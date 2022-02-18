@@ -7,10 +7,11 @@ export class ReptileClass {
     private _birthday: string ="";
     private _type : string =""; //ART ALSO HAKENNASEN
     private _morph: string ="";
-
-    //private ordnung: Ordnung
+    private _species: string =""; //Spezies (Ordnung)
+    private _gender: string ="";
+    //private feeding array list?: Ordnung
+    //private note : Note; liste/Array
     // private breeder: Breeder;
-    // private gender: Gender;
 
 
     constructor() {
@@ -58,10 +59,32 @@ export class ReptileClass {
         this._morph = value;
     }
 
-    setReptile(name: string, birthday : string, type : string, morph : string){
+
+    get gender(): string {
+        return this._gender;
+    }
+
+
+    set gender(value: string) {
+        this._gender = value;
+    }
+
+
+    get species(): string {
+        return this._species;
+    }
+
+
+    set species(value: string) {
+        this._species = value;
+    }
+
+    setReptile(name: string, birthday : string, type : string, morph : string, gender: string, species : string){
         this._name = name;
         this._birthday = birthday;
         this._type = type;
         this._morph = morph;
+        this._gender = gender;
+        this._species = species;
     }
 }
