@@ -7,16 +7,14 @@ import {
     MDBCard,
     MDBCardBody,
     MDBCardHeader,
-    MDBCardImage, MDBCardText, MDBFooter,
-    MDBNavbar
+    MDBCardImage, MDBFooter,
 } from "mdb-react-ui-kit";
-import {MdDelete, MdSearch, MdAdd} from "react-icons/md";
+import {MdDelete, MdSearch} from "react-icons/md";
 import {IoFastFoodOutline, IoRestaurantOutline} from "react-icons/io5";
 import {FiEdit} from "react-icons/fi";
 import {FaStickyNote} from "react-icons/fa";
-import AddFeedingModal from "../modals/AddFeedingModal";
+import {GiWeight} from "react-icons/gi";
 
-// const Todo = (props) =>{
 const Reptile = ({
                      name,
                      birthday,
@@ -24,16 +22,22 @@ const Reptile = ({
                      morph,
                      gender,
                      species,
+    feedings,
+    weights,
+    notes,
                      index,
                      onDeleteReptile,
-                     addFeeding,
-                     toggleShow
+                     toggleWeightModal,
+                     toggleNoteModal,
+                     toggleFeedingModal,
+                     setReptileId,
                  }: any) => {
+
+
     return (
 
-    <div>
+        <div>
             <MDBCard className={"reptileCard"}>
-
                 <MDBCardHeader>
                     <MDBBadge className={"nameBadge"}>
                         {name}
@@ -54,7 +58,11 @@ const Reptile = ({
                         <h2><span className={"cardTextSpan"}>Spezies: </span> {species}</h2>
                         <h2><span className={"cardTextSpan"}>Typ: </span> {type}</h2>
                         <h2><span className={"cardTextSpan"}>Morph: </span>{morph}</h2>
-                        <h3><MDBBadge className={"lastFeedingBadge"}> <IoFastFoodOutline/> Letzte Fütterung: 12.2
+                        <h3><MDBBadge className={"lastFeedingBadge"}> <IoFastFoodOutline/> Letzte Fütterung: {feedings[feedings.length-1] !== undefined ? feedings[feedings.length-1]._date : " "}
+                        </MDBBadge></h3>
+                        <h3><MDBBadge className={"lastFeedingBadge"}> <IoFastFoodOutline/> Letztes Gewicht: {weights[weights.length-1] !== undefined ? weights[weights.length-1]._weight : " "}
+                        </MDBBadge></h3>
+                        <h3><MDBBadge className={"lastFeedingBadge"}> <IoFastFoodOutline/> Letzte Notiz: {notes[notes.length-1] !== undefined ? notes[notes.length-1]._note : " "}
                         </MDBBadge></h3>
                     </div>
                 </MDBCardBody>
@@ -64,12 +72,23 @@ const Reptile = ({
                         onDeleteReptile(index)
                     }}> <MdSearch size={"25px"}/>
                     </MDBBtn>
+
+
+                    <MDBBtn color={"success"} className={"detailsButton"} onClick={() => {
+                        toggleWeightModal() ; setReptileId(index)
+                    }}> <GiWeight size={"25px"}/>
+                    </MDBBtn>
+
+
                     <MDBBtn color={"success"} className={"noteButton"} onClick={() => {
-                        onDeleteReptile(index)
+                        toggleNoteModal(); setReptileId(index)
                     }}> <FaStickyNote size={"25px"}/>
                     </MDBBtn>
+
+                    {/*TODO BEI TOGGLE DIE SCHREIBWEISE ÄNDERN */}
                     <MDBBtn color={"success"} className={"feedButton"} onClick={() => {
-                        toggleShow();
+                        toggleFeedingModal();
+                        setReptileId(index)
                     }}> <IoRestaurantOutline size={"25px"}/>
                     </MDBBtn>
 

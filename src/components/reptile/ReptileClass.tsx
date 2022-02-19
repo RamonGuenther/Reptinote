@@ -1,5 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
-import FeedingClass from "../entities/FeedingClass";
+import FeedingClass from "../../data/FeedingClass";
+import NoteClass from "../../data/NoteClass";
+import WeightClass from "../../data/WeightClass";
 
 export class ReptileClass {
 
@@ -11,6 +13,8 @@ export class ReptileClass {
     private _species: object ={}; //Spezies (Ordnung)
     private _gender: object = {};
     private _feedings : FeedingClass[];
+    private _notes : NoteClass[];
+    private _weights : WeightClass[];
     //private feeding array list?: Ordnung
     //private note : Note; liste/Array
     // private breeder: Breeder;
@@ -19,6 +23,9 @@ export class ReptileClass {
     constructor() {
         this._id = uuidv4();
         this._feedings = [];
+        this._notes = [];
+        this._weights = [];
+
     }
 
 
@@ -88,6 +95,23 @@ export class ReptileClass {
         this._gender = value;
     }
 
+
+    set notes(value: NoteClass[]) {
+        this._notes = value;
+    }
+
+    set weights(value: WeightClass[]) {
+        this._weights = value;
+    }
+
+    get notes(): NoteClass[] {
+        return this._notes;
+    }
+
+    get weights(): WeightClass[] {
+        return this._weights;
+    }
+
     setReptile(name: string, birthday : string, type : string, morph : string, gender: object, species : object){
         this._name = name;
         this._birthday = birthday;
@@ -95,6 +119,20 @@ export class ReptileClass {
         this._morph = morph;
         this._gender = gender;
         this._species = species;
+    }
+
+
+
+    loadReptile(name: string, birthday : string, type : string, morph : string, gender: object, species : object, feedings : FeedingClass[], notes : NoteClass[], weights : WeightClass[]){
+        this._name = name;
+        this._birthday = birthday;
+        this._type = type;
+        this._morph = morph;
+        this._gender = gender;
+        this._species = species;
+        this._feedings = feedings;
+        this._notes = notes;
+        this._weights = weights;
     }
     
 }

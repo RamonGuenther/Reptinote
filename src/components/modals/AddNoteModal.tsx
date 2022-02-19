@@ -17,18 +17,18 @@ import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
 import {LocalizationProvider} from "@mui/lab";
 
 
-const AddFeedingModal = ({
-                             toggleShow,
-                             basicModal,
-                             setBasicModal,
-                             handleInputChange,
-                             values,
-                             submit,
-                             index,
-                             startDate,
-                             setStartDate
+const AddNoteModal = ({
+                          toggleShow,
+                          basicModal,
+                          setBasicModal,
+                          submit,
+                          index,
+                          startDate,
+                          setStartDate,
+                          inputNote,
+                          changeNote,
 
-                         }: any) => {
+                      }: any) => {
 
     return (
         <>
@@ -36,7 +36,7 @@ const AddFeedingModal = ({
                 <MDBModalDialog>
                     <MDBModalContent>
                         <MDBModalHeader>
-                            <MDBModalTitle>Fütterung hinzufügen</MDBModalTitle>
+                            <MDBModalTitle>Notiz hinzufügen</MDBModalTitle>
                             <MDBBtn className='btn-close' color='none' onClick={toggleShow}/>
                         </MDBModalHeader>
                         <MDBModalBody>
@@ -54,21 +54,12 @@ const AddFeedingModal = ({
 
                                 <MDBInput
                                     className={"mt-3"}
-                                    value={values.type}
-                                    onChange={handleInputChange}
+                                    value={inputNote}
+                                    onChange={changeNote}
                                     name="type" //TODO: ohne name Attribut funktioniert es nicht
                                     type="text"
                                     label={"type"}
                                     placeholder="Name des Reptils..."
-                                />
-                                <MDBInput
-                                    className={"mt-3"}
-                                    value={values.weight}
-                                    onChange={handleInputChange}
-                                    type="text"
-                                    label={"Geburtstag"}
-                                    name="weight"
-                                    placeholder="Geburtstag des Reptils..."
                                 />
                             </form>
                         </MDBModalBody>
@@ -78,7 +69,7 @@ const AddFeedingModal = ({
                                 Abbrechen
                             </MDBBtn>
                             <MDBBtn onClick={(e: any) => {
-                                submit(index, e)
+                                submit(e, index)
                             }}>Fütterung hinzufügen</MDBBtn>
 
 
@@ -94,4 +85,4 @@ const AddFeedingModal = ({
 }
 
 
-export default AddFeedingModal;
+export default AddNoteModal;

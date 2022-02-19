@@ -4,8 +4,13 @@ import {ReptileClass} from "./ReptileClass";
 import AddReptileModal from "../modals/AddReptileModal";
 import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import FeedingClass from "../entities/FeedingClass";
+import FeedingClass from "../../data/FeedingClass";
 import AddFeedingModal from "../modals/AddFeedingModal";
+import AddWeightModal from "../modals/AddWeightModal";
+import {BiNote} from "react-icons/all";
+import AddNoteModal from "../modals/AddNoteModal";
+import NoteClass from "../../data/NoteClass";
+import WeightClass from "../../data/WeightClass";
 
 /**
  * TODO:
@@ -21,7 +26,7 @@ const initialValuesReptile = {
 
 const initialValuesFeeding = {
     type: "",
-    weight: 1,
+    weight: "",
 }
 
 const optionsGender = [
@@ -101,14 +106,12 @@ function ReptileList() {
                 console.log(parsed[0]._description)
                 for (let i = 0; i < parsed.length; i++) {
                     let newReptile = new ReptileClass();
-                    newReptile.setReptile(parsed[i]._name, parsed[i]._birthday, parsed[i]._type, parsed[i]._morph, parsed[i]._gender, parsed[i]._species);
+                    newReptile.loadReptile(parsed[i]._name, parsed[i]._birthday, parsed[i]._type, parsed[i]._morph, parsed[i]._gender, parsed[i]._species, parsed[i]._feedings, parsed[i]._notes, parsed[i]._weights);
                     array.push(newReptile);
                 }
                 return array;
             } catch (e) {
-
                 return []
-
             }
         } else {
             console.log("APFEL")
@@ -119,7 +122,7 @@ function ReptileList() {
 
             for (let i = 0; i < reptilesExample.length; i++) {
                 let reptile1 = new ReptileClass();
-                reptile1.setReptile(reptilesExample[i].name, reptilesExample[i].geburtsdatum, reptilesExample[i].art, reptilesExample[i].morph, reptilesExample[i].geschlecht, reptilesExample[i].ordnung)
+                reptile1.loadReptile(reptilesExample[i].name, reptilesExample[i].geburtsdatum, reptilesExample[i].art, reptilesExample[i].morph, reptilesExample[i].geschlecht, reptilesExample[i].ordnung, [], [], [])
                 array.push(reptile1);
             }
 
@@ -139,6 +142,9 @@ function ReptileList() {
 
     const [reptileModal, setReptileModal] = useState(false);
     const [feedingModal, setFeedingModal] = useState(false);
+    const [weightModal, setWeightModal] = useState(false);
+    const [noteModal, setNoteModal] = useState(false);
+
 
     const [selectedGenderOption, setSelectedGenderOption] = useState(null);
     const [selectedSpeciesOption, setSelectedSpeciesOption] = useState(null);
@@ -170,18 +176,21 @@ function ReptileList() {
     }
 
 
-    function addFeeding(event: any, index: number): void {
+    function addFeeding(index: number, event: any): void { //TODO: onClick={() => {onDeleteReptile(index)}}
         event.preventDefault();
-        if (feedingValues.type === "") { //TODO: wie validieren
+        console.log(index)
+        if (feedingValues.type === "" || feedingValues.weight === " ") { //TODO: wie validieren
             notify(); //TODO eigenes
             return;
         }
         const newTodos = [...reptiles];
         let feeding = new FeedingClass();
-        feeding.setFoody(feedingValues.weight, feedingValues.type);
+        feeding.setFoody(feedingValues.weight, feedingValues.type, startDate.toLocaleDateString());
         newTodos[index].feedings.push(feeding);
+
         setReptiles(newTodos);
         setFeedingValues(initialValuesFeeding)
+        setStartDate(new Date());
         toggleFeedingModal();
     }
 
@@ -195,6 +204,7 @@ function ReptileList() {
 
     function handleInputChangeReptile(e: any): void {
         const {name, value} = e.target;
+
         setReptileValues({
             ...reptileValues,
             [name]: value,
@@ -211,12 +221,22 @@ function ReptileList() {
     }
 
 
+    const [reptileId, setReptileId] = useState(0);
+
     function toggleReptileModal(): void {
         setReptileModal(!reptileModal);
     }
 
     function toggleFeedingModal(): void {
         setFeedingModal(!feedingModal);
+    }
+
+    function toggleWeightModal(): void {
+        setWeightModal(!weightModal);
+    }
+
+    function toggleNoteModal(): void {
+        setNoteModal(!noteModal);
     }
 
     useEffect(() => {
@@ -229,8 +249,59 @@ function ReptileList() {
     }, [reptiles]); //Wenn sich todo an sich selber verändert
 
 
+    const [startDate, setStartDate] = useState(new Date());
+
+    const [inputWeight, setInputWeight] = useState("");
+
+    const [inputNote, setInputNote] = useState("");
+
+    function changeWeight(event: any) {
+        setInputWeight(event.target.value)
+    }
+
+    function changeNote(event: any) {
+        setInputNote(event.target.value)
+    }
+
+    function submitNote(event: any, index: number) {
+        event.preventDefault();
+        console.log(index)
+        // if (feedingValues.type === "" || feedingValues.weight ===" ") { //TODO: wie validieren
+        //     notify(); //TODO eigenes
+        //     return;
+        // }
+        const newTodos = [...reptiles];
+        let note = new NoteClass();
+        note.setNote(inputNote, startDate.toLocaleDateString());
+        newTodos[index].notes.push(note);
+        setReptiles(newTodos);
+        setInputNote("");
+        setStartDate(new Date());
+        toggleNoteModal();
+
+    }
+
+    function submitWeight(event: any, index: number) {
+        event.preventDefault();
+        console.log(index)
+        // if (feedingValues.type === "" || feedingValues.weight ===" ") { //TODO: wie validieren
+        //     notify(); //TODO eigenes
+        //     return;
+        // }
+        const newTodos = [...reptiles];
+        let weight = new WeightClass();
+        weight.setWeight(inputWeight, startDate.toLocaleDateString());
+        newTodos[index].weights.push(weight);
+        setReptiles(newTodos);
+        setInputWeight("");
+        setStartDate(new Date());
+        toggleWeightModal();
+    }
+
 
     return (
+
+
         <div className={" mt-3 rounded p-5"}>
 
             <AddReptileModal
@@ -240,6 +311,7 @@ function ReptileList() {
                 handleInputChange={handleInputChangeReptile}
                 values={reptileValues}
                 submit={addReptile}
+
                 selectedGenderOption={selectedGenderOption}
                 setSelectedGenderOption={setSelectedGenderOption}
                 selectedSpeciesOption={selectedSpeciesOption}
@@ -253,6 +325,35 @@ function ReptileList() {
                 values={feedingValues}
                 handleInputChange={handleInputChangeFeeding}
                 submit={addFeeding}
+                index={reptileId}
+                startDate={startDate}
+                setStartDate={setStartDate}
+            />
+
+            <AddWeightModal
+                toggleShow={toggleWeightModal}
+                setBasicModal={setWeightModal}
+                basicModal={weightModal}
+                startDate={startDate}
+                setStartDate={setStartDate}
+                inputWeight={inputWeight}
+                changeWeight={changeWeight}
+                submit={submitWeight}
+                index={reptileId}
+
+
+            />
+
+            <AddNoteModal
+                toggleShow={toggleNoteModal}
+                setBasicModal={setNoteModal}
+                basicModal={noteModal}
+                startDate={startDate}
+                setStartDate={setStartDate}
+                inputNote={inputNote}
+                changeNote={changeNote}
+                submit={submitNote}
+                index={reptileId}
             />
 
 
@@ -265,12 +366,19 @@ function ReptileList() {
                         morph={item._morph}
                         gender={item._gender.label}
                         species={item._species.label}
+                        feedings={item._feedings}
+                        weights={item._weights}
+                        notes={item._notes}
+
                         key={index}
                         index={index}
                         // onChangeTodo={changeTodo} //Funktion der anderen Seite geben
                         onDeleteReptile={deleteReptile}
                         addFeeding={addFeeding}
-                        toggleShow={toggleFeedingModal}
+                        toggleFeedingModal={toggleFeedingModal}
+                        toggleWeightModal={toggleWeightModal}
+                        toggleNoteModal={toggleNoteModal}
+                        setReptileId={setReptileId}
                     />
                 )
             })}
