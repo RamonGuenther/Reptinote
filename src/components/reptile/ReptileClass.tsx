@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
+import FeedingClass from "../entities/FeedingClass";
 
 export class ReptileClass {
 
@@ -7,8 +8,9 @@ export class ReptileClass {
     private _birthday: string ="";
     private _type : string =""; //ART ALSO HAKENNASEN
     private _morph: string ="";
-    private _species: string =""; //Spezies (Ordnung)
-    private _gender: string ="";
+    private _species: object ={}; //Spezies (Ordnung)
+    private _gender: object = {};
+    private _feedings : FeedingClass[];
     //private feeding array list?: Ordnung
     //private note : Note; liste/Array
     // private breeder: Breeder;
@@ -16,6 +18,7 @@ export class ReptileClass {
 
     constructor() {
         this._id = uuidv4();
+        this._feedings = [];
     }
 
 
@@ -25,6 +28,14 @@ export class ReptileClass {
 
     get id(): string {
         return this._id;
+    }
+
+    set feedings(value: FeedingClass[]) {
+        this._feedings = value;
+    }
+
+    get feedings(): FeedingClass[] {
+        return this._feedings;
     }
 
     get name(): string {
@@ -60,26 +71,24 @@ export class ReptileClass {
     }
 
 
-    get gender(): string {
+    get species(): object {
+        return this._species;
+    }
+
+    get gender(): object {
         return this._gender;
     }
 
 
-    set gender(value: string) {
-        this._gender = value;
-    }
-
-
-    get species(): string {
-        return this._species;
-    }
-
-
-    set species(value: string) {
+    set species(value: object) {
         this._species = value;
     }
 
-    setReptile(name: string, birthday : string, type : string, morph : string, gender: string, species : string){
+    set gender(value: object) {
+        this._gender = value;
+    }
+
+    setReptile(name: string, birthday : string, type : string, morph : string, gender: object, species : object){
         this._name = name;
         this._birthday = birthday;
         this._type = type;
@@ -87,4 +96,5 @@ export class ReptileClass {
         this._gender = gender;
         this._species = species;
     }
+    
 }

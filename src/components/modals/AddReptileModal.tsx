@@ -9,6 +9,7 @@ import {
     MDBModalTitle
 } from "mdb-react-ui-kit";
 import Select from "react-select";
+import {ToastContainer} from 'react-toastify';
 
 const optionsGender = [
     {label: 'Weiblich'},
@@ -27,7 +28,7 @@ const optionsSpecies = [
 ]
 
 
-const Modal = ({
+const AddReptileModal = ({
                    toggleShow,
                    basicModal,
                    setBasicModal,
@@ -45,7 +46,6 @@ const Modal = ({
     return (
         <>
             <MDBBtn onClick={toggleShow}>Reptil hinzufügen</MDBBtn>
-
             <MDBModal show={basicModal} setShow={setBasicModal} tabIndex='-1'>
                 <MDBModalDialog>
                     <MDBModalContent>
@@ -138,7 +138,12 @@ const Modal = ({
                     </MDBModalContent>
                 </MDBModalDialog>
             </MDBModal>
+            <ToastContainer
+            />
+
         </>
     )
 }
-export default Modal;
+
+
+export default AddReptileModal;
