@@ -15,6 +15,7 @@ export class ReptileClass {
     private _feedings : FeedingClass[];
     private _notes : NoteClass[];
     private _weights : WeightClass[];
+    private _urlLink : string = "";
     //private feeding array list?: Ordnung
     //private note : Note; liste/Array
     // private breeder: Breeder;
@@ -112,18 +113,27 @@ export class ReptileClass {
         return this._weights;
     }
 
-    setReptile(name: string, birthday : string, type : string, morph : string, gender: object, species : object){
+
+    set urlLink(value: string) {
+        this._urlLink = value;
+    }
+
+    get urlLink(): string {
+        return this._urlLink;
+    }
+
+    setReptile(name: string, birthday : string, type : string, morph : string, gender: object, species : object, image : string){
         this._name = name;
         this._birthday = birthday;
         this._type = type;
         this._morph = morph;
         this._gender = gender;
         this._species = species;
+        this._urlLink = image;
     }
 
 
-
-    loadReptile(name: string, birthday : string, type : string, morph : string, gender: object, species : object, feedings : FeedingClass[], notes : NoteClass[], weights : WeightClass[]){
+    loadReptile(name: string, birthday : string, type : string, morph : string, gender: object, species : object, feedings : FeedingClass[], notes : NoteClass[], weights : WeightClass[], image: string){
         this._name = name;
         this._birthday = birthday;
         this._type = type;
@@ -133,6 +143,7 @@ export class ReptileClass {
         this._feedings = feedings;
         this._notes = notes;
         this._weights = weights;
+        this._urlLink = image;
     }
     
 }

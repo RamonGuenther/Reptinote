@@ -7,7 +7,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import FeedingClass from "../../data/FeedingClass";
 import AddFeedingModal from "../modals/AddFeedingModal";
 import AddWeightModal from "../modals/AddWeightModal";
-import {BiNote} from "react-icons/all";
 import AddNoteModal from "../modals/AddNoteModal";
 import NoteClass from "../../data/NoteClass";
 import WeightClass from "../../data/WeightClass";
@@ -22,6 +21,7 @@ const initialValuesReptile = {
     birthday: "",
     type: "",
     morph: "",
+    image: ""
 };
 
 const initialValuesFeeding = {
@@ -29,55 +29,7 @@ const initialValuesFeeding = {
     weight: "",
 }
 
-const optionsGender = [
-    {label: 'Weiblich'},
-    {label: 'Männlich'},
-    {label: 'Unbekannt'},
-];
 
-const optionsSpecies = [
-    {label: 'Schlange'},
-    {label: 'Echse'},
-    {label: 'Krokodil'},
-    {label: 'Schildkröte'},
-    {label: 'Amphibie'},
-    {label: 'Gliederfüßer'},
-    {label: 'Sonstiges'},
-]
-
-
-const reptilesExample = [
-    {
-        id: 1,
-        name: 'Hubert',
-        geburtsdatum: 'NZ20',
-        geschlecht: optionsGender[1],
-        ordnung: optionsSpecies[0],
-        art: 'Westliche Hakennasennatter',
-        morph: 'Superconda het. Toxic',
-        feedings: []
-    },
-    {
-        id: 2,
-        name: 'Tifa',
-        geburtsdatum: 'NZ21',
-        geschlecht: optionsGender[0],
-        ordnung: optionsSpecies[0],
-        art: 'Boa Constrictor Imperator',
-        morph: 'IMG het. Leopard',
-        feedings: []
-    },
-    {
-        id: 3,
-        name: 'Hektor',
-        geburtsdatum: 'NZ21',
-        geschlecht: optionsGender[1],
-        ordnung: optionsSpecies[0],
-        art: 'Boa Constrictor Constrictor',
-        morph: 'Classic',
-        feedings: []
-    },
-];
 
 const feedings = [
     {
@@ -95,46 +47,7 @@ const feedings = [
 ];
 
 //TODO: Statt klassen interfaces??? // WAHrscheinlich keine neuen States
-function ReptileList() {
-
-    const [reptiles, setReptiles] = useState<ReptileClass[]>(() => {
-        const items = localStorage.getItem("reptile");
-        if (items != null) {
-            let parsed = JSON.parse(items);
-            try {
-                let array: ReptileClass[] = [];
-                console.log(parsed[0]._description)
-                for (let i = 0; i < parsed.length; i++) {
-                    let newReptile = new ReptileClass();
-                    newReptile.loadReptile(parsed[i]._name, parsed[i]._birthday, parsed[i]._type, parsed[i]._morph, parsed[i]._gender, parsed[i]._species, parsed[i]._feedings, parsed[i]._notes, parsed[i]._weights);
-                    array.push(newReptile);
-                }
-                return array;
-            } catch (e) {
-                return []
-            }
-        } else {
-            console.log("APFEL")
-
-            let array: ReptileClass[] = [];
-
-            console.log(reptilesExample[1].geschlecht);
-
-            for (let i = 0; i < reptilesExample.length; i++) {
-                let reptile1 = new ReptileClass();
-                reptile1.loadReptile(reptilesExample[i].name, reptilesExample[i].geburtsdatum, reptilesExample[i].art, reptilesExample[i].morph, reptilesExample[i].geschlecht, reptilesExample[i].ordnung, [], [], [])
-                array.push(reptile1);
-            }
-
-            // let feeding = new FeedingClass();
-            //
-            // array[0].feedings.push(feeding);
-
-            console.log(array[0]);
-
-            return array;
-        }
-    });
+function ReptileList({reptiles, setReptiles} :any) {
 
     const [reptileValues, setReptileValues] = useState(initialValuesReptile);
     const [feedingValues, setFeedingValues] = useState(initialValuesFeeding);
@@ -168,7 +81,7 @@ function ReptileList() {
             return;
         }
         const newReptile = new ReptileClass();
-        newReptile.setReptile(reptileValues.name, reptileValues.birthday, reptileValues.type, reptileValues.morph, selectedGenderOption, selectedSpeciesOption);
+        newReptile.setReptile(reptileValues.name, reptileValues.birthday, reptileValues.type, reptileValues.morph, selectedGenderOption, selectedSpeciesOption, reptileValues.image);
         const newReptiles = [...reptiles, newReptile];
         setReptiles(newReptiles);
         setReptileValues(initialValuesReptile); //reset
@@ -239,15 +152,6 @@ function ReptileList() {
         setNoteModal(!noteModal);
     }
 
-    useEffect(() => {
-        if (reptiles.length !== 0)
-            localStorage.setItem("reptile", JSON.stringify(reptiles))
-        else {
-            localStorage.removeItem("reptile") //damit definitiv keine Reptilien drinne sind wenn man alle löscht
-        }
-        console.log(localStorage.getItem("item"));
-    }, [reptiles]); //Wenn sich todo an sich selber verändert
-
 
     const [startDate, setStartDate] = useState(new Date());
 
@@ -299,10 +203,15 @@ function ReptileList() {
     }
 
 
+    const [searchValue, setSearchValue] = useState("")
+
     return (
-
-
         <div className={" mt-3 rounded p-5"}>
+            <input
+                type={"text"}
+                value={searchValue}
+                onChange={ (e:any) => setSearchValue(e.target.value)}
+            />
 
             <AddReptileModal
                 toggleShow={toggleReptileModal}
@@ -311,7 +220,6 @@ function ReptileList() {
                 handleInputChange={handleInputChangeReptile}
                 values={reptileValues}
                 submit={addReptile}
-
                 selectedGenderOption={selectedGenderOption}
                 setSelectedGenderOption={setSelectedGenderOption}
                 selectedSpeciesOption={selectedSpeciesOption}
@@ -356,8 +264,7 @@ function ReptileList() {
                 index={reptileId}
             />
 
-
-            {reptiles.map((item: any, index: number) => { //Statt 3 mal todos.description...
+            {reptiles.filter((reptil: { name: string; }) => reptil.name.match(new RegExp(searchValue, "i"))).map((item: any, index: number) => {
                 return (
                     <Reptile
                         name={item._name}
@@ -369,7 +276,11 @@ function ReptileList() {
                         feedings={item._feedings}
                         weights={item._weights}
                         notes={item._notes}
+                        image = {item._urlLink}
 
+                        item = {item}
+
+                        reptileList = {reptiles}
                         key={index}
                         index={index}
                         // onChangeTodo={changeTodo} //Funktion der anderen Seite geben

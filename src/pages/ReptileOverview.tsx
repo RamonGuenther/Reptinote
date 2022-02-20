@@ -1,10 +1,10 @@
 import React from "react";
 
 
-const Reptileoverview = () => {
+const ReptileOverview = () => {
     return(
-        <div> Übersicht </div>
+        <div> Details </div>
     )
 }
 
-export default Reptileoverview;
+export default ReptileOverview;

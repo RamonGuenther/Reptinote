@@ -101,6 +101,16 @@ const AddReptileModal = ({
                                     placeholder="Morph des Reptils..."
                                 />
 
+                                <MDBInput
+                                    className={"mt-3"}
+                                    value={values.image}
+                                    label={"Morph"}
+                                    onChange={handleInputChange}
+                                    name="image"
+                                    type="text"
+                                    placeholder="Morph des Reptils..."
+                                />
+
                                 <Select
                                     className={"mt-3"}
                                     defaultValue={selectedGenderOption}
@@ -119,6 +129,7 @@ const AddReptileModal = ({
                                     getOptionValue={(option) => option.label}
 
                                 />
+
 
                                 {/*<MDBInput*/}
                                 {/*    className={"mt-3 , bg-info"}*/}

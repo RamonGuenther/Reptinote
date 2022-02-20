@@ -44,9 +44,9 @@ export default class FeedingClass{
         return this._weight;
     }
 
-    setFoody(weight: string, type: string, date : string){
+    setFoody(weight: string, feeding: string, date : string){
         this._weight = weight;
-        this._feeding = type;
+        this._feeding = feeding;
         this._date = date;
     }
 
