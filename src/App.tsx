@@ -30,8 +30,8 @@ const reptilesExample = [
         id: 1,
         name: 'Hubert',
         geburtsdatum: 'NZ20',
-        geschlecht: optionsGender[1],
-        ordnung: optionsSpecies[0],
+        geschlecht: optionsGender[1].label,
+        ordnung: optionsSpecies[0].label,
         art: 'Westliche Hakennasennatter',
         morph: 'Superconda het. Toxic',
         image: "https://i.ibb.co/T1rggYm/Hubert.png",
@@ -41,8 +41,8 @@ const reptilesExample = [
         id: 2,
         name: 'Tifa',
         geburtsdatum: 'NZ21',
-        geschlecht: optionsGender[0],
-        ordnung: optionsSpecies[0],
+        geschlecht: optionsGender[0].label,
+        ordnung: optionsSpecies[0].label,
         art: 'Boa Constrictor Imperator',
         morph: 'IMG het. Leopard',
         image: 'https://i.ibb.co/109Gkpr/Tifa.jpg',
@@ -52,8 +52,8 @@ const reptilesExample = [
         id: 3,
         name: 'Hektor',
         geburtsdatum: 'NZ21',
-        geschlecht: optionsGender[1],
-        ordnung: optionsSpecies[0],
+        geschlecht: optionsGender[1].label,
+        ordnung: optionsSpecies[0].label,
         art: 'Boa Constrictor Constrictor',
         morph: 'Classic',
         image:'https://i.ibb.co/BLnjXz7/Hektor.jpg',
@@ -131,8 +131,6 @@ function App() {
         <div>
             <Router>
                 <Navbar/>
-                <div className={"container"}>
-
                     <div className="App">
                         <Routes>
                             <Route path={'/'} element={<ReptileOverview reptiles={reptiles} setReptiles={setReptiles} saveReptile = {saveReptile} saveFeeding = {saveFeeding} editReptile={editReptile}/>}/>
@@ -141,8 +139,6 @@ function App() {
                             <Route path={'*'} element={<NotFound/>}/>
                         </Routes>
                     </div>
-                </div>
-
             </Router>
         </div>
     )

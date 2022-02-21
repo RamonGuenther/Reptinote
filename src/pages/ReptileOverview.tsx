@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import Reptile from "../components/reptile/Reptile";
+import ReptileCard from "../components/reptile/ReptileCard";
 import {ReptileClass} from "../data/ReptileClass";
 import AddReptileModal from "../components/modals/AddReptileModal";
 import {toast} from 'react-toastify';
@@ -11,12 +11,9 @@ import AddNoteModal from "../components/modals/AddNoteModal";
 import NoteClass from "../data/NoteClass";
 import WeightClass from "../data/WeightClass";
 import EditReptileModal from "../components/modals/EditReptileModal";
+import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
 
-/**
- * TODO:
- *      - Neues Modal brauch auch eine ID
- *
- */
 const initialValuesReptile = {
     name: "",
     birthday: "",
@@ -42,8 +39,8 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
     const [weightModal, setWeightModal] = useState(false);
     const [noteModal, setNoteModal] = useState(false);
 
-    const [selectedGenderOption, setSelectedGenderOption] = useState(null);
-    const [selectedSpeciesOption, setSelectedSpeciesOption] = useState(null);
+    const [selectedGenderOption, setSelectedGenderOption] = useState("");
+    const [selectedSpeciesOption, setSelectedSpeciesOption] = useState("");
 
 
     const notify = () => toast.error("Bitte alle Felder ausfüllen! Morph muss nicht bekannt sein.", {
@@ -52,6 +49,7 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
+
         draggable: true,
         progress: undefined,
     });
@@ -154,6 +152,14 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
         setInputNote(event.target.value)
     }
 
+    function handleSpeciesSelect(event : any){
+        setSelectedSpeciesOption(event.target.value)
+    }
+
+    function handleGenderSelect(event : any){
+        setSelectedGenderOption(event.target.value)
+    }
+
     function submitNote(event: any, index: number) {
         event.preventDefault();
         console.log(index)
@@ -199,8 +205,8 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
         let type = reptiles[reptileId].type;
         let morph = reptiles[reptileId].morph;
         let image = reptiles[reptileId].image;
-        setSelectedGenderOption(reptiles[reptileId].gender.label);
-        setSelectedSpeciesOption(reptiles[reptileId].species.label);
+        setSelectedGenderOption(reptiles[reptileId].gender);
+        setSelectedSpeciesOption(reptiles[reptileId].species);
         setReptileValues({name: name, birthday: birthday, type: type, morph: morph, image: image})
         console.log(reptileId + " aufruf");
     }
@@ -212,30 +218,48 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
 
     const [searchValue, setSearchValue] = useState("")
 
+    function test(event:any){
+
+        setSearchValue(event.target.value);
+        console.log(searchValue);
+
+    }
+
     //TODO: Ivonne zeigen wie behindert das schon wieder ist
     useEffect(()=>{
         initializeEdit();
     },[reptileEditModal])
 
     return (
-        <div className={" mt-3 rounded p-5"}>
-            <input
+        <div className={" mt-3 rounded p-5 container"}>
+
+            {/*<Autocomplete*/}
+            {/*    disablePortal*/}
+            {/*    options={reptiles.map((item: any, index: number) =>{return {label: item.name}})}*/}
+            {/*    sx={{ width: 300 }}*/}
+            {/*    onChange={(e: any) => test(e)}*/}
+            {/*    value={searchValue}*/}
+            {/*    renderInput={(params:any) => <TextField {...params} label="Reptil suchen" />}*/}
+            {/*/>*/}
+
+            <TextField
                 type={"text"}
                 value={searchValue}
+                label={"Reptil suchen"}
                 onChange={(e: any) => setSearchValue(e.target.value)}
             />
 
+
             <AddReptileModal
                 toggleShow={toggleReptileModal}
-                setBasicModal={setReptileModal}
                 basicModal={reptileModal}
                 handleInputChange={handleInputChangeReptile}
                 values={reptileValues}
                 submit={addReptile}
                 selectedGenderOption={selectedGenderOption}
-                setSelectedGenderOption={setSelectedGenderOption}
+                handleGenderSelect={handleGenderSelect}
                 selectedSpeciesOption={selectedSpeciesOption}
-                setSelectedSpeciesOption={setSelectedSpeciesOption}
+                handleSpeciesSelect={handleSpeciesSelect}
             />
 
             <AddFeedingModal
@@ -252,7 +276,6 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
 
             <AddWeightModal
                 toggleShow={toggleWeightModal}
-                setBasicModal={setWeightModal}
                 basicModal={weightModal}
                 startDate={startDate}
                 setStartDate={setStartDate}
@@ -276,26 +299,25 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
 
             <EditReptileModal
                 toggleShow={toggle}
-                setBasicModal={setReptileEditModal}
                 basicModal={reptileEditModal}
                 handleInputChange={handleInputChangeReptile}
                 values={reptileValues}
                 submit={addReptile}
                 selectedGenderOption={selectedGenderOption}
-                setSelectedGenderOption={setSelectedGenderOption}
+                handleGenderSelect={handleGenderSelect}
                 selectedSpeciesOption={selectedSpeciesOption}
-                setSelectedSpeciesOption={setSelectedSpeciesOption}
+                handleSpeciesSelect={handleSpeciesSelect}
             />
 
             {reptiles.filter((reptil: { name: string; }) => reptil.name.match(new RegExp(searchValue, "i"))).map((item: any, index: number) => {
                 return (
-                    <Reptile
+                    <ReptileCard
                         name={item._name}
                         birthday={item._birthday}
                         type={item._type}
                         morph={item._morph}
-                        gender={item._gender.label}
-                        species={item._species.label}
+                        gender={item._gender}
+                        species={item._species}
                         feedings={item._feedings}
                         weights={item._weights}
                         notes={item._notes}

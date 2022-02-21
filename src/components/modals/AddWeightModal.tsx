@@ -1,16 +1,7 @@
 import React from "react";
 
-import {
-    MDBBtn, MDBInput,
-    MDBModal,
-    MDBModalBody,
-    MDBModalContent,
-    MDBModalDialog, MDBModalFooter,
-    MDBModalHeader,
-    MDBModalTitle
-} from "mdb-react-ui-kit";
 import {ToastContainer} from 'react-toastify';
-import {TextField} from "@mui/material";
+import {Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, TextField} from "@mui/material";
 
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 
@@ -33,51 +24,49 @@ const AddWeightModal = ({
 
     return (
         <>
-            <MDBModal show={basicModal} setShow={setBasicModal} tabIndex='-1'>
-                <MDBModalDialog>
-                    <MDBModalContent>
-                        <MDBModalHeader>
-                            <MDBModalTitle>Gewicht </MDBModalTitle>
-                            <MDBBtn className='btn-close' color='none' onClick={toggleShow}/>
-                        </MDBModalHeader>
-                        <MDBModalBody>
-                            <form>
-                                <LocalizationProvider dateAdapter={AdapterDateFns}>
-                                    <DesktopDatePicker
-                                        label="Datum der Messung"
-                                        inputFormat="MM/dd/yyyy"
-                                        value={startDate}
-                                        onChange={setStartDate}
-                                        renderInput={(params) => <TextField {...params} />}
-                                    />
+            <Dialog open={basicModal} onClose={toggleShow}>
+                <DialogTitle>
+                    Gewicht hinzufügen
+                    <Button className='btn-close' onClick={toggleShow}/>
+                </DialogTitle>
+                <DialogContent>
+                    <form>
+                        <FormControl fullWidth>
 
-                                </LocalizationProvider>
+                        <TextField
+                            className={"mt-3 mb-3"}
+                            value={inputWeight}
+                            onChange={changeWeight}
+                            type="text"
+                            label={"Gewicht"}
+                            placeholder="Aktuelles Gewicht des Reptils..."
+                        />
 
-                                <MDBInput
-                                    className={"mt-3"}
-                                    value={inputWeight}
-                                    onChange={changeWeight}
-                                    type="text"
-                                    label={"Gewicht"}
-                                    placeholder="Aktuelles Gewicht des Reptils..."
+                            <LocalizationProvider dateAdapter={AdapterDateFns}>
+                                <DesktopDatePicker
+                                    label="Datum der Messung"
+                                    inputFormat="MM/dd/yyyy"
+                                    value={startDate}
+                                    onChange={setStartDate}
+                                    renderInput={(params) => <TextField {...params} />}
                                 />
 
-                            </form>
-                        </MDBModalBody>
+                            </LocalizationProvider>
+                        </FormControl>
+                    </form>
+                </DialogContent>
 
-                        <MDBModalFooter>
-                            <MDBBtn color='secondary' onClick={toggleShow}>
-                                Abbrechen
-                            </MDBBtn>
-                            <MDBBtn onClick={(e: any) => {
-                                submit(e, index)
-                            }}>Fütterung hinzufügen</MDBBtn>
+                <DialogActions>
+                    <Button color='secondary' onClick={toggleShow}>
+                        Abbrechen
+                    </Button>
+                    <Button onClick={(e: any) => {
+                        submit(e, index)
+                    }}>Fütterung hinzufügen</Button>
 
 
-                        </MDBModalFooter>
-                    </MDBModalContent>
-                </MDBModalDialog>
-            </MDBModal>
+                </DialogActions>
+            </Dialog>
             <ToastContainer
             />
 

@@ -10,8 +10,8 @@ export class ReptileClass {
     private _birthday: string ="";
     private _type : string =""; //ART ALSO HAKENNASEN
     private _morph: string ="";
-    private _species: object ={}; //Spezies (Ordnung)
-    private _gender: object = {};
+    private _species: string =""; //Spezies (Ordnung)
+    private _gender: string = "";
     private _feedings : FeedingClass[];
     private _notes : NoteClass[];
     private _weights : WeightClass[];
@@ -75,23 +75,21 @@ export class ReptileClass {
     }
 
 
-    get species(): object {
-        return this._species;
-    }
-
-    get gender(): object {
-        return this._gender;
-    }
-
-
-    set species(value: object) {
+    set species(value: string) {
         this._species = value;
     }
 
-    set gender(value: object) {
+    set gender(value: string) {
         this._gender = value;
     }
 
+    get species(): string {
+        return this._species;
+    }
+
+    get gender(): string {
+        return this._gender;
+    }
 
     set notes(value: NoteClass[]) {
         this._notes = value;
@@ -118,7 +116,7 @@ export class ReptileClass {
         return this._image;
     }
 
-    setReptile(name: string, birthday : string, type : string, morph : string, gender: object, species : object, image : string){
+    setReptile(name: string, birthday : string, type : string, morph : string, gender: string, species : string, image : string){
         this._name = name;
         this._birthday = birthday;
         this._type = type;
@@ -129,7 +127,7 @@ export class ReptileClass {
     }
 
 
-    loadReptile(name: string, birthday : string, type : string, morph : string, gender: object, species : object, feedings : FeedingClass[], notes : NoteClass[], weights : WeightClass[], image: string){
+    loadReptile(name: string, birthday : string, type : string, morph : string, gender: string, species : string, feedings : FeedingClass[], notes : NoteClass[], weights : WeightClass[], image: string){
         this._name = name;
         this._birthday = birthday;
         this._type = type;

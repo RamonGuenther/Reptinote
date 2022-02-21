@@ -1,141 +1,158 @@
 import React from "react";
+
 import {
-    MDBBtn, MDBInput,
-    MDBModal,
-    MDBModalBody,
-    MDBModalContent,
-    MDBModalDialog, MDBModalFooter,
-    MDBModalHeader,
-    MDBModalTitle
-} from "mdb-react-ui-kit";
-import Select from "react-select";
+    Button,
+    Dialog, DialogActions,
+    DialogContent,
+    DialogTitle,
+    FormControl,
+    InputLabel,
+    MenuItem,
+    Select as MuiSelect, TextField
+} from "@mui/material";
 import {ToastContainer} from 'react-toastify';
 
 const optionsGender = [
-    {label: 'Weiblich'},
-    {label: 'Männlich'},
-    {label: 'Unbekannt'},
+    'Weiblich',
+    'Männlich',
+    'Unbekannt',
 ];
 
 const optionsSpecies = [
-    {label: 'Schlange'},
-    {label: 'Echse'},
-    {label: 'Krokodil'},
-    {label: 'Schildkröte'},
-    {label: 'Amphibie'},
-    {label: 'Gliederfüßer'},
-    {label: 'Sonstiges'},
+    'Schlange',
+    'Echse',
+    'Krokodil',
+    'Schildkröte',
+    'Amphibie',
+    'Gliederfüßer',
+    'Sonstiges',
 ]
 
 
 const EditReptileModal = ({
-                             toggleShow,
-                             basicModal,
-                             setBasicModal,
-                             handleInputChange,
-                             values,
-                             submit,
-                             selectedGenderOption,
-                             setSelectedGenderOption,
-                             selectedSpeciesOption,
-                             setSelectedSpeciesOption,
-                         }: any) => {
+                              toggleShow,
+                              basicModal,
+                              handleInputChange,
+                              values,
+                              submit,
+                              selectedGenderOption,
+                              handleGenderSelect,
+                              selectedSpeciesOption,
+                              handleSpeciesSelect,
+                          }: any) => {
     return (
         <>
-            <MDBModal show={basicModal} setShow={setBasicModal} tabIndex='-1'>
-                <MDBModalDialog>
-                    <MDBModalContent>
-                        <MDBModalHeader>
-                            <MDBModalTitle>Reptil Bearbeiten</MDBModalTitle>
-                            <MDBBtn className='btn-close' color='none' onClick={toggleShow}/>
-                        </MDBModalHeader>
-                        <MDBModalBody>
-                            <form>
-                                {/*value= textinput = TwoWayDatabinding für das resetten */}
+            <Dialog open={basicModal} onClose={toggleShow}>
+                <DialogTitle>
+                    Reptil hinzufügen
+                    <Button className='btn-close' onClick={toggleShow}/>
+                </DialogTitle>
+                <DialogContent className={"dialog"}>
+                    <form>
+                        {/*value= textinput = TwoWayDatabinding für das resetten */}
 
-                                {/*<div>*/}
-                                {/*    <img src={image}/>*/}
-                                {/*    <h1>Select Image</h1>*/}
-                                {/*    <input type="file" name="myImage" onChange={onImageChange}/>*/}
-                                {/*</div>*/}
+                        {/*<div>*/}
+                        {/*    <img src={image}/>*/}
+                        {/*    <h1>Select Image</h1>*/}
+                        {/*    <input type="file" name="myImage" onChange={onImageChange}/>*/}
+                        {/*</div>*/}
 
-                                <MDBInput
-                                    className={"mt-3"}
-                                    value={values.name}
-                                    onChange={handleInputChange}
-                                    name="name" //TODO: ohne name Attribut funktioniert es nicht
-                                    type="text"
-                                    label={"Name"}
-                                    placeholder="Name des Reptils..."
-                                />
-                                <MDBInput
-                                    className={"mt-3"}
-                                    value={values.birthday}
-                                    onChange={handleInputChange}
-                                    type="text"
-                                    label={"Geburtstag"}
-                                    name="birthday"
-                                    placeholder="Geburtstag des Reptils..."
-                                />
-                                <MDBInput
-                                    className={"mt-3"}
-                                    value={values.type}
-                                    onChange={handleInputChange}
-                                    label={"Art"}
-                                    name="type"
-                                    type="text"
-                                    placeholder="Art des Reptils..."
-                                />
-                                <MDBInput
-                                    className={"mt-3"}
-                                    value={values.morph}
-                                    label={"Morph"}
-                                    onChange={handleInputChange}
-                                    name="morph"
-                                    type="text"
-                                    placeholder="Morph des Reptils..."
-                                />
+                        <FormControl fullWidth>
 
-                                <MDBInput
-                                    className={"mt-3"}
-                                    value={values.image}
-                                    label={"Bild"}
-                                    onChange={handleInputChange}
-                                    name="image"
-                                    type="text"
-                                    placeholder="Image Url eingeben"
-                                />
+                            <TextField
+                                className={"mt-3"}
+                                value={values.name}
+                                onChange={handleInputChange}
+                                name="name" //TODO: ohne name Attribut funktioniert es nicht
+                                type="text"
+                                label={"Name"}
+                                placeholder="Name des Reptils..."
+                            />
+                            <TextField
+                                className={"mt-3"}
+                                value={values.birthday}
+                                onChange={handleInputChange}
+                                type="text"
+                                label={"Geburtstag"}
+                                name="birthday"
+                                placeholder="Geburtstag des Reptils..."
+                            />
+                            <TextField
+                                className={"mt-3"}
+                                value={values.type}
+                                onChange={handleInputChange}
+                                label={"Art"}
+                                name="type"
+                                type="text"
+                                placeholder="Art des Reptils..."
+                            />
+                            <TextField
+                                className={"mt-3"}
+                                value={values.morph}
+                                label={"Morph"}
+                                onChange={handleInputChange}
+                                name="morph"
+                                type="text"
+                                placeholder="Morph des Reptils..."
+                            />
 
-                                <Select
-                                    className={"mt-3"}
-                                    defaultValue={selectedGenderOption}
-                                    options={optionsGender}
-                                    onChange={setSelectedGenderOption}
-                                    placeholder={"Geschlecht auswählen.."}
-                                    getOptionValue={(option) => option.label}
-                                />
+                            <TextField
+                                className={"mt-3"}
+                                value={values.image}
+                                label={"Bild"}
+                                onChange={handleInputChange}
+                                name="image"
+                                type="text"
+                                placeholder="Image Url eingeben"
+                            />
 
-                                <Select
-                                    className={"mt-3"}
-                                    defaultValue={selectedSpeciesOption}
-                                    options={optionsSpecies}
-                                    onChange={setSelectedSpeciesOption}
-                                    placeholder={"Spezies auswählen.."}
-                                    getOptionValue={(option) => option.label}
+                        </FormControl>
+                        <FormControl fullWidth>
+                            <InputLabel id="demo-simple-select-label">Geschlecht</InputLabel>
+                            <MuiSelect
+                                className={"mt-3"}
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                value={selectedGenderOption ? selectedGenderOption : ""}
+                                label="Geschlecht"
+                                onChange={handleGenderSelect}
+                            >
+                                <MenuItem value={optionsGender[0]}>{optionsGender[0]}</MenuItem>
+                                <MenuItem value={optionsGender[1]}>{optionsGender[1]}</MenuItem>
+                                <MenuItem value={optionsGender[2]}>{optionsGender[2]}</MenuItem>
+                            </MuiSelect>
+                        </FormControl>
 
-                                />
-                            </form>
-                        </MDBModalBody>
+                        <FormControl fullWidth>
+                            <InputLabel id="demo-simple-select-label">Spezies</InputLabel>
+                            <MuiSelect
+                                className={"mt-3"}
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                value={selectedSpeciesOption ? selectedSpeciesOption : ""}
+                                label="Spezies"
+                                onChange={handleSpeciesSelect}
+                            >
+                                <MenuItem value={optionsSpecies[0]}>{optionsSpecies[0]}</MenuItem>
+                                <MenuItem value={optionsSpecies[1]}>{optionsSpecies[1]}</MenuItem>
+                                <MenuItem value={optionsSpecies[2]}>{optionsSpecies[2]}</MenuItem>
+                                <MenuItem value={optionsSpecies[3]}>{optionsSpecies[3]}</MenuItem>
+                                <MenuItem value={optionsSpecies[4]}>{optionsSpecies[4]}</MenuItem>
+                                <MenuItem value={optionsSpecies[5]}>{optionsSpecies[5]}</MenuItem>
+                                <MenuItem value={optionsSpecies[6]}>{optionsSpecies[6]}</MenuItem>
 
-                        <MDBModalFooter>
-                            <MDBBtn color='secondary' onClick={toggleShow}>
-                                Abbrechen
-                            </MDBBtn>
-                            <MDBBtn onClick={submit}>Reptil Speichern</MDBBtn>
-                        </MDBModalFooter>
-                    </MDBModalContent>
-                </MDBModalDialog>
-            </MDBModal>
+                            </MuiSelect>
+                        </FormControl>
+                    </form>
+                </DialogContent>
+
+                <DialogActions>
+                    <Button color='secondary' onClick={toggleShow}>
+                        Abbrechen
+                    </Button>
+                    <Button onClick={submit}>Reptil Speichern</Button>
+                </DialogActions>
+            </Dialog>
             <ToastContainer
             />
 

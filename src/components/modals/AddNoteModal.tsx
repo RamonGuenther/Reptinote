@@ -1,15 +1,6 @@
 import React from "react";
-import {
-    MDBBtn, MDBInput,
-    MDBModal,
-    MDBModalBody,
-    MDBModalContent,
-    MDBModalDialog, MDBModalFooter,
-    MDBModalHeader,
-    MDBModalTitle
-} from "mdb-react-ui-kit";
 import {ToastContainer} from 'react-toastify';
-import {TextField} from "@mui/material";
+import {Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, TextField} from "@mui/material";
 
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 
@@ -20,7 +11,6 @@ import {LocalizationProvider} from "@mui/lab";
 const AddNoteModal = ({
                           toggleShow,
                           basicModal,
-                          setBasicModal,
                           submit,
                           index,
                           startDate,
@@ -32,51 +22,49 @@ const AddNoteModal = ({
 
     return (
         <>
-            <MDBModal show={basicModal} setShow={setBasicModal} tabIndex='-1'>
-                <MDBModalDialog>
-                    <MDBModalContent>
-                        <MDBModalHeader>
-                            <MDBModalTitle>Notiz hinzufügen</MDBModalTitle>
-                            <MDBBtn className='btn-close' color='none' onClick={toggleShow}/>
-                        </MDBModalHeader>
-                        <MDBModalBody>
-                            <form>
-                                <LocalizationProvider dateAdapter={AdapterDateFns}>
-                                    <DesktopDatePicker
-                                        label="Notizdatum"
-                                        inputFormat="MM/dd/yyyy"
-                                        value={startDate}
-                                        onChange={setStartDate}
-                                        renderInput={(params) => <TextField {...params} />}
-                                    />
+            <Dialog open={basicModal} onClose={toggleShow}>
+                <DialogTitle>
+                    Notiz hinzufügen
+                    <Button className='btn-close' onClick={toggleShow}/>
+                </DialogTitle>
+                <DialogContent>
+                    <form>
 
-                                </LocalizationProvider>
+                        <FormControl fullWidth>
 
-                                <MDBInput
-                                    className={"mt-3"}
-                                    value={inputNote}
-                                    onChange={changeNote}
-                                    name="type"
-                                    type="text"
-                                    label={"Notiz"}
-                                    placeholder="Notiz eingeben..."
-                                />
-                            </form>
-                        </MDBModalBody>
+                        <TextField
+                            className={"mt-3 mb-3"}
+                            value={inputNote}
+                            onChange={changeNote}
+                            name="type"
+                            type="text"
+                            label={"Notiz"}
+                            placeholder="Notiz eingeben..."
+                        />
+                        <LocalizationProvider dateAdapter={AdapterDateFns}>
+                            <DesktopDatePicker
+                                label="Notizdatum"
+                                inputFormat="MM/dd/yyyy"
+                                value={startDate}
+                                onChange={setStartDate}
+                                renderInput={(params) => <TextField {...params} />}
+                            />
+                        </LocalizationProvider>
 
-                        <MDBModalFooter>
-                            <MDBBtn color='secondary' onClick={toggleShow}>
-                                Abbrechen
-                            </MDBBtn>
-                            <MDBBtn onClick={(e: any) => {
-                                submit(e, index)
-                            }}>Fütterung hinzufügen</MDBBtn>
+                        </FormControl>
+                    </form>
+                </DialogContent>
 
+                <DialogActions>
+                    <Button color='secondary' onClick={toggleShow}>
+                        Abbrechen
+                    </Button>
+                    <Button onClick={(e: any) => {
+                        submit(e, index)
+                    }}>Notiz hinzufügen</Button>
 
-                        </MDBModalFooter>
-                    </MDBModalContent>
-                </MDBModalDialog>
-            </MDBModal>
+                </DialogActions>
+            </Dialog>
             <ToastContainer
             />
 

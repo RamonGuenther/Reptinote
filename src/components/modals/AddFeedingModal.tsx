@@ -1,15 +1,6 @@
 import React from "react";
-import {
-    MDBBtn, MDBInput,
-    MDBModal,
-    MDBModalBody,
-    MDBModalContent,
-    MDBModalDialog, MDBModalFooter,
-    MDBModalHeader,
-    MDBModalTitle
-} from "mdb-react-ui-kit";
 import {ToastContainer} from 'react-toastify';
-import {TextField} from "@mui/material";
+import {Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, TextField} from "@mui/material";
 
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 
@@ -20,7 +11,6 @@ import {LocalizationProvider} from "@mui/lab";
 const AddFeedingModal = ({
                              toggleShow,
                              basicModal,
-                             setBasicModal,
                              handleInputChange,
                              values,
                              submit,
@@ -32,59 +22,56 @@ const AddFeedingModal = ({
 
     return (
         <>
-            <MDBModal show={basicModal} setShow={setBasicModal} tabIndex='-1'>
-                <MDBModalDialog>
-                    <MDBModalContent>
-                        <MDBModalHeader>
-                            <MDBModalTitle>Fütterung hinzufügen</MDBModalTitle>
-                            <MDBBtn className='btn-close' color='none' onClick={toggleShow}/>
-                        </MDBModalHeader>
-                        <MDBModalBody>
-                            <form>
-                                <LocalizationProvider dateAdapter={AdapterDateFns}>
-                                    <DesktopDatePicker
-                                        label="Fütterungsdatum"
-                                        inputFormat="MM/dd/yyyy"
-                                        value={startDate}
-                                        onChange={setStartDate}
-                                        renderInput={(params) => <TextField {...params} />}
-                                    />
-                                </LocalizationProvider>
+            <Dialog open={basicModal} onClose={toggleShow}>
+                <DialogTitle>
+                    Fütterung hinzufügen
+                    <Button className='btn-close' onClick={toggleShow}/>
+                </DialogTitle>
+                <DialogContent>
+                    <form>
+                        <FormControl fullWidth>
 
-                                <MDBInput
-                                    className={"mt-3"}
-                                    value={values.type}
-                                    onChange={handleInputChange}
-                                    name="type"
-                                    type="text"
-                                    label={"Futterart"}
-                                    placeholder="Futterart..."
+                            <TextField
+                                className={"mt-3"}
+                                value={values.type}
+                                onChange={handleInputChange}
+                                name="type"
+                                type="text"
+                                label={"Futterart"}
+                                placeholder="Futterart..."
+                            />
+                            <TextField
+                                className={"mt-3 mb-3"}
+                                value={values.weight}
+                                onChange={handleInputChange}
+                                type="text"
+                                label={"Gewicht"}
+                                name="weight"
+                                placeholder="Gewicht des Futters..."
+                            />
+
+                            <LocalizationProvider dateAdapter={AdapterDateFns}>
+                                <DesktopDatePicker
+                                    label="Fütterungsdatum"
+                                    inputFormat="MM/dd/yyyy"
+                                    value={startDate}
+                                    onChange={setStartDate}
+                                    renderInput={(params) => <TextField {...params} />}
                                 />
-                                <MDBInput
-                                    className={"mt-3"}
-                                    value={values.weight}
-                                    onChange={handleInputChange}
-                                    type="text"
-                                    label={"Gewicht"}
-                                    name="weight"
-                                    placeholder="Gewicht des Futters..."
-                                />
-                            </form>
-                        </MDBModalBody>
+                            </LocalizationProvider>
+                        </FormControl>
+                    </form>
+                </DialogContent>
 
-                        <MDBModalFooter>
-                            <MDBBtn color='secondary' onClick={toggleShow}>
-                                Abbrechen
-                            </MDBBtn>
-                            <MDBBtn onClick={(e: any) => {
-                                submit(index, e)
-                            }}>Fütterung hinzufügen</MDBBtn>
-
-
-                        </MDBModalFooter>
-                    </MDBModalContent>
-                </MDBModalDialog>
-            </MDBModal>
+                <DialogActions>
+                    <Button color='secondary' onClick={toggleShow}>
+                        Abbrechen
+                    </Button>
+                    <Button onClick={(e: any) => {
+                        submit(index, e)
+                    }}>Fütterung hinzufügen</Button>
+                </DialogActions>
+            </Dialog>
             <ToastContainer
             />
 

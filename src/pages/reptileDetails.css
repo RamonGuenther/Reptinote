@@ -1,0 +1,25 @@
+.reptileDetails{
+        display: flex;
+}
+
+.section1{
+
+    float: left;
+    padding: 20px;
+    width: 40%;
+}
+
+.section2{
+    border-left: 1px solid #a6a1a1;
+    padding: 20px;
+    float: right;
+    width: 60%;
+}
+
+
+
+.img{
+    width: 500px !important;
+    height: 500px;
+}
+
