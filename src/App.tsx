@@ -1,15 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import './App.css';
-import {MDBNavbar} from "mdb-react-ui-kit";
-import ReptileList from "./components/reptile/ReptileList";
-import {BrowserRouter as Router, Link, Route, Routes} from "react-router-dom";
-import Reptile from "./components/reptile/Reptile";
-import Navbar from "./layout/Navbar";
 import ReptileOverview from "./pages/ReptileOverview";
+import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
+import Navbar from "./layout/Navbar";
 import ReptileDetails from "./pages/ReptileDetails";
-import NotFound from "./pages/NotFound";
-import {ReptileClass} from "./components/reptile/ReptileClass";
+import {ReptileClass} from "./data/ReptileClass";
 import FeedingClass from "./data/FeedingClass";
+import NotFound from "./pages/NotFound";
 
 const optionsGender = [
     {label: 'Weiblich'},
@@ -65,14 +62,12 @@ const reptilesExample = [
 ];
 
 function App() {
-
-
     const [reptiles, setReptiles] = useState<ReptileClass[]>(() => {
         const items = localStorage.getItem("reptile");
         if (items != null) {
             let parsed = JSON.parse(items);
             try {
-                let array: ReptileClass[] = [];
+                let reptileList: ReptileClass[] = [];
 
                 let feeding: FeedingClass[] = [];
                 for (let i = 0; i < parsed.length; i++) {
@@ -84,32 +79,43 @@ function App() {
                         feeding.push(newFeeding);
                     }
                     let newReptile = new ReptileClass();
-                    newReptile.loadReptile(parsed[i]._name, parsed[i]._birthday, parsed[i]._type, parsed[i]._morph, parsed[i]._gender, parsed[i]._species, feeding, parsed[i]._notes, parsed[i]._weights, parsed[i]._urlLink);
-                    array.push(newReptile);
+                    newReptile.loadReptile(parsed[i]._name, parsed[i]._birthday, parsed[i]._type, parsed[i]._morph, parsed[i]._gender, parsed[i]._species, feeding, parsed[i]._notes, parsed[i]._weights, parsed[i]._image);
+                    reptileList.push(newReptile);
                 }
-                return array;
+                return reptileList;
             } catch (e) {
                 console.log(e)
                 return []
             }
         } else {
-            console.log("APFEL")
 
-            let array: ReptileClass[] = [];
-
-            console.log(reptilesExample[1].geschlecht);
+            let reptileList: ReptileClass[] = [];
 
             for (let i = 0; i < reptilesExample.length; i++) {
                 let reptile1 = new ReptileClass();
                 reptile1.loadReptile(reptilesExample[i].name, reptilesExample[i].geburtsdatum, reptilesExample[i].art, reptilesExample[i].morph, reptilesExample[i].geschlecht, reptilesExample[i].ordnung, [], [], [],  reptilesExample[i].image)
-                array.push(reptile1);
+                reptileList.push(reptile1);
             }
-
-            console.log(array[0]);
-
-            return array;
+            return reptileList;
         }
     });
+
+    function saveReptile(newReptile : ReptileClass):void{
+        const newReptiles = [...reptiles, newReptile];
+        setReptiles(newReptiles);
+    }
+
+    function editReptile(newReptile : ReptileClass, index : number):void{
+        const newReptiles = [...reptiles];
+        newReptiles[index] = newReptile;
+        setReptiles(newReptiles);
+    }
+
+    function saveFeeding(newFeeding : FeedingClass, index : number){
+        const newReptiles = [...reptiles];
+        newReptiles[index].feedings.push(newFeeding);
+        setReptiles(newReptiles);
+    }
 
     useEffect(() => {
         if (reptiles.length !== 0)
@@ -120,23 +126,19 @@ function App() {
         console.log(localStorage.getItem("item"));
     }, [reptiles]); //Wenn sich todo an sich selber verändert
 
-    //
+
     return (
         <div>
-
-
             <Router>
-                <Navbar></Navbar>
+                <Navbar/>
                 <div className={"container"}>
 
                     <div className="App">
                         <Routes>
-                            <Route path={'/'} element={<ReptileList reptiles={reptiles} setReptiles={setReptiles}/>}/>
-                            <Route path={'reptilienUebersicht'}
-                                   element={<ReptileList reptiles={reptiles} setReptiles={setReptiles}/>}/>
-                            {/*<Route path={'reptilienUebersicht/reptileDetails/:id'} element={<ReptileDetails reptiles = {reptiles} setReptiles = {setReptiles}/>}/>*/}
-                            <Route path={'reptileDetails/:id'}
-                                   element={<ReptileDetails reptiles={reptiles} setReptiles={setReptiles}/>}/>
+                            <Route path={'/'} element={<ReptileOverview reptiles={reptiles} setReptiles={setReptiles} saveReptile = {saveReptile} saveFeeding = {saveFeeding} editReptile={editReptile}/>}/>
+                            <Route path={'reptilienUebersicht'} element={<ReptileOverview reptiles={reptiles} setReptiles={setReptiles} saveReptile = {saveReptile} saveFeeding = {saveFeeding}  editReptile={editReptile}/>}/>
+                            <Route path={'reptileDetails/:id'} element={<ReptileDetails reptiles={reptiles} setReptiles={setReptiles}/>}/>
+                            <Route path={'*'} element={<NotFound/>}/>
                         </Routes>
                     </div>
                 </div>
@@ -144,7 +146,6 @@ function App() {
             </Router>
         </div>
     )
-        ;
 }
 
 export default App;

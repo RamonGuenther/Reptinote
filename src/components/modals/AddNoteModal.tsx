@@ -43,7 +43,7 @@ const AddNoteModal = ({
                             <form>
                                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                                     <DesktopDatePicker
-                                        label="Fütterungsdatum"
+                                        label="Notizdatum"
                                         inputFormat="MM/dd/yyyy"
                                         value={startDate}
                                         onChange={setStartDate}
@@ -56,10 +56,10 @@ const AddNoteModal = ({
                                     className={"mt-3"}
                                     value={inputNote}
                                     onChange={changeNote}
-                                    name="type" //TODO: ohne name Attribut funktioniert es nicht
+                                    name="type"
                                     type="text"
-                                    label={"type"}
-                                    placeholder="Name des Reptils..."
+                                    label={"Notiz"}
+                                    placeholder="Notiz eingeben..."
                                 />
                             </form>
                         </MDBModalBody>

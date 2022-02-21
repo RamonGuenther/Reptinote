@@ -28,7 +28,7 @@ const optionsSpecies = [
 ]
 
 
-const AddReptileModal = ({
+const EditReptileModal = ({
                              toggleShow,
                              basicModal,
                              setBasicModal,
@@ -42,12 +42,11 @@ const AddReptileModal = ({
                          }: any) => {
     return (
         <>
-            <MDBBtn onClick={toggleShow}>Reptil hinzufügen</MDBBtn>
             <MDBModal show={basicModal} setShow={setBasicModal} tabIndex='-1'>
                 <MDBModalDialog>
                     <MDBModalContent>
                         <MDBModalHeader>
-                            <MDBModalTitle>Reptil hinzufügen</MDBModalTitle>
+                            <MDBModalTitle>Reptil Bearbeiten</MDBModalTitle>
                             <MDBBtn className='btn-close' color='none' onClick={toggleShow}/>
                         </MDBModalHeader>
                         <MDBModalBody>
@@ -132,7 +131,7 @@ const AddReptileModal = ({
                             <MDBBtn color='secondary' onClick={toggleShow}>
                                 Abbrechen
                             </MDBBtn>
-                            <MDBBtn onClick={submit}>Reptil hinzufügen</MDBBtn>
+                            <MDBBtn onClick={submit}>Reptil Speichern</MDBBtn>
                         </MDBModalFooter>
                     </MDBModalContent>
                 </MDBModalDialog>
@@ -145,4 +144,4 @@ const AddReptileModal = ({
 }
 
 
-export default AddReptileModal;
+export default EditReptileModal;

@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
-import FeedingClass from "../../data/FeedingClass";
-import NoteClass from "../../data/NoteClass";
-import WeightClass from "../../data/WeightClass";
+import FeedingClass from "./FeedingClass";
+import NoteClass from "./NoteClass";
+import WeightClass from "./WeightClass";
 
 export class ReptileClass {
 
@@ -15,11 +15,7 @@ export class ReptileClass {
     private _feedings : FeedingClass[];
     private _notes : NoteClass[];
     private _weights : WeightClass[];
-    private _urlLink : string = "";
-    //private feeding array list?: Ordnung
-    //private note : Note; liste/Array
-    // private breeder: Breeder;
-
+    private _image : string = "";
 
     constructor() {
         this._id = uuidv4();
@@ -114,12 +110,12 @@ export class ReptileClass {
     }
 
 
-    set urlLink(value: string) {
-        this._urlLink = value;
+    set image(value: string) {
+        this._image = value;
     }
 
-    get urlLink(): string {
-        return this._urlLink;
+    get image(): string {
+        return this._image;
     }
 
     setReptile(name: string, birthday : string, type : string, morph : string, gender: object, species : object, image : string){
@@ -129,7 +125,7 @@ export class ReptileClass {
         this._morph = morph;
         this._gender = gender;
         this._species = species;
-        this._urlLink = image;
+        this._image = image;
     }
 
 
@@ -143,7 +139,7 @@ export class ReptileClass {
         this._feedings = feedings;
         this._notes = notes;
         this._weights = weights;
-        this._urlLink = image;
+        this._image = image;
     }
     
 }

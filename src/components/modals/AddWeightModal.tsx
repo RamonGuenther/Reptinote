@@ -1,7 +1,7 @@
 import React from "react";
 
 import {
-    MDBBtn, MDBInput, MDBInputGroupText,
+    MDBBtn, MDBInput,
     MDBModal,
     MDBModalBody,
     MDBModalContent,
@@ -44,7 +44,7 @@ const AddWeightModal = ({
                             <form>
                                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                                     <DesktopDatePicker
-                                        label="Fütterungsdatum"
+                                        label="Datum der Messung"
                                         inputFormat="MM/dd/yyyy"
                                         value={startDate}
                                         onChange={setStartDate}
@@ -57,10 +57,9 @@ const AddWeightModal = ({
                                     className={"mt-3"}
                                     value={inputWeight}
                                     onChange={changeWeight}
-                                    name="name" //TODO: ohne name Attribut funktioniert es nicht
                                     type="text"
-                                    label={"Name"}
-                                    placeholder="Name des Reptils..."
+                                    label={"Gewicht"}
+                                    placeholder="Aktuelles Gewicht des Reptils..."
                                 />
 
                             </form>

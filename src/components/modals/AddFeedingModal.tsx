@@ -49,26 +49,25 @@ const AddFeedingModal = ({
                                         onChange={setStartDate}
                                         renderInput={(params) => <TextField {...params} />}
                                     />
-
                                 </LocalizationProvider>
 
                                 <MDBInput
                                     className={"mt-3"}
                                     value={values.type}
                                     onChange={handleInputChange}
-                                    name="type" //TODO: ohne name Attribut funktioniert es nicht
+                                    name="type"
                                     type="text"
-                                    label={"type"}
-                                    placeholder="Name des Reptils..."
+                                    label={"Futterart"}
+                                    placeholder="Futterart..."
                                 />
                                 <MDBInput
                                     className={"mt-3"}
                                     value={values.weight}
                                     onChange={handleInputChange}
                                     type="text"
-                                    label={"Geburtstag"}
+                                    label={"Gewicht"}
                                     name="weight"
-                                    placeholder="Geburtstag des Reptils..."
+                                    placeholder="Gewicht des Futters..."
                                 />
                             </form>
                         </MDBModalBody>

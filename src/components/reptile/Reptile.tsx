@@ -14,7 +14,6 @@ import {IoFastFoodOutline, IoRestaurantOutline} from "react-icons/io5";
 import {FiEdit} from "react-icons/fi";
 import {FaStickyNote} from "react-icons/fa";
 import {GiWeight} from "react-icons/gi";
-import AddReptileModal from "../modals/AddReptileModal";
 import {Link} from "react-router-dom";
 
 const Reptile = ({
@@ -33,7 +32,8 @@ const Reptile = ({
                      toggleNoteModal,
                      toggleFeedingModal,
                      setReptileId,
-    image
+                     image,
+                     toggleReptileEditModal
                  }: any) => {
 
 
@@ -83,7 +83,6 @@ const Reptile = ({
                     </Link>
 
 
-
                     <MDBBtn color={"success"} className={"detailsButton"} onClick={() => {
                         toggleWeightModal();
                         setReptileId(index)
@@ -107,8 +106,9 @@ const Reptile = ({
                     <div className="verticalLine"></div>
 
                     <MDBBtn color={"primary"} className={"deleteButton"} onClick={() => {
-                        onDeleteReptile(index)
+                        setReptileId(index); toggleReptileEditModal(index);
                     }}> <FiEdit size={"25px"}/>
+
                     </MDBBtn>
                     <MDBBtn color={"danger"} className={"deleteButton"} onClick={() => {
                         onDeleteReptile(index)

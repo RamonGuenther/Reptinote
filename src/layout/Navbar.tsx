@@ -1,8 +1,6 @@
 import React from "react";
 import {Link} from "react-router-dom";
 
-import {MDBNavbar, MDBNavbarBrand} from "mdb-react-ui-kit";
-
 const Navbar = () => {
   return(
       <nav
