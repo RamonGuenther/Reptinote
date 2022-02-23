@@ -4,7 +4,7 @@ import {
     Button,
     Dialog, DialogActions,
     DialogContent,
-    DialogTitle,
+    DialogTitle, Divider,
     FormControl,
     InputLabel,
     MenuItem,
@@ -32,6 +32,8 @@ const EditReptileModal = ({
                     Reptil hinzufügen
                     <Button className='btn-close' onClick={toggleShow}/>
                 </DialogTitle>
+                <Divider/>
+
                 <DialogContent className={"dialog"}>
                     <form>
                         {/*value= textinput = TwoWayDatabinding für das resetten */}
@@ -130,6 +132,7 @@ const EditReptileModal = ({
                         </FormControl>
                     </form>
                 </DialogContent>
+                <Divider/>
 
                 <DialogActions>
                     <Button color='secondary' onClick={toggleShow}>

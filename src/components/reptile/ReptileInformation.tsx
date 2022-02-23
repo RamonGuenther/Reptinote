@@ -17,14 +17,21 @@ const ReptileInformation = ({reptile}: any) => {
         <>
 
             <Card className={"reptileCardInformation"}>
-                <CardContent className={""}>
                     <h2 className={"reptilName"}>{reptile.name}</h2>
                     <h2 className={"reptileSpeciesType"}>{reptile.species} | {reptile.type}</h2>
-                    <CardMedia
-                        className={""}
-                        component={"img"}
-                        image={reptile.image}
-                    />
+
+                {/*<CardHeader*/}
+                {/*    title="Shrimp and Chorizo Paella"*/}
+                {/*    subheader="September 14, 2016"*/}
+                {/*>*/}
+
+                {/*</CardHeader>*/}
+                <CardMedia
+                    className={"img"}
+                    component={"img"}
+                    image={reptile.image}
+                />
+                <CardContent className={""}>
                     <div className={"cardText"}>
                         {/*TODO: WIe ivonne machen einfach und unten Tabelle benutzen für die Beschriftung*/}
 

@@ -16,7 +16,6 @@ import {initialValuesFeeding, initialValuesReptile} from "../helper/Constants";
 import {notifyFailure, notifySuccess} from "../helper/Toasts";
 
 
-
 //TODO: Statt klassen interfaces??? // WAHrscheinlich keine neuen States
 function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editReptile}: any) {
 
@@ -44,7 +43,7 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
         if (reptileModal) {
             saveReptile(newReptile);
             setReptileValues(initialValuesReptile); //reset
-            notifySuccess("Das Reptil " + reptileValues.name +" wurde gespeichert.");
+            notifySuccess("Das Reptil " + reptileValues.name + " wurde gespeichert.");
             toggleReptileModal();
         } else if (reptileEditModal) {
             editReptile(newReptile, reptileId)
@@ -122,19 +121,19 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
 
     const [inputNote, setInputNote] = useState("");
 
-    function changeWeight(event: any) {
+    function handleInputChangeWeight(event: any) {
         setInputWeight(event.target.value)
     }
 
-    function changeNote(event: any) {
+    function handleInputChangeNote(event: any) {
         setInputNote(event.target.value)
     }
 
-    function handleSpeciesSelect(event : any){
+    function handleSpeciesSelect(event: any) {
         setSelectedSpeciesOption(event.target.value)
     }
 
-    function handleGenderSelect(event : any){
+    function handleGenderSelect(event: any) {
         setSelectedGenderOption(event.target.value)
     }
 
@@ -174,7 +173,6 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
 
     const [reptileEditModal, setReptileEditModal] = useState(false);
 
-    //TODO: Verzögert
     function initializeEdit() {
         let name = reptiles[reptileId].name;
         let birthday = reptiles[reptileId].birthday;
@@ -184,17 +182,16 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
         setSelectedGenderOption(reptiles[reptileId].gender);
         setSelectedSpeciesOption(reptiles[reptileId].species);
         setReptileValues({name: name, birthday: birthday, type: type, morph: morph, image: image})
-        console.log(reptileId + " aufruf");
     }
 
-    function toggle(){
+    function toggle() {
         setReptileEditModal(!reptileEditModal);
     }
 
 
     const [searchValue, setSearchValue] = useState("")
 
-    function test(event:any){
+    function test(event: any) {
 
         setSearchValue(event.target.value);
         console.log(searchValue);
@@ -202,9 +199,9 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
     }
 
     //TODO: Ivonne zeigen wie behindert das schon wieder ist
-    useEffect(()=>{
+    useEffect(() => {
         initializeEdit();
-    },[reptileEditModal])
+    }, [reptileEditModal])
 
     return (
         <div className={" mt-3 rounded p-5 container"}>
@@ -245,7 +242,6 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
                 values={feedingValues}
                 handleInputChange={handleInputChangeFeeding}
                 submit={addFeeding}
-                index={reptileId}
                 startDate={startDate}
                 setStartDate={setStartDate}
             />
@@ -256,9 +252,8 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
                 startDate={startDate}
                 setStartDate={setStartDate}
                 inputWeight={inputWeight}
-                changeWeight={changeWeight}
+                changeWeight={handleInputChangeWeight}
                 submit={submitWeight}
-                index={reptileId}
             />
 
             <AddNoteModal
@@ -268,9 +263,8 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
                 startDate={startDate}
                 setStartDate={setStartDate}
                 inputNote={inputNote}
-                changeNote={changeNote}
+                changeNote={handleInputChangeNote}
                 submit={submitNote}
-                index={reptileId}
             />
 
             <EditReptileModal
@@ -288,6 +282,10 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
             {reptiles.filter((reptil: { name: string; }) => reptil.name.match(new RegExp(searchValue, "i"))).map((item: any, index: number) => {
                 return (
                     <ReptileCard
+
+                        key = {index}
+
+                        id = {item.id}
                         name={item._name}
                         birthday={item._birthday}
                         type={item._type}
@@ -298,13 +296,7 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
                         weights={item._weights}
                         notes={item._notes}
                         image={item.image}
-
-                        item={item}
-
-                        reptileList={reptiles}
-                        key={index}
                         index={index}
-                        // onChangeTodo={changeTodo} //Funktion der anderen Seite geben
                         onDeleteReptile={deleteReptile}
                         addFeeding={addFeeding}
                         toggleFeedingModal={toggleFeedingModal}

@@ -1,6 +1,14 @@
 import React from "react";
-import {ToastContainer} from 'react-toastify';
-import {Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, TextField} from "@mui/material";
+import {
+    Button,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+    Divider,
+    FormControl, InputAdornment,
+    TextField
+} from "@mui/material";
 
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 
@@ -14,12 +22,9 @@ const AddFeedingModal = ({
                              handleInputChange,
                              values,
                              submit,
-                             index,
                              startDate,
                              setStartDate
-
                          }: any) => {
-
     return (
         <>
             <Dialog open={basicModal} onClose={toggleShow}>
@@ -27,7 +32,8 @@ const AddFeedingModal = ({
                     Fütterung hinzufügen
                     <Button className='btn-close' onClick={toggleShow}/>
                 </DialogTitle>
-                <DialogContent>
+             <Divider/>
+            <DialogContent>
                     <form>
                         <FormControl fullWidth>
 
@@ -49,6 +55,9 @@ const AddFeedingModal = ({
                                 label={"Gewicht"}
                                 name="weight"
                                 placeholder="Gewicht des Futters..."
+                                InputProps={{
+                                    endAdornment : <InputAdornment position="end">g</InputAdornment>
+                                }}
                                 required
                             />
 
@@ -64,6 +73,7 @@ const AddFeedingModal = ({
                         </FormControl>
                     </form>
                 </DialogContent>
+                <Divider/>
 
                 <DialogActions>
                     <Button color='secondary' onClick={toggleShow}>

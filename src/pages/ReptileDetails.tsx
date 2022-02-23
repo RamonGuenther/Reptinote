@@ -1,57 +1,28 @@
 import React, {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
-import FeedingClass from "../data/FeedingClass";
-import {Box, Button, Paper, Tab} from "@mui/material";
+import {Tab} from "@mui/material";
 import FeedTable from "../components/tables/FeedTable";
-import {ReptileClass} from "../data/ReptileClass";
 import ReptileInformation from "../components/reptile/ReptileInformation";
 import "./reptileDetails.css"
 import {TabContext, TabList, TabPanel} from "@mui/lab";
-import WeightClass from "../data/WeightClass";
-import NoteClass from "../data/NoteClass";
 import NotesTable from "../components/tables/NotesTable";
 import WeightsTable from "../components/tables/WeightsTable";
+
 /**
  *
  * TODO: Wie Ivonne Löschen und hinzufügen auf dem Tab
  */
-const ReptileDetails = ({reptiles}: any) => {
+const ReptileDetails = ({reptiles, setReptiles}: any) => {
 
     let {id} = useParams();
+
     let index: number = 0;
 
-
-    if (typeof id === "string") {
-        index = parseInt(id);
+    for(let i = 0; i< reptiles.length; i++){
+        if(reptiles[i].id === id){
+            index = i;
+        }
     }
-
-
-
-    const [reptile, setReptile] = useState<ReptileClass>(reptiles[index]);
-
-
-    // function deleteFeeding(){
-    //     const newReptile = reptile;
-    //     console.log("Vorher" + feedings.length + reptile.feedings.length);
-    //
-    //     let index: number = 0;
-    //     for (let i = 0; i < newReptile.feedings.length; i++) {
-    //         if (id === newReptile.feedings[i].id) {
-    //             index = i;
-    //         }
-    //     }
-    //     newReptile.feedings.splice(index, 1);
-    //     let test : FeedingClass[] = feedings;
-    //     test.splice(index,1);
-    //
-    //
-    //     setFeedings(test);
-    //     setReptile(newReptile);
-    //     console.log("Nachher" + feedings.length + reptile.feedings.length);
-    //
-    //
-    // }
-
 
 
     const [value, setValue] = React.useState('1');
@@ -59,6 +30,8 @@ const ReptileDetails = ({reptiles}: any) => {
     const handleChange = (event: React.SyntheticEvent, newValue: string) => {
         setValue(newValue);
     };
+
+    const [startDate, setStartDate] = useState(new Date());
 
 
 
@@ -69,7 +42,7 @@ const ReptileDetails = ({reptiles}: any) => {
                 <section className={"section1"}>
 
                     <ReptileInformation
-                        reptile={reptile}
+                        reptile={reptiles[index]}
                     />
                 </section>
 
@@ -85,14 +58,13 @@ const ReptileDetails = ({reptiles}: any) => {
                                  value="3"/>
                         </TabList>
                         <TabPanel value="1">
-                            <Button>Hinzufügen</Button>
-                            <FeedTable reptile={reptile} setReptile = {setReptile}/>
+                            <FeedTable reptiles={reptiles} setReptiles = {setReptiles} index={index} startDate = {startDate} setStartDate={setStartDate}/>
                         </TabPanel>
                         <TabPanel value="2">
-                            {/*<NotesTable noteData={notes}/>*/}
+                            <NotesTable reptiles={reptiles} setReptiles = {setReptiles} index={index} startDate = {startDate} setStartDate={setStartDate}/>
                         </TabPanel>
                         <TabPanel value="3">
-                            {/*<WeightsTable weightData={weights}/>*/}
+                            <WeightsTable reptiles={reptiles} setReptiles = {setReptiles} index={index} startDate = {startDate} setStartDate={setStartDate}/>
                         </TabPanel>
                     </TabContext>
                 </section>

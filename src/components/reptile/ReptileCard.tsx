@@ -1,5 +1,5 @@
 import React from "react";
-import "./reptile.css"
+import "./reptileCard.css"
 import {MdDelete, MdSearch} from "react-icons/md";
 import {IoFastFoodOutline, IoRestaurantOutline} from "react-icons/io5";
 import {FiEdit} from "react-icons/fi";
@@ -8,7 +8,6 @@ import {GiWeight} from "react-icons/gi";
 import {Link} from "react-router-dom";
 
 import {
-    Avatar,
     Badge,
     Button,
     Card,
@@ -17,10 +16,10 @@ import {
     CardHeader,
     CardMedia,
     Chip,
-    Divider
 } from "@mui/material";
 
 const ReptileCard = ({
+                         id,
                          name,
                          birthday,
                          type,
@@ -45,7 +44,7 @@ const ReptileCard = ({
         <div>
             <Card className={"reptileCard"}>
                 <CardHeader
-                    avatar={<Link to={`/reptileDetails/${index}`}> <Chip onClick={() => {
+                    avatar={<Link to={`/reptileDetails/${id}`}> <Chip onClick={() => {
                     }} className={"nameBadge"} variant="outlined" label={name}/> </Link>}
                 />
                 {/*<MDBCardImage className={"image"} src='https://mdbootstrap.com/img/new/standard/nature/182.webp'*/}
@@ -64,22 +63,27 @@ const ReptileCard = ({
                         <h2><span className={"cardTextSpan"}>Spezies: </span> {species}</h2>
                         <h2><span className={"cardTextSpan"}>Typ: </span> {type}</h2>
                         <h2><span className={"cardTextSpan"}>Morph: </span>{morph}</h2>
-                        <h3><Badge className={"lastFeedingBadge"}> <IoFastFoodOutline/> Letzte
-                            Fütterung: {feedings[feedings.length - 1] !== undefined ? feedings[feedings.length - 1]._date : " "}
-                        </Badge></h3>
-                        <h3><Badge className={"lastFeedingBadge"}> <IoFastFoodOutline/> Letztes
-                            Gewicht: {weights[weights.length - 1] !== undefined ? weights[weights.length - 1]._weight : " "}
-                        </Badge></h3>
-                        <h3><Badge className={"lastFeedingBadge"}> <IoFastFoodOutline/> Letzte
-                            Notiz: {notes[notes.length - 1] !== undefined ? notes[notes.length - 1]._note : " "}
-                        </Badge></h3>
+                        <div className={"badgeLayout"}>
+                            {weights[weights.length - 1] !== undefined &&
+                            <h3><Badge className={"lastWeightBadge"}> <GiWeight size={"25px"}/>
+                                {+weights[weights.length - 1]._weight}g</Badge></h3>}
+
+                            {feedings[feedings.length - 1] !== undefined &&
+                            <h3><Badge className={"lastFeedingBadge"}> <IoFastFoodOutline size={"25px"}/>
+                                {feedings[feedings.length - 1]._date}</Badge></h3>}
+
+                            {notes[notes.length - 1] !== undefined &&
+                            <h3><Badge className={"lastNoteBadge"}> <FaStickyNote size={"25px"}/>
+                                {notes[notes.length - 1]._note.substring(0, 30)}...</Badge></h3>}
+
+                        </div>
                     </div>
                 </CardContent>
 
                 <CardActions className={"cardFooter"}>
 
-                    <div className={"lel"}>
-                        <Link to={`/reptileDetails/${index}`}>
+                    <div className={"buttonsLayout"}>
+                        <Link to={`/reptileDetails/${id}`}>
                             <Button variant="contained" className={"detailsButton bg-info"} onClick={() => {
                             }}> <MdSearch size={"25px"}/>
                             </Button>

@@ -120,7 +120,7 @@ function App() {
                                                          saveReptile={saveReptile} saveFeeding={saveFeeding}
                                                          editReptile={editReptile}/>}/>
                         <Route path={'reptileDetails/:id'}
-                               element={<ReptileDetails reptiles={reptiles} />}/>
+                               element={<ReptileDetails reptiles={reptiles} setReptiles={setReptiles} />}/>
 
                         <Route path={'breeder'}
                                element={<BreederOverview />}/>

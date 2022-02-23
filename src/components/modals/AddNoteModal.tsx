@@ -1,6 +1,15 @@
 import React from "react";
 import {ToastContainer} from 'react-toastify';
-import {Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, TextField} from "@mui/material";
+import {
+    Button,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+    Divider,
+    FormControl,
+    TextField
+} from "@mui/material";
 
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 
@@ -12,7 +21,6 @@ const AddNoteModal = ({
                           toggleShow,
                           basicModal,
                           submit,
-                          index,
                           startDate,
                           setStartDate,
                           inputNote,
@@ -27,6 +35,8 @@ const AddNoteModal = ({
                     Notiz hinzufügen
                     <Button className='btn-close' onClick={toggleShow}/>
                 </DialogTitle>
+                <Divider/>
+
                 <DialogContent>
                     <form>
 
@@ -55,6 +65,7 @@ const AddNoteModal = ({
                         </FormControl>
                     </form>
                 </DialogContent>
+                <Divider/>
 
                 <DialogActions>
                     <Button color='secondary' onClick={toggleShow}>

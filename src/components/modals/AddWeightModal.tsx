@@ -1,7 +1,16 @@
 import React from "react";
 
 import {ToastContainer} from 'react-toastify';
-import {Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, TextField} from "@mui/material";
+import {
+    Button,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+    Divider,
+    FormControl, InputAdornment,
+    TextField
+} from "@mui/material";
 
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 
@@ -28,6 +37,8 @@ const AddWeightModal = ({
                     Gewicht hinzufügen
                     <Button className='btn-close' onClick={toggleShow}/>
                 </DialogTitle>
+                <Divider/>
+
                 <DialogContent>
                     <form>
                         <FormControl fullWidth>
@@ -39,7 +50,9 @@ const AddWeightModal = ({
                             type="text"
                             label={"Gewicht"}
                             placeholder="Aktuelles Gewicht des Reptils..."
-                            required
+                            InputProps={
+                                {endAdornment : <InputAdornment position="end">g</InputAdornment>,}
+                            }
                         />
 
                             <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -55,6 +68,7 @@ const AddWeightModal = ({
                         </FormControl>
                     </form>
                 </DialogContent>
+                <Divider/>
 
                 <DialogActions>
                     <Button color='secondary' onClick={toggleShow}>
