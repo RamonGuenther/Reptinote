@@ -39,6 +39,7 @@ const AddFeedingModal = ({
                                 type="text"
                                 label={"Futterart"}
                                 placeholder="Futterart..."
+                                required
                             />
                             <TextField
                                 className={"mt-3 mb-3"}
@@ -48,6 +49,7 @@ const AddFeedingModal = ({
                                 label={"Gewicht"}
                                 name="weight"
                                 placeholder="Gewicht des Futters..."
+                                required
                             />
 
                             <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -56,7 +58,7 @@ const AddFeedingModal = ({
                                     inputFormat="MM/dd/yyyy"
                                     value={startDate}
                                     onChange={setStartDate}
-                                    renderInput={(params) => <TextField {...params} />}
+                                    renderInput={(params) => <TextField {...params} required />}
                                 />
                             </LocalizationProvider>
                         </FormControl>
@@ -72,9 +74,6 @@ const AddFeedingModal = ({
                     }}>Fütterung hinzufügen</Button>
                 </DialogActions>
             </Dialog>
-            <ToastContainer
-            />
-
         </>
     )
 }

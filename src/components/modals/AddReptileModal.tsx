@@ -1,7 +1,5 @@
 import React from "react";
-import {ToastContainer} from 'react-toastify';
 import {
-    Box,
     Button,
     Dialog, DialogActions,
     DialogContent,
@@ -11,22 +9,7 @@ import {
     MenuItem,
     Select as MuiSelect, TextField
 } from "@mui/material";
-
-const optionsGender = [
-    'Weiblich',
-    'Männlich',
-    'Unbekannt',
-];
-
-const optionsSpecies = [
-    'Schlange',
-    'Echse',
-    'Krokodil',
-    'Schildkröte',
-    'Amphibie',
-    'Gliederfüßer',
-    'Sonstiges',
-]
+import {optionsGender, optionsSpecies} from "../../helper/Constants";
 
 
 const AddReptileModal = ({
@@ -68,6 +51,7 @@ const AddReptileModal = ({
                             type="text"
                             label={"Name"}
                             placeholder="Name des Reptils..."
+                            required
                         />
                         <TextField
                             className={"mt-3"}
@@ -77,6 +61,7 @@ const AddReptileModal = ({
                             label={"Geburtstag"}
                             name="birthday"
                             placeholder="Geburtstag des Reptils..."
+                            required
                         />
                         <TextField
                             className={"mt-3"}
@@ -86,6 +71,7 @@ const AddReptileModal = ({
                             name="type"
                             type="text"
                             placeholder="Art des Reptils..."
+                            required
                         />
                         <TextField
                             className={"mt-3"}
@@ -96,7 +82,6 @@ const AddReptileModal = ({
                             type="text"
                             placeholder="Morph des Reptils..."
                         />
-
                         <TextField
                             className={"mt-3"}
                             value={values.image}
@@ -107,15 +92,15 @@ const AddReptileModal = ({
                             placeholder="Image Url eingeben"
                         />
                         </FormControl>
-                        <FormControl fullWidth>
-                            <InputLabel id="demo-simple-select-label">Geschlecht</InputLabel>
+                        <FormControl className={"mt-3"}  fullWidth>
+                            <InputLabel id="demo-simple-select-label" required>Geschlecht</InputLabel>
                             <MuiSelect
-                                className={"mt-3"}
                                 labelId="demo-simple-select-label"
                                 id="demo-simple-select"
                                 value={selectedGenderOption ? selectedGenderOption : ""}
                                 label="Geschlecht"
                                 onChange={handleGenderSelect}
+
                             >
                                 <MenuItem value={optionsGender[0]}>{optionsGender[0]}</MenuItem>
                                 <MenuItem value={optionsGender[1]}>{optionsGender[1]}</MenuItem>
@@ -123,10 +108,9 @@ const AddReptileModal = ({
                             </MuiSelect>
                         </FormControl>
 
-                        <FormControl fullWidth>
-                            <InputLabel id="demo-simple-select-label">Spezies</InputLabel>
+                        <FormControl className={"mt-3"}  fullWidth>
+                            <InputLabel id="demo-simple-select-label" required>Spezies</InputLabel>
                             <MuiSelect
-                                className={"mt-3"}
                                 labelId="demo-simple-select-label"
                                 id="demo-simple-select"
                                 value={selectedSpeciesOption ? selectedSpeciesOption : ""}
@@ -140,7 +124,6 @@ const AddReptileModal = ({
                                 <MenuItem value={optionsSpecies[4]}>{optionsSpecies[4]}</MenuItem>
                                 <MenuItem value={optionsSpecies[5]}>{optionsSpecies[5]}</MenuItem>
                                 <MenuItem value={optionsSpecies[6]}>{optionsSpecies[6]}</MenuItem>
-
                             </MuiSelect>
                         </FormControl>
                     </form>
@@ -153,9 +136,6 @@ const AddReptileModal = ({
                     <Button onClick={submit}>Reptil hinzufügen</Button>
                 </DialogActions>
             </Dialog>
-            <ToastContainer
-            />
-
         </>
     )
 }

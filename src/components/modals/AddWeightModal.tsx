@@ -40,6 +40,7 @@ const AddWeightModal = ({
                             type="text"
                             label={"Gewicht"}
                             placeholder="Aktuelles Gewicht des Reptils..."
+                            required
                         />
 
                             <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -48,7 +49,7 @@ const AddWeightModal = ({
                                     inputFormat="MM/dd/yyyy"
                                     value={startDate}
                                     onChange={setStartDate}
-                                    renderInput={(params) => <TextField {...params} />}
+                                    renderInput={(params) => <TextField {...params} required/>}
                                 />
 
                             </LocalizationProvider>
@@ -67,8 +68,6 @@ const AddWeightModal = ({
 
                 </DialogActions>
             </Dialog>
-            <ToastContainer
-            />
 
         </>
     )

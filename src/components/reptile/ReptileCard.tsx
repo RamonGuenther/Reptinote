@@ -6,7 +6,7 @@ import {FiEdit} from "react-icons/fi";
 import {FaStickyNote} from "react-icons/fa";
 import {GiWeight} from "react-icons/gi";
 import {Link} from "react-router-dom";
-import { StyledEngineProvider } from '@mui/material/styles';
+
 import {
     Avatar,
     Badge,
@@ -21,31 +21,32 @@ import {
 } from "@mui/material";
 
 const ReptileCard = ({
-                     name,
-                     birthday,
-                     type,
-                     morph,
-                     gender,
-                     species,
-                     feedings,
-                     weights,
-                     notes,
-                     index,
-                     onDeleteReptile,
-                     toggleWeightModal,
-                     toggleNoteModal,
-                     toggleFeedingModal,
-                     setReptileId,
-                     image,
-                     toggleReptileEditModal
-                 }: any) => {
+                         name,
+                         birthday,
+                         type,
+                         morph,
+                         gender,
+                         species,
+                         feedings,
+                         weights,
+                         notes,
+                         index,
+                         onDeleteReptile,
+                         toggleWeightModal,
+                         toggleNoteModal,
+                         toggleFeedingModal,
+                         setReptileId,
+                         image,
+                         toggleReptileEditModal
+                     }: any) => {
 
 
     return (
         <div>
             <Card className={"reptileCard"}>
                 <CardHeader
-                    avatar={ <Link to={`/reptileDetails/${index}`}> <Chip onClick={()=>{}}className={"nameBadge"} variant="outlined" label={name}/> </Link>}
+                    avatar={<Link to={`/reptileDetails/${index}`}> <Chip onClick={() => {
+                    }} className={"nameBadge"} variant="outlined" label={name}/> </Link>}
                 />
                 {/*<MDBCardImage className={"image"} src='https://mdbootstrap.com/img/new/standard/nature/182.webp'*/}
                 {/*              alt='...'/>*/}
@@ -75,46 +76,49 @@ const ReptileCard = ({
                     </div>
                 </CardContent>
 
-                <CardActions className={"cardFooter"} >
-                    <Link to={`/reptileDetails/${index}`}>
-                        <Button variant="contained" className={"detailsButton bg-info"} onClick={() => {
-                        }}> <MdSearch size={"25px"}/>
+                <CardActions className={"cardFooter"}>
+
+                    <div className={"lel"}>
+                        <Link to={`/reptileDetails/${index}`}>
+                            <Button variant="contained" className={"detailsButton bg-info"} onClick={() => {
+                            }}> <MdSearch size={"25px"}/>
+                            </Button>
+
+                        </Link>
+
+                        <Button variant="contained" className={"weightButton bg-success"} onClick={() => {
+                            toggleWeightModal();
+                            setReptileId(index)
+                        }}> <GiWeight size={"25px"}/>
                         </Button>
 
-                    </Link>
 
-                    <Button variant="contained" className={"weightButton bg-success"} onClick={() => {
-                        toggleWeightModal();
-                        setReptileId(index)
-                    }}> <GiWeight size={"25px"}/>
-                    </Button>
+                        <Button variant="contained" className={"noteButton bg-success"} onClick={() => {
+                            toggleNoteModal();
+                            setReptileId(index)
+                        }}> <FaStickyNote size={"25px"}/>
+                        </Button>
 
+                        {/*TODO BEI TOGGLE DIE SCHREIBWEISE ÄNDERN */}
+                        <Button variant="contained" className={"feedButton bg-success"} onClick={() => {
+                            toggleFeedingModal();
+                            setReptileId(index)
+                        }}> <IoRestaurantOutline size={"25px"}/>
+                        </Button>
 
-                    <Button variant="contained" className={"noteButton bg-success"} onClick={() => {
-                        toggleNoteModal();
-                        setReptileId(index)
-                    }}> <FaStickyNote size={"25px"}/>
-                    </Button>
+                        <div className="verticalLine"/>
 
-                    {/*TODO BEI TOGGLE DIE SCHREIBWEISE ÄNDERN */}
-                    <Button variant="contained" className={"feedButton bg-success"} onClick={() => {
-                        toggleFeedingModal();
-                        setReptileId(index)
-                    }}> <IoRestaurantOutline size={"25px"}/>
-                    </Button>
+                        <Button variant="contained" className={"editButton"} onClick={() => {
+                            setReptileId(index);
+                            toggleReptileEditModal(index);
+                        }}> <FiEdit size={"25px"}/>
 
-                    <div className="verticalLine"/>
-
-                    <Button variant="contained" className={"editButton"} onClick={() => {
-                        setReptileId(index);
-                        toggleReptileEditModal(index);
-                    }}> <FiEdit size={"25px"}/>
-
-                    </Button>
-                    <Button variant="contained" className={"deleteButton bg-danger"} onClick={() => {
-                        onDeleteReptile(index)
-                    }}> <MdDelete size={"25px"}/>
-                    </Button>
+                        </Button>
+                        <Button variant="contained" className={"deleteButton bg-danger"} onClick={() => {
+                            onDeleteReptile(index)
+                        }}> <MdDelete size={"25px"}/>
+                        </Button>
+                    </div>
                 </CardActions>
             </Card>
         </div>

@@ -1,15 +1,21 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 import FeedingClass from "../data/FeedingClass";
-import {Box, Paper, Tab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
-import FoodGrid from "../components/tables/FoodGrid";
+import {Box, Button, Paper, Tab} from "@mui/material";
+import FeedTable from "../components/tables/FeedTable";
 import {ReptileClass} from "../data/ReptileClass";
 import ReptileInformation from "../components/reptile/ReptileInformation";
 import "./reptileDetails.css"
 import {TabContext, TabList, TabPanel} from "@mui/lab";
-
-
-const ReptileDetails = ({reptiles, setReptiles}: any) => {
+import WeightClass from "../data/WeightClass";
+import NoteClass from "../data/NoteClass";
+import NotesTable from "../components/tables/NotesTable";
+import WeightsTable from "../components/tables/WeightsTable";
+/**
+ *
+ * TODO: Wie Ivonne Löschen und hinzufügen auf dem Tab
+ */
+const ReptileDetails = ({reptiles}: any) => {
 
     let {id} = useParams();
     let index: number = 0;
@@ -19,15 +25,39 @@ const ReptileDetails = ({reptiles, setReptiles}: any) => {
         index = parseInt(id);
     }
 
-    const [feeding, setFeeding] = useState<FeedingClass[]>(reptiles[index]._feedings);
+    const [feedings, setFeedings] = useState<FeedingClass[]>(reptiles[index]._feedings);
+
+    const [weights, setWeights] = useState<WeightClass[]>(reptiles[index]._weights);
+
+    const [notes, setNotes] = useState<NoteClass[]>(reptiles[index]._notes);
 
     const [reptile, setReptile] = useState<ReptileClass>(reptiles[index]);
+
+
+    function deleteFeeding(){
+        const newReptile = reptile;
+        let index: number = 0;
+        for (let i = 0; i < newReptile.feedings.length; i++) {
+            if (id === newReptile.feedings[i].id) {
+                index = i;
+            }
+        }
+        newReptile.feedings.splice(index, 1);
+        let test : FeedingClass[] = feedings;
+        test.splice(index,1);
+
+        setFeedings(test);
+        setReptile(newReptile);
+    }
+
+
 
     const [value, setValue] = React.useState('1');
 
     const handleChange = (event: React.SyntheticEvent, newValue: string) => {
         setValue(newValue);
     };
+
 
 
     return (
@@ -53,14 +83,14 @@ const ReptileDetails = ({reptiles, setReptiles}: any) => {
                                  value="3"/>
                         </TabList>
                         <TabPanel value="1">
-                            <FoodGrid feeding={feeding}/>
+                            <Button>Hinzufügen</Button>
+                            <FeedTable feedData={reptile.feedings}  reptile={reptile} setReptile = {setReptile} deleteFeeding={deleteFeeding}/>
                         </TabPanel>
                         <TabPanel value="2">
-                            Item Two
-
+                            <NotesTable noteData={notes}/>
                         </TabPanel>
                         <TabPanel value="3">
-                            Item Three
+                            <WeightsTable weightData={weights}/>
                         </TabPanel>
                     </TabContext>
                 </section>

@@ -2,7 +2,6 @@ import React, {useEffect, useState} from "react";
 import ReptileCard from "../components/reptile/ReptileCard";
 import {ReptileClass} from "../data/ReptileClass";
 import AddReptileModal from "../components/modals/AddReptileModal";
-import {toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import FeedingClass from "../data/FeedingClass";
 import AddFeedingModal from "../components/modals/AddFeedingModal";
@@ -13,19 +12,9 @@ import WeightClass from "../data/WeightClass";
 import EditReptileModal from "../components/modals/EditReptileModal";
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
+import {initialValuesFeeding, initialValuesReptile} from "../helper/Constants";
+import {notifyFailure, notifySuccess} from "../helper/Toasts";
 
-const initialValuesReptile = {
-    name: "",
-    birthday: "",
-    type: "",
-    morph: "",
-    image: ""
-};
-
-const initialValuesFeeding = {
-    type: "",
-    weight: "",
-}
 
 
 //TODO: Statt klassen interfaces??? // WAHrscheinlich keine neuen States
@@ -43,22 +32,11 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
     const [selectedSpeciesOption, setSelectedSpeciesOption] = useState("");
 
 
-    const notify = () => toast.error("Bitte alle Felder ausfüllen! Morph muss nicht bekannt sein.", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-
-        draggable: true,
-        progress: undefined,
-    });
-
     //add
     function addReptile(event: any): void {
         event.preventDefault();
         if (reptileValues.name === "" || reptileValues.birthday === "" || reptileValues.type === "" || reptileValues.morph === "" || selectedGenderOption === null || selectedSpeciesOption === null) {
-            notify();
+            notifyFailure("Bitte alle Pflichtfelder ausfüllen!");
             return;
         }
         let newReptile = new ReptileClass();
@@ -67,10 +45,12 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
         if (reptileModal) {
             saveReptile(newReptile);
             setReptileValues(initialValuesReptile); //reset
+            notifySuccess("Das Reptil " + reptileValues.name +" wurde gespeichert.");
             toggleReptileModal();
         } else if (reptileEditModal) {
             editReptile(newReptile, reptileId)
             setReptileValues(initialValuesReptile); //reset
+            notifySuccess("Das Reptil " + reptileValues.name + " wurde bearbeitet.");
             toggle();
         }
     }
@@ -80,7 +60,7 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
         event.preventDefault();
         console.log(index)
         if (feedingValues.type === "" || feedingValues.weight === " ") { //TODO: wie validieren
-            notify(); //TODO eigenes
+            notifyFailure("Bitte alle Felder füllen")
             return;
         }
         let feeding = new FeedingClass();
@@ -88,6 +68,7 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
         saveFeeding(feeding, index);
         setFeedingValues(initialValuesFeeding)
         setStartDate(new Date());
+        notifySuccess("Fütterung gespeichert");
         toggleFeedingModal();
     }
 

@@ -11,22 +11,7 @@ import {
     Select as MuiSelect, TextField
 } from "@mui/material";
 import {ToastContainer} from 'react-toastify';
-
-const optionsGender = [
-    'Weiblich',
-    'Männlich',
-    'Unbekannt',
-];
-
-const optionsSpecies = [
-    'Schlange',
-    'Echse',
-    'Krokodil',
-    'Schildkröte',
-    'Amphibie',
-    'Gliederfüßer',
-    'Sonstiges',
-]
+import {optionsGender, optionsSpecies} from "../../helper/Constants";
 
 
 const EditReptileModal = ({
@@ -153,8 +138,6 @@ const EditReptileModal = ({
                     <Button onClick={submit}>Reptil Speichern</Button>
                 </DialogActions>
             </Dialog>
-            <ToastContainer
-            />
 
         </>
     )

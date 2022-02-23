@@ -66,6 +66,10 @@ h2 {
     font-weight: bold;
 }
 
+.lel{
+    margin: auto
+}
+
 .detailsButton {
     width: 75px;
     font-size: large;
@@ -101,7 +105,7 @@ h2 {
 .verticalLine {
     display: inline-flex;
     margin-left: 20px;
-    margin-bottom: -8px;
+    margin-bottom: -25px;
     border-left: 1px solid #232323 ;
     height: 50px;
 }

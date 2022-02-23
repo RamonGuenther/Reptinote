@@ -40,6 +40,7 @@ const AddNoteModal = ({
                             type="text"
                             label={"Notiz"}
                             placeholder="Notiz eingeben..."
+                            required
                         />
                         <LocalizationProvider dateAdapter={AdapterDateFns}>
                             <DesktopDatePicker
@@ -47,7 +48,7 @@ const AddNoteModal = ({
                                 inputFormat="MM/dd/yyyy"
                                 value={startDate}
                                 onChange={setStartDate}
-                                renderInput={(params) => <TextField {...params} />}
+                                renderInput={(params) => <TextField {...params} required/>}
                             />
                         </LocalizationProvider>
 
@@ -65,8 +66,6 @@ const AddNoteModal = ({
 
                 </DialogActions>
             </Dialog>
-            <ToastContainer
-            />
 
         </>
     )

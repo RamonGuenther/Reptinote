@@ -1,16 +1,17 @@
 import React, {useState} from "react";
 import {Badge, Button, Card, CardActions, CardContent, CardHeader, CardMedia, Chip} from "@mui/material";
-import {Link} from "react-router-dom";
-import {IoFastFoodOutline, IoRestaurantOutline} from "react-icons/io5";
 import {MdDelete, MdSearch} from "react-icons/md";
-import {GiWeight} from "react-icons/gi";
-import {FaStickyNote} from "react-icons/fa";
-import {FiEdit} from "react-icons/fi";
+
 
 import "./reptileInformation.css"
 
 const ReptileInformation = ({reptile}: any) => {
 
+    // function Test(){
+    //     return(
+    //         <h2> lel </h2>
+    //     )
+    // }
 
     return (
         <>
@@ -33,10 +34,13 @@ const ReptileInformation = ({reptile}: any) => {
                     </div>
                 </CardContent>
 
+                {!reptile._breeder.name? <Button> Züchter hinzufügen</Button> : ""}
                 <CardActions className={"cardFooter"} >
                         <Button variant="contained" className={"detailsButton bg-info"} onClick={() => {
                         }}> <MdSearch size={"25px"}/>
                         </Button>
+
+                    {}
                 </CardActions>
             </Card>
         </>

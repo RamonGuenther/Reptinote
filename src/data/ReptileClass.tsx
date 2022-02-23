@@ -2,6 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 import FeedingClass from "./FeedingClass";
 import NoteClass from "./NoteClass";
 import WeightClass from "./WeightClass";
+import {BreederClass} from "./BreederClass";
 
 export class ReptileClass {
 
@@ -16,15 +17,25 @@ export class ReptileClass {
     private _notes : NoteClass[];
     private _weights : WeightClass[];
     private _image : string = "";
+    private _breeder : BreederClass;
 
     constructor() {
         this._id = uuidv4();
+        this._breeder = new BreederClass();
         this._feedings = [];
         this._notes = [];
         this._weights = [];
 
     }
 
+
+    get breeder(): BreederClass {
+        return this._breeder;
+    }
+
+    set breeder(value: BreederClass) {
+        this._breeder = value;
+    }
 
     set id(value: string) {
         this._id = value;
