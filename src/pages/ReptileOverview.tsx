@@ -33,8 +33,7 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
 
 
     //add
-    function addReptile(event: any): void {
-        event.preventDefault();
+    function addReptile(): void {
         if (reptileValues.name === "" || reptileValues.birthday === "" || reptileValues.type === "" || reptileValues.morph === "" || selectedGenderOption === null || selectedSpeciesOption === null) {
             notifyFailure("Bitte alle Pflichtfelder ausfüllen!");
             return;
@@ -56,26 +55,24 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
     }
 
 
-    function addFeeding(index: number, event: any): void { //TODO: onClick={() => {onDeleteReptile(index)}}
-        event.preventDefault();
-        console.log(index)
+    function addFeeding(): void { //TODO: onClick={() => {onDeleteReptile(index)}}
         if (feedingValues.type === "" || feedingValues.weight === " ") { //TODO: wie validieren
-            notifyFailure("Bitte alle Felder füllen")
+            notifyFailure("Bitte alle Felder ausfüllen!")
             return;
         }
         let feeding = new FeedingClass();
         feeding.setFoody(feedingValues.weight, feedingValues.type, startDate.toLocaleDateString());
-        saveFeeding(feeding, index);
+        saveFeeding(feeding, reptileId);
         setFeedingValues(initialValuesFeeding)
         setStartDate(new Date());
-        notifySuccess("Fütterung gespeichert");
+        notifySuccess("Die Fütterung wurde gespeichert.");
         toggleFeedingModal();
     }
 
 
-    function deleteReptile(index: number): void {
+    function deleteReptile(): void {
         const newTodos = [...reptiles];
-        newTodos.splice(index, 1);
+        newTodos.splice(reptileId, 1);
         setReptiles(newTodos);
     }
 
@@ -141,38 +138,36 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
         setSelectedGenderOption(event.target.value)
     }
 
-    function submitNote(event: any, index: number) {
-        event.preventDefault();
-        console.log(index)
-        // if (feedingValues.type === "" || feedingValues.weight ===" ") { //TODO: wie validieren
-        //     notify(); //TODO eigenes
-        //     return;
-        // }
+    function submitNote() {
+        if (inputNote === "") { //TODO: wie validieren
+            notifyFailure("Bitte alle Felder ausfüllen."); //TODO eigenes
+            return;
+        }
         const newTodos = [...reptiles];
         let note = new NoteClass();
         note.setNote(inputNote, startDate.toLocaleDateString());
-        newTodos[index].notes.push(note);
+        newTodos[reptileId].notes.push(note);
         setReptiles(newTodos);
         setInputNote("");
         setStartDate(new Date());
+        notifySuccess("Die Notiz wurde gespeichert.");
         toggleNoteModal();
 
     }
 
-    function submitWeight(event: any, index: number) {
-        event.preventDefault();
-        console.log(index)
-        // if (feedingValues.type === "" || feedingValues.weight ===" ") { //TODO: wie validieren
-        //     notify(); //TODO eigenes
-        //     return;
-        // }
+    function submitWeight() {
+        if (inputWeight === "") { //TODO: wie validieren
+            notifyFailure("Bitte alle Felder ausfüllen."); //TODO eigenes
+            return;
+        }
         const newTodos = [...reptiles];
         let weight = new WeightClass();
         weight.setWeight(inputWeight, startDate.toLocaleDateString());
-        newTodos[index].weights.push(weight);
+        newTodos[reptileId].weights.push(weight);
         setReptiles(newTodos);
         setInputWeight("");
         setStartDate(new Date());
+        notifySuccess("Das Gewicht wurde gespeichert.");
         toggleWeightModal();
     }
 

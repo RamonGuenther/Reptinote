@@ -60,9 +60,7 @@ const AddNoteModal = ({
                     <Button color='secondary' onClick={toggleShow}>
                         Abbrechen
                     </Button>
-                    <Button onClick={(e: any) => {
-                        submit(e, index)
-                    }}>Notiz hinzufügen</Button>
+                    <Button onClick={submit}>Notiz hinzufügen</Button>
 
                 </DialogActions>
             </Dialog>

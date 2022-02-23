@@ -18,19 +18,23 @@ const ReptileInformation = ({reptile}: any) => {
 
             <Card className={"reptileCardInformation"}>
                 <CardContent className={""}>
-                    <h2 className={"lel"}>{reptile.name}</h2>
-
+                    <h2 className={"reptilName"}>{reptile.name}</h2>
+                    <h2 className={"reptileSpeciesType"}>{reptile.species} | {reptile.type}</h2>
                     <CardMedia
                         className={""}
                         component={"img"}
                         image={reptile.image}
                     />
                     <div className={"cardText"}>
+                        {/*TODO: WIe ivonne machen einfach und unten Tabelle benutzen für die Beschriftung*/}
+
                         <h2><span className={"cardTextSpan"}>Geburtstag:</span> {reptile.birthday}</h2>
                         <h2><span className={"cardTextSpan"}>Geschlecht:</span> {reptile.gender}</h2>
-                        <h2><span className={"cardTextSpan"}>Spezies: </span> {reptile.species}</h2>
-                        <h2><span className={"cardTextSpan"}>Typ: </span> {reptile.type}</h2>
                         <h2><span className={"cardTextSpan"}>Morph: </span>{reptile.morph}</h2>
+                        <h2><span className={"cardTextSpan"}>Letzte Fütterung: </span> {reptile.birthday}</h2>
+                        <h2><span className={"cardTextSpan"}>Gewicht: </span> {reptile.gender}</h2>
+                        <h2><span className={"cardTextSpan"}>Aktuellste Notiz:  </span>{reptile.morph}</h2>
+
                     </div>
                 </CardContent>
 

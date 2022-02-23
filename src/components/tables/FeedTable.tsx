@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {
     Button,
     Paper,
@@ -13,7 +13,7 @@ import {
 import FeedingClass from "../../data/FeedingClass";
 import TablePagination from '@mui/material/TablePagination';
 
-const FeedTable = ({feedData,deleteFeeding, index, reptile, setReptile}: any) => {
+const FeedTable = ({reptile, setReptile}: any) => {
 
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
@@ -22,25 +22,46 @@ const FeedTable = ({feedData,deleteFeeding, index, reptile, setReptile}: any) =>
         setPage(0);
     };
 
-    // function deleteFeeding2(id : string){
-    //     const newReptile = reptile;
-    //     let index : number = 0;
-    //     for(let i = 0 ; i < newReptile.feedings.length; i++){
-    //         if(id === newReptile.feedings[i].id){
-    //             index = i;
-    //         }
-    //     }
-    //     newReptile.feedings.splice(index,1);
-    //     setReptile(newReptile);
-    // }
+    function deleteFeeding2(id : string){
+        const newReptile = reptile;
+        let index : number = 0;
+        for(let i = 0 ; i < newReptile.feedings.length; i++){
+            if(id === newReptile.feedings[i].id){
+                index = i;
+            }
+        }
+        newReptile.feedings.splice(index,1);
+        setReptile(newReptile);
+        handleDelete(newReptile.feedings);
+    }
 
-    const [page, setPage] = React.useState(0);
+    const[array, setArray] = useState<FeedingClass[]>(reptile.feedings);
+
+    function handleDelete(newFeed : FeedingClass[]) {
+        const newReptiles = [...newFeed];
+        setArray(newReptiles);
+    }
+
+
+    // useEffect(() => {
+    //   handleDelete();
+    // }, [reptile]); //Wenn sich todo an sich selber verändert
+
+
+    function lel(){
+
+    }
+
+    const [page, setPage] = useState(0);
     // Avoid a layout jump when reaching the last page with empty rows.
-    const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - feedData.length) : 0;
+    const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - array.length) : 0;
 
     const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number,) => {
         setPage(newPage);
     };
+
+
+
 
     return (
         <TableContainer component={Paper}>
@@ -54,18 +75,18 @@ const FeedTable = ({feedData,deleteFeeding, index, reptile, setReptile}: any) =>
                 </TableHead>
                 <TableBody>
                     {(rowsPerPage > 0
-                            ? feedData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                            : feedData
+                            ? array.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                            : array
                     ).map((item: FeedingClass) => (
                         <TableRow
                             key={item.id}
                             sx={{'&:last-child td, &:last-child th': {border: 0}}}>
                             {/*<TableCell component="th">{item.id}</TableCell>*/}
-                            <TableCell component="th">{item.date}</TableCell>
+                            <TableCell  component="th">{item.date}</TableCell>
                             <TableCell component="th">{item.weight} g</TableCell>
                             <TableCell component="th">{item.feeding} g</TableCell>
 
-                            <TableCell component="th"><Button onClick={e =>{deleteFeeding(item.id)}}> test</Button></TableCell>
+                            <TableCell component="th"><Button onClick={e =>{deleteFeeding2(item.id)}}> test</Button></TableCell>
                         </TableRow>
                     ))}
                     {emptyRows > 0 && (
@@ -78,7 +99,7 @@ const FeedTable = ({feedData,deleteFeeding, index, reptile, setReptile}: any) =>
                     <TableRow>
                         <TablePagination
                             rowsPerPageOptions={[5, 10, 25, {label: 'All', value: -1}]}
-                            count={feedData.length}
+                            count={array.length}
                             rowsPerPage={rowsPerPage}
                             page={page}
                             labelRowsPerPage={"Zeilen pro Seite"}

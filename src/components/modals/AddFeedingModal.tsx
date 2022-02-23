@@ -58,7 +58,7 @@ const AddFeedingModal = ({
                                     inputFormat="MM/dd/yyyy"
                                     value={startDate}
                                     onChange={setStartDate}
-                                    renderInput={(params) => <TextField {...params} required />}
+                                    renderInput={(params) => <TextField {...params} required/>}
                                 />
                             </LocalizationProvider>
                         </FormControl>
@@ -69,9 +69,7 @@ const AddFeedingModal = ({
                     <Button color='secondary' onClick={toggleShow}>
                         Abbrechen
                     </Button>
-                    <Button onClick={(e: any) => {
-                        submit(index, e)
-                    }}>Fütterung hinzufügen</Button>
+                    <Button onClick={submit}>Fütterung hinzufügen</Button>
                 </DialogActions>
             </Dialog>
         </>

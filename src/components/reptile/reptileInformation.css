@@ -4,8 +4,12 @@
     border-radius: 15px !important;
 }
 
-.lel{
+.reptilName{
     text-align: left;
 }
 
 
+.reptileSpeciesType{
+    font-size: large;
+    text-align: left;
+}

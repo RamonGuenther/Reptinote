@@ -25,30 +25,32 @@ const ReptileDetails = ({reptiles}: any) => {
         index = parseInt(id);
     }
 
-    const [feedings, setFeedings] = useState<FeedingClass[]>(reptiles[index]._feedings);
 
-    const [weights, setWeights] = useState<WeightClass[]>(reptiles[index]._weights);
-
-    const [notes, setNotes] = useState<NoteClass[]>(reptiles[index]._notes);
 
     const [reptile, setReptile] = useState<ReptileClass>(reptiles[index]);
 
 
-    function deleteFeeding(){
-        const newReptile = reptile;
-        let index: number = 0;
-        for (let i = 0; i < newReptile.feedings.length; i++) {
-            if (id === newReptile.feedings[i].id) {
-                index = i;
-            }
-        }
-        newReptile.feedings.splice(index, 1);
-        let test : FeedingClass[] = feedings;
-        test.splice(index,1);
-
-        setFeedings(test);
-        setReptile(newReptile);
-    }
+    // function deleteFeeding(){
+    //     const newReptile = reptile;
+    //     console.log("Vorher" + feedings.length + reptile.feedings.length);
+    //
+    //     let index: number = 0;
+    //     for (let i = 0; i < newReptile.feedings.length; i++) {
+    //         if (id === newReptile.feedings[i].id) {
+    //             index = i;
+    //         }
+    //     }
+    //     newReptile.feedings.splice(index, 1);
+    //     let test : FeedingClass[] = feedings;
+    //     test.splice(index,1);
+    //
+    //
+    //     setFeedings(test);
+    //     setReptile(newReptile);
+    //     console.log("Nachher" + feedings.length + reptile.feedings.length);
+    //
+    //
+    // }
 
 
 
@@ -84,13 +86,13 @@ const ReptileDetails = ({reptiles}: any) => {
                         </TabList>
                         <TabPanel value="1">
                             <Button>Hinzufügen</Button>
-                            <FeedTable feedData={reptile.feedings}  reptile={reptile} setReptile = {setReptile} deleteFeeding={deleteFeeding}/>
+                            <FeedTable reptile={reptile} setReptile = {setReptile}/>
                         </TabPanel>
                         <TabPanel value="2">
-                            <NotesTable noteData={notes}/>
+                            {/*<NotesTable noteData={notes}/>*/}
                         </TabPanel>
                         <TabPanel value="3">
-                            <WeightsTable weightData={weights}/>
+                            {/*<WeightsTable weightData={weights}/>*/}
                         </TabPanel>
                     </TabContext>
                 </section>
