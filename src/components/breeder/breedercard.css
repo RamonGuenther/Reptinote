@@ -2,3 +2,9 @@
     margin-top: 80px;
     display: inline-flex;
 }
+
+#breeder-card{
+    width: 400px;
+    height: 300px;
+    margin-left: 20px;
+}

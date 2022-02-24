@@ -7,7 +7,7 @@ export class Breeder {
     private _firstName : string ="";
     private _lastName : string = "";
     private _street : string = "";
-    private _plz : string = "";
+    private _postal : string = "";
     private _place : string = "";
     private _country : string = "";
     private _mail : string="";
@@ -39,8 +39,8 @@ export class Breeder {
         this._street = value;
     }
 
-    set plz(value: string) {
-        this._plz = value;
+    set postal(value: string) {
+        this._postal = value;
     }
 
     set place(value: string) {
@@ -80,8 +80,8 @@ export class Breeder {
         return this._street;
     }
 
-    get plz(): string {
-        return this._plz;
+    get postal(): string {
+        return this._postal;
     }
 
     get place(): string {
@@ -100,12 +100,12 @@ export class Breeder {
         return this._phone;
     }
 
-    public setBreeder(companyName: string, firstName: string, lastName: string, street: string, plz: string, place: string, country: string, mail: string, phoneNumber: string) {
+    public setBreeder(companyName: string, firstName: string, lastName: string, street: string, postal: string, place: string, country: string, mail: string, phoneNumber: string) {
         this._companyName = companyName;
         this._firstName = firstName;
         this._lastName = lastName;
         this._street = street;
-        this._plz = plz;
+        this._postal = postal;
         this._place = place;
         this._country = country;
         this._mail = mail;

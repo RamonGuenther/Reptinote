@@ -1,0 +1,4 @@
+.test{
+    display: grid;
+    grid-template-areas: "a b";
+}

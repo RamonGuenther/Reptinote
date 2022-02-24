@@ -36,6 +36,7 @@
 
 .reptile-information-card-text{
     display: grid;
+    /*grid-template-columns: 1fr 1fr;*/
     grid-template-areas: "a b";
 }
 

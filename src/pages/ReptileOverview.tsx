@@ -136,7 +136,7 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
         setSelectedGenderOption(event.target.value)
     }
 
-    function submitNote() {
+    function addNote() {
         if (inputNote === "") { //TODO: wie validieren
             notifyFailure("Bitte alle Felder ausfüllen."); //TODO eigenes
             return;
@@ -153,7 +153,7 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
 
     }
 
-    function submitWeight() {
+    function addWeight() {
         if (inputWeight === "") { //TODO: wie validieren
             notifyFailure("Bitte alle Felder ausfüllen."); //TODO eigenes
             return;
@@ -254,7 +254,7 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
                 setStartDate={setStartDate}
                 inputWeight={inputWeight}
                 changeWeight={handleInputChangeWeight}
-                submit={submitWeight}
+                submit={addWeight}
             />
 
             <AddNoteModal
@@ -264,7 +264,7 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
                 setStartDate={setStartDate}
                 inputNote={inputNote}
                 changeNote={handleInputChangeNote}
-                submit={submitNote}
+                submit={addNote}
             />
 
             <EditReptileModal

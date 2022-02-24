@@ -20,7 +20,7 @@ const BreederCard = ({
 
     return(
         <div className="breeder-card-layout">
-            <Card sx={{ maxWidth: 345 }}>
+            <Card id="breeder-card">
                 <CardContent>
                     Firma: {companyName}
                     {firstName}

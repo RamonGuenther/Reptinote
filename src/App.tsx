@@ -69,7 +69,8 @@ function App() {
                         feedings,
                         notes,
                         weights,
-                        parsed[i]._image);
+                        parsed[i]._image
+                    );
 
                     reptileList.push(newReptile);
                 }
@@ -94,7 +95,8 @@ function App() {
                     [],
                     [],
                     [],
-                    reptilesExample[i].image);
+                    reptilesExample[i].image
+                );
 
                 reptileList.push(reptile1);
             }
@@ -122,79 +124,55 @@ function App() {
 
     const [breeders, setBreeders] = useState<Breeder[]>(() => {
 
-        let breederList: Breeder[] = [];
+        const items = localStorage.getItem("breeders");
+        if (items != null) {
+            let parsed = JSON.parse(items);
+            try {
+                let breederList: Breeder[] = [];
 
-        for (let i = 0; i < breedersExample.length; i++) {
-            let newBreeder = new Breeder();
-            newBreeder.setBreeder(
-                breedersExample[i].companyName,
-                breedersExample[i].firstName,
-                breedersExample[i].lastName,
-                breedersExample[i].street,
-                breedersExample[i].postal,
-                breedersExample[i].place,
-                breedersExample[i].country,
-                breedersExample[i].email,
-                breedersExample[i].phone);
+                for (let i = 0; i < parsed.length; i++) {
+                    let newBreeder = new Breeder();
+                    newBreeder.setBreeder(
+                        parsed[i]._companyName,
+                        parsed[i]._firstName,
+                        parsed[i]._lastName,
+                        parsed[i]._street,
+                        parsed[i]._postal,
+                        parsed[i]._place,
+                        parsed[i]._country,
+                        parsed[i]._mail,
+                        parsed[i]._phone
+                    );
 
-            breederList.push(newBreeder);
+                    breederList.push(newBreeder);
+                }
+
+                return breederList;
+            } catch (e) {
+                console.log(e);
+                return [];
+            }
+        } else {
+            let breederList: Breeder[] = [];
+
+            for (let i = 0; i < breedersExample.length; i++) {
+                let newBreeder = new Breeder();
+                newBreeder.setBreeder(
+                    breedersExample[i].companyName,
+                    breedersExample[i].firstName,
+                    breedersExample[i].lastName,
+                    breedersExample[i].street,
+                    breedersExample[i].postal,
+                    breedersExample[i].place,
+                    breedersExample[i].country,
+                    breedersExample[i].email,
+                    breedersExample[i].phone
+                );
+
+                breederList.push(newBreeder);
+            }
+            return breederList;
         }
-        return breederList;
-
-
-        // const items = localStorage.getItem("reptiles");
-        // if (items != null) {
-        //     let parsed = JSON.parse(items);
-        //     try {
-        //         let reptileList: Reptile[] = [];
-        //
-        //         let feedings: Feeding[] = [];
-        //         let weights: Weight[] = [];
-        //         let notes: Note[] = [];
-        //
-        //         for (let i = 0; i < parsed.length; i++) {
-        //
-        //             feedings = [];
-        //             notes = [];
-        //             weights = [];
-        //
-        //             for (let j = 0; j < parsed[i]._feedings.length; j++) {
-        //                 let newFeeding = new Feeding();
-        //                 newFeeding.setFoody(parsed[i]._feedings[j]._weight, parsed[i]._feedings[j]._feeding, parsed[i]._feedings[j]._date)
-        //                 feedings.push(newFeeding);
-        //             }
-        //
-        //             for (let k = 0; k < parsed[i]._weights.length; k++) {
-        //                 let newWeight = new Weight();
-        //                 newWeight.setWeight(parsed[i]._weights[k]._weight, parsed[i]._weights[k]._date)
-        //                 weights.push(newWeight);
-        //             }
-        //
-        //             for (let l = 0; l < parsed[i]._notes.length; l++) {
-        //                 let newNote = new Note();
-        //                 newNote.setNote(parsed[i]._notes[l]._note, parsed[i]._notes[l]._date)
-        //                 notes.push(newNote);
-        //             }
-        //
-        //             let newReptile = new Reptile();
-        //             newReptile.loadReptile(parsed[i]._name, parsed[i]._birthday, parsed[i]._type, parsed[i]._morph, parsed[i]._gender, parsed[i]._species, feedings, notes, weights, parsed[i]._image);
-        //             reptileList.push(newReptile);
-        //         }
-        //         return reptileList;
-        //     } catch (e) {
-        //         console.log(e)
-        //         return []
-        //     }
-        // } else {
-        //     let reptileList: Reptile[] = [];
-        //
-        //     for (let i = 0; i < reptilesExample.length; i++) {
-        //         let reptile1 = new Reptile();
-        //         reptile1.loadReptile(reptilesExample[i].name, reptilesExample[i].geburtsdatum, reptilesExample[i].art, reptilesExample[i].morph, reptilesExample[i].geschlecht, reptilesExample[i].ordnung, [], [], [], reptilesExample[i].image)
-        //         reptileList.push(reptile1);
-        //     }
-        //     return reptileList;
-        // }
     });
 
 
@@ -202,16 +180,17 @@ function App() {
         if (reptiles.length !== 0) {
             localStorage.setItem("reptiles", JSON.stringify(reptiles))
         } else {
-            localStorage.removeItem("reptiles") //damit definitiv keine Reptilien drinne sind wenn man alle löscht
+            localStorage.removeItem("reptiles")
         }
+    }, [reptiles]);
+
+    useEffect(() => {
         if (breeders.length !== 0) {
             localStorage.setItem("breeders", JSON.stringify(breeders))
         } else {
-            localStorage.removeItem("breeders") //damit definitiv keine Reptilien drinne sind wenn man alle löscht
+            localStorage.removeItem("breeders")
         }
-
-    }, [reptiles, breeders]); //Wenn sich todo an sich selber verändert
-
+    }, [breeders]);
 
     return (
         <div>
@@ -220,7 +199,6 @@ function App() {
                 <div className="App">
                     <Routes>
 
-                        document.title = 'Your page title here';
                         <Route path={'/'} element={<ReptileOverview reptiles={reptiles} setReptiles={setReptiles}
                                                                     saveReptile={saveReptile} saveFeeding={saveFeeding}
                                                                     editReptile={editReptile}/>}/>

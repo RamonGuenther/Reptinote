@@ -1,98 +1,131 @@
 import React from "react";
+import "./addBreederModal.css"
 import {
     Button,
     Dialog, DialogActions,
     DialogContent,
     DialogTitle, Divider,
     FormControl,
-    InputLabel,
-    MenuItem,
-    Select as MuiSelect, TextField
+    TextField
 } from "@mui/material";
-import {optionsGender, optionsSpecies} from "../../helper/Constants";
+
 
 
 const AddBreederModal = ({
-                             toggleShow,
-                             basicModal,
+                             showAddBreederModal,
+                             toggleAddBreederModal,
                              handleInputChange,
                              values,
                              submit,
-                             selectedGenderOption,
-                             handleGenderSelect,
-                             selectedSpeciesOption,
-                             handleSpeciesSelect,
                          }: any) => {
     return (
         <>
-            <Button variant="outlined" onClick={toggleShow}>Reptil hinzufügen</Button>
-
-            <Dialog  open={basicModal} onClose={toggleShow}>
+            <Dialog open={showAddBreederModal} onClose={toggleAddBreederModal}>
                 <DialogTitle>
-                    Reptil hinzufügen
-                    <Button className='btn-close' onClick={toggleShow}/>
+                    Züchter hinzufügen
+                    <Button className='btn-close' onClick={toggleAddBreederModal}/>
                 </DialogTitle>
                 <Divider/>
                 <DialogContent className={"dialog"}>
                     <form>
-                        <FormControl fullWidth>
-                            <TextField
-                                className={"mt-3"}
-                                value={values.name}
-                                onChange={handleInputChange}
-                                name="name" //TODO: ohne name Attribut funktioniert es nicht
-                                type="text"
-                                label={"Name"}
-                                placeholder="Name des Reptils..."
-                                required
-                            />
-                            <TextField
-                                className={"mt-3"}
-                                value={values.birthday}
-                                onChange={handleInputChange}
-                                type="text"
-                                label={"Geburtstag"}
-                                name="birthday"
-                                placeholder="Geburtstag des Reptils..."
-                                required
-                            />
-                            <TextField
-                                className={"mt-3"}
-                                value={values.type}
-                                onChange={handleInputChange}
-                                label={"Art"}
-                                name="type"
-                                type="text"
-                                placeholder="Art des Reptils..."
-                                required
-                            />
-                            <TextField
-                                className={"mt-3"}
-                                value={values.morph}
-                                label={"Morph"}
-                                onChange={handleInputChange}
-                                name="morph"
-                                type="text"
-                                placeholder="Morph des Reptils..."
-                            />
-                            <TextField
-                                className={"mt-3"}
-                                value={values.image}
-                                label={"Bild"}
-                                onChange={handleInputChange}
-                                name="image"
-                                type="text"
-                                placeholder="Image Url eingeben"
-                            />
-                        </FormControl>
+                        <div className={"test"}>
+                            <div>
+                                <TextField
+                                    className={"mt-3"}
+                                    value={values.companyName}
+                                    onChange={handleInputChange}
+                                    name="companyName" //TODO: ohne name Attribut funktioniert es nicht
+                                    type="text"
+                                    label={"Firmenname"}
+                                    placeholder="Name der Firma des Züchters..."
+                                    required
+                                />
+                                <TextField
+                                    className={"mt-3"}
+                                    value={values.firstName}
+                                    onChange={handleInputChange}
+                                    type="text"
+                                    label={"Vorname"}
+                                    name="firstName"
+                                    placeholder="Vorname des Züchters..."
+                                    required
+                                />
+                                <TextField
+                                    className={"mt-3"}
+                                    value={values.lastName}
+                                    onChange={handleInputChange}
+                                    label={"Nachname"}
+                                    name="lastName"
+                                    type="text"
+                                    placeholder="Nachname des Züchters..."
+                                    required
+                                />
+                                <TextField
+                                    className={"mt-3"}
+                                    value={values.street}
+                                    label={"Straße"}
+                                    onChange={handleInputChange}
+                                    name="street"
+                                    type="text"
+                                    placeholder="Straße..."
+                                />
+                                <TextField
+                                    className={"mt-3"}
+                                    value={values.postal}
+                                    label={"Postleizahl"}
+                                    onChange={handleInputChange}
+                                    name="postal"
+                                    type="text"
+                                    placeholder="Postleitzahl..."
+                                />
+                            </div>
+                            <div>
+                                <TextField
+                                    className={"mt-3"}
+                                    value={values.place}
+                                    label={"Ort"}
+                                    onChange={handleInputChange}
+                                    name="place"
+                                    type="text"
+                                    placeholder="Ort..."
+                                />
+                                <TextField
+                                    className={"mt-3"}
+                                    value={values.country}
+                                    label={"Land"}
+                                    onChange={handleInputChange}
+                                    name="country"
+                                    type="text"
+                                    placeholder="Land..."
+                                />
+                                <TextField
+                                    className={"mt-3"}
+                                    value={values.email}
+                                    label={"Email"}
+                                    onChange={handleInputChange}
+                                    name="email"
+                                    type="text"
+                                    placeholder="Email..."
+                                />
+                                <TextField
+                                    className={"mt-3"}
+                                    value={values.phone}
+                                    label={"Telefonnummer"}
+                                    onChange={handleInputChange}
+                                    name="phone"
+                                    type="text"
+                                    placeholder="Telefonnummer..."
+                                />
+                            </div>
+                        </div>
                     </form>
                 </DialogContent>
                 <Divider/>
                 <DialogActions>
-                    <Button color='secondary' onClick={toggleShow}>
+                    <Button color='secondary' onClick={toggleAddBreederModal}>
                         Abbrechen
                     </Button>
-                    <Button onClick={submit}>Reptil hinzufügen</Button>
+                    <Button onClick={submit}>Züchter hinzufügen</Button>
                 </DialogActions>
             </Dialog>
         </>
