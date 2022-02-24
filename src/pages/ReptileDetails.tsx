@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {Tab} from "@mui/material";
 import FeedTable from "../components/tables/FeedTable";
 import ReptileInformation from "../components/reptile/ReptileInformation";
@@ -13,6 +13,9 @@ import WeightsTable from "../components/tables/WeightsTable";
  * TODO: Wie Ivonne Löschen und hinzufügen auf dem Tab
  */
 const ReptileDetails = ({reptiles, setReptiles}: any) => {
+
+    const history = useNavigate();
+
 
     let {id} = useParams();
 
@@ -34,6 +37,13 @@ const ReptileDetails = ({reptiles, setReptiles}: any) => {
     const [startDate, setStartDate] = useState(new Date());
 
 
+    function deleteReptile(): void {
+        const newTodos = [...reptiles];
+        newTodos.splice(index, 1);
+        setReptiles(newTodos);
+        history("/reptilienUebersicht");
+    }
+
 
     return (
         <>
@@ -42,7 +52,7 @@ const ReptileDetails = ({reptiles, setReptiles}: any) => {
                 <section className={"section1"}>
 
                     <ReptileInformation
-                        reptile={reptiles[index]}
+                        reptile={reptiles[index]} deleteReptile = {deleteReptile}
                     />
                 </section>
 

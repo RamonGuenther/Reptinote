@@ -112,7 +112,9 @@ function App() {
                 <Navbar/>
                 <div className="App">
                     <Routes>
-                        <Route path={'/'} element={<ReptileOverview reptiles={reptiles} setReptiles={setReptiles}
+
+                        document.title = 'Your page title here';
+                        <Route  path={'/'} element={<ReptileOverview reptiles={reptiles} setReptiles={setReptiles}
                                                                     saveReptile={saveReptile} saveFeeding={saveFeeding}
                                                                     editReptile={editReptile}/>}/>
                         <Route path={'reptilienUebersicht'}

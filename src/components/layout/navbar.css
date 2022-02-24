@@ -1,0 +1,38 @@
+#navbar{
+    background-color: #6b3333;
+    height: 60px;
+}
+
+#navbar-projectName{
+    font-size: xx-large;
+    margin-left: 20px;
+}
+
+.navbar-verticalLine{
+    display: inline-flex;
+    margin-left: 30px;
+    margin-bottom: -15px;
+    border-left: 1px solid #f5f4f4;
+    height: 40px;
+}
+
+#navbar-reptile-overview{
+    font-size: large;
+    margin-left: 20px;
+
+}
+
+#navbar-breeder{
+    font-size: large;
+    margin-left: 20px;
+}
+
+
+a{
+    text-decoration: none !important;
+    color: white;
+}
+
+a, a:hover {
+    color: white;
+}

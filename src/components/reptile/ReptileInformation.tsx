@@ -4,8 +4,9 @@ import {MdDelete, MdSearch} from "react-icons/md";
 
 
 import "./reptileInformation.css"
+import DeleteDialog from "../modals/DeleteDialog";
 
-const ReptileInformation = ({reptile}: any) => {
+const ReptileInformation = ({reptile, deleteReptile}: any) => {
 
     // function Test(){
     //     return(
@@ -13,12 +14,22 @@ const ReptileInformation = ({reptile}: any) => {
     //     )
     // }
 
+    const [open, setOpen] = React.useState(false);
+
+    const toggleDeleteDialog = () => {
+        setOpen(!open);
+    };
+
+
+
+
     return (
         <>
+            <DeleteDialog open={open} toggleDeleteDialog={toggleDeleteDialog} action = {deleteReptile} name ={reptile.name} />
 
-            <Card className={"reptileCardInformation"}>
-                    <h2 className={"reptilName"}>{reptile.name}</h2>
-                    <h2 className={"reptileSpeciesType"}>{reptile.species} | {reptile.type}</h2>
+            <Card id={"reptile-information-card"}>
+                    <h2 id={"reptile-information-name"}>{reptile.name}</h2>
+                    <h2 id={"reptile-information-species_type"}>{reptile.species} | {reptile.type}</h2>
 
                 {/*<CardHeader*/}
                 {/*    title="Shrimp and Chorizo Paella"*/}
@@ -26,12 +37,13 @@ const ReptileInformation = ({reptile}: any) => {
                 {/*>*/}
 
                 {/*</CardHeader>*/}
-                <CardMedia
-                    className={"img"}
-                    component={"img"}
-                    image={reptile.image}
-                />
-                <CardContent className={""}>
+
+                <CardContent className={"reptileInfoContent"}>
+                    <CardMedia
+                        id={"reptile-information-image"}
+                        component={"img"}
+                        image={reptile.image}
+                    />
                     <div className={"cardText"}>
                         {/*TODO: WIe ivonne machen einfach und unten Tabelle benutzen für die Beschriftung*/}
 
@@ -43,12 +55,13 @@ const ReptileInformation = ({reptile}: any) => {
                         <h2><span className={"cardTextSpan"}>Aktuellste Notiz:  </span>{reptile.morph}</h2>
 
                     </div>
+                    {/*{!reptile._breeder.name? <Button > Züchter hinzufügen</Button> : ""}*/}
+
                 </CardContent>
 
-                {!reptile._breeder.name? <Button> Züchter hinzufügen</Button> : ""}
-                <CardActions className={"cardFooter"} >
+                <CardActions className={"reptileInfoActions"} >
                         <Button variant="contained" className={"detailsButton bg-info"} onClick={() => {
-                        }}> <MdSearch size={"25px"}/>
+                         toggleDeleteDialog()}}> <MdDelete size={"25px"}/>
                         </Button>
 
                     {}

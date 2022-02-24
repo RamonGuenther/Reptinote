@@ -15,7 +15,9 @@ import TablePagination from '@mui/material/TablePagination';
 import {initialValuesFeeding} from "../../helper/Constants";
 import AddFeedingModal from "../modals/AddFeedingModal";
 import {notifyFailure, notifySuccess} from "../../helper/Toasts";
-
+import "../reptile/reptileInformation.css"
+import {MdDelete} from "react-icons/md";
+import {FiPlus} from "react-icons/fi";
 const FeedTable = ({reptiles, setReptiles, index, startDate, setStartDate}: any) => {
 
     const [tableData, setTableData] = useState<FeedingClass[]>(reptiles[index].feedings);
@@ -107,16 +109,19 @@ const FeedTable = ({reptiles, setReptiles, index, startDate, setStartDate}: any)
                 startDate={startDate}
                 setStartDate={setStartDate}
             />
+            {/*<Fab className={"tableAddButton"}  size={"small"} onClick={toggleFeedingModal}><FiPlus size={"25px"}/></Fab>*/}
 
-            <Button variant={"contained"} onClick={toggleFeedingModal}>Hinzufügen</Button>
+            <Button className={"tableAddButton"} variant={"contained"} onClick={toggleFeedingModal}>Fütterung hinzufügen</Button>
             <TableContainer component={Paper}>
                 {/*<Button variant={"contained"}>Hinzufügen</Button>*/}
-                <Table sx={{minWidth: 400}} size="small" aria-label="a dense table">
-                    <TableHead>
+                <Table size="medium">
+                    <TableHead style={{background:"grey"}}>
                         <TableRow>
-                            <TableCell> Dessert (100g serving)</TableCell>
-                            <TableCell>Calories</TableCell>
-                            <TableCell>Fat&nbsp;(g)</TableCell>
+                            <TableCell> Datum </TableCell>
+                            <TableCell>Futter</TableCell>
+                            <TableCell>Gewicht</TableCell>
+                            <TableCell>Entfernen</TableCell>
+
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -129,12 +134,11 @@ const FeedTable = ({reptiles, setReptiles, index, startDate, setStartDate}: any)
                                 sx={{'&:last-child td, &:last-child th': {border: 0}}}>
                                 {/*<TableCell component="th">{item.id}</TableCell>*/}
                                 <TableCell component="th">{item.date}</TableCell>
-                                <TableCell component="th">{item.weight} g</TableCell>
-                                <TableCell component="th">{item.feeding} g</TableCell>
-
+                                <TableCell component="th">{item.feeding} </TableCell>
+                                <TableCell component="th">{item.weight}g</TableCell>
                                 <TableCell component="th"><Button onClick={e => {
                                     deleteFeeding(item.id)
-                                }}> test</Button></TableCell>
+                                }}><MdDelete size={"25px"} style={{color: "#c54a4a"}}/></Button></TableCell>
                             </TableRow>
                         ))}
                         {emptyRows > 0 && (

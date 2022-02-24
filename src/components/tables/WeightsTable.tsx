@@ -14,6 +14,7 @@ import TablePagination from '@mui/material/TablePagination';
 import WeightClass from "../../data/WeightClass";
 import AddWeightModal from "../modals/AddWeightModal";
 import {notifyFailure, notifySuccess} from "../../helper/Toasts";
+import {MdDelete} from "react-icons/md";
 
 const WeightsTable = ({reptiles, setReptiles, index, startDate, setStartDate}: any) => {
 
@@ -100,15 +101,15 @@ const WeightsTable = ({reptiles, setReptiles, index, startDate, setStartDate}: a
                 submit={addWeight}
             />
 
-            <Button variant={"contained"} onClick={toggleWeightModal}>Hinzufügen</Button>
+            <Button className={"tableAddButton"} variant={"contained"} onClick={toggleWeightModal}>Gewicht hinzufügen</Button>
 
             <TableContainer component={Paper}>
-                <Table sx={{minWidth: 400}} size="small" aria-label="a dense table">
-                    <TableHead>
+                <Table size="medium">
+                    <TableHead style={{background:"grey"}}>
                         <TableRow>
-                            <TableCell> Dessert (100g serving)</TableCell>
-                            <TableCell>Calories</TableCell>
-                            <TableCell>Fat&nbsp;(g)</TableCell>
+                            <TableCell>Datum</TableCell>
+                            <TableCell>Gewicht</TableCell>
+                            <TableCell>Entfernen</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -124,7 +125,7 @@ const WeightsTable = ({reptiles, setReptiles, index, startDate, setStartDate}: a
                                 <TableCell component="th">{item.weight} g</TableCell>
                                 <TableCell component="th"><Button onClick={() => {
                                     deleteWeight(item.id)
-                                }}> test</Button></TableCell>
+                                }}><MdDelete size={"25px"} style={{color: "#c54a4a"}}/></Button></TableCell>
                             </TableRow>
                         ))}
                         {emptyRows > 0 && (

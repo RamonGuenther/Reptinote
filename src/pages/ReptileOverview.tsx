@@ -174,6 +174,9 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
     const [reptileEditModal, setReptileEditModal] = useState(false);
 
     function initializeEdit() {
+        if(reptiles.length===0){
+            return;
+        }
         let name = reptiles[reptileId].name;
         let birthday = reptiles[reptileId].birthday;
         let type = reptiles[reptileId].type;

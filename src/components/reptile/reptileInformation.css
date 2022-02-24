@@ -1,25 +1,36 @@
-.reptileCardInformation{
+#reptile-information-card {
     background-color: #423c3c !important;
     border: 1px solid black;
     border-radius: 15px !important;
+    margin-top: 10px;
 }
 
-.reptilName{
+#reptile-information-name {
     color: white;
     text-align: left;
     padding-left: 5px;
 }
 
 
-.reptileSpeciesType{
+#reptile-information-species_type {
     font-size: large;
     text-align: left;
     padding-left: 5px;
+    color: white;
 
 }
 
-.img{
-    /*width: 890px !important;*/
-    height: 500px;
+#reptile-information-image{
+    max-width: 80vmin;
+}
+
+
+.reptileInfoContent{
+    background-color: #5d5858;
+}
+
+.reptileInfoActions{
+    background-color: #5d5858;
+
 }
 

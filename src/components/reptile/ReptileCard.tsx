@@ -17,6 +17,7 @@ import {
     CardMedia,
     Chip,
 } from "@mui/material";
+import DeleteDialog from "../modals/DeleteDialog";
 
 const ReptileCard = ({
                          id,
@@ -39,10 +40,17 @@ const ReptileCard = ({
                          toggleReptileEditModal
                      }: any) => {
 
+    const [open, setOpen] = React.useState(false);
+
+    const toggleDeleteDialog = () => {
+        setOpen(!open);
+    };
+
 
     return (
         <div>
-            <Card className={"reptileCard"}>
+            <DeleteDialog open={open} toggleDeleteDialog={toggleDeleteDialog} name ={name} action = {onDeleteReptile}/>
+            <Card id={"reptile-card"}>
                 <CardHeader
                     avatar={<Link to={`/reptileDetails/${id}`}> <Chip onClick={() => {
                     }} className={"nameBadge"} variant="outlined" label={name}/> </Link>}
@@ -50,13 +58,13 @@ const ReptileCard = ({
                 {/*<MDBCardImage className={"image"} src='https://mdbootstrap.com/img/new/standard/nature/182.webp'*/}
                 {/*              alt='...'/>*/}
 
-                <CardContent className={"cardBody"}>
+                <CardContent id={"reptile-card-body"}>
                     <CardMedia
                         className={"image"}
                         component={"img"}
                         image={image}
                     />
-                    <div className={"cardText"}>
+                    <div className={"reptile-card-text"}>
                         <h2><span className={"cardTextSpan"}>Name:</span> {name}</h2>
                         <h2><span className={"cardTextSpan"}>Geburtstag:</span> {birthday}</h2>
                         <h2><span className={"cardTextSpan"}>Geschlecht:</span> {gender}</h2>
@@ -119,7 +127,7 @@ const ReptileCard = ({
 
                         </Button>
                         <Button variant="contained" className={"deleteButton bg-danger"} onClick={() => {
-                            onDeleteReptile(index)
+                            toggleDeleteDialog()
                         }}> <MdDelete size={"25px"}/>
                         </Button>
                     </div>

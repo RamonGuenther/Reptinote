@@ -1,4 +1,4 @@
-.reptileCard {
+#reptile-card {
     margin-top: 50px;
     background-color: #423c3c !important;
     border: 1px solid black;
@@ -6,12 +6,12 @@
 
 }
 
-.cardBody {
+#reptile-card-body {
     display: flex;
     background-color: #5d5858;
 }
 
-.cardText {
+.reptile-card-text {
     width: 100%;
     text-align: left;
     color: white;
@@ -33,7 +33,7 @@
     min-width: 150px;
     font-size: x-large !important;
     color: white !important;
-    background-color: #6c1515 !important;
+    background-color: #7e3d3d !important;
 }
 
 .badgeLayout{
@@ -47,7 +47,7 @@
     margin-top: 10px;
     border-radius: 10px;
     padding: 10px;
-    background-color: #a25353 !important;
+    background-color: #7e3d3d !important;
     margin-right: 5px;
     margin-left: 5px;
 }
