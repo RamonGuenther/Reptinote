@@ -1,10 +1,10 @@
 import { v4 as uuidv4 } from 'uuid';
-import FeedingClass from "./FeedingClass";
-import NoteClass from "./NoteClass";
-import WeightClass from "./WeightClass";
-import {BreederClass} from "./BreederClass";
+import Feeding from "./Feeding";
+import Note from "./Note";
+import Weight from "./Weight";
+import {Breeder} from "./Breeder";
 
-export class ReptileClass {
+export class Reptile {
 
     private _id: string;
     private _name: string ="";
@@ -13,15 +13,15 @@ export class ReptileClass {
     private _morph: string ="";
     private _species: string =""; //Spezies (Ordnung)
     private _gender: string = "";
-    private _feedings : FeedingClass[];
-    private _notes : NoteClass[];
-    private _weights : WeightClass[];
+    private _feedings : Feeding[];
+    private _notes : Note[];
+    private _weights : Weight[];
     private _image : string = "";
-    private _breeder : BreederClass;
+    private _breeder : Breeder;
 
     constructor() {
         this._id = uuidv4();
-        this._breeder = new BreederClass();
+        this._breeder = new Breeder();
         this._feedings = [];
         this._notes = [];
         this._weights = [];
@@ -29,11 +29,11 @@ export class ReptileClass {
     }
 
 
-    get breeder(): BreederClass {
+    get breeder(): Breeder {
         return this._breeder;
     }
 
-    set breeder(value: BreederClass) {
+    set breeder(value: Breeder) {
         this._breeder = value;
     }
 
@@ -45,11 +45,11 @@ export class ReptileClass {
         return this._id;
     }
 
-    set feedings(value: FeedingClass[]) {
+    set feedings(value: Feeding[]) {
         this._feedings = value;
     }
 
-    get feedings(): FeedingClass[] {
+    get feedings(): Feeding[] {
         return this._feedings;
     }
 
@@ -102,19 +102,19 @@ export class ReptileClass {
         return this._gender;
     }
 
-    set notes(value: NoteClass[]) {
+    set notes(value: Note[]) {
         this._notes = value;
     }
 
-    set weights(value: WeightClass[]) {
+    set weights(value: Weight[]) {
         this._weights = value;
     }
 
-    get notes(): NoteClass[] {
+    get notes(): Note[] {
         return this._notes;
     }
 
-    get weights(): WeightClass[] {
+    get weights(): Weight[] {
         return this._weights;
     }
 
@@ -127,7 +127,7 @@ export class ReptileClass {
         return this._image;
     }
 
-    setReptile(name: string, birthday : string, type : string, morph : string, gender: string, species : string, image : string){
+    public setReptile(name: string, birthday : string, type : string, morph : string, gender: string, species : string, image : string){
         this._name = name;
         this._birthday = birthday;
         this._type = type;
@@ -138,7 +138,7 @@ export class ReptileClass {
     }
 
 
-    loadReptile(name: string, birthday : string, type : string, morph : string, gender: string, species : string, feedings : FeedingClass[], notes : NoteClass[], weights : WeightClass[], image: string){
+    public loadReptile(name: string, birthday : string, type : string, morph : string, gender: string, species : string, feedings : Feeding[], notes : Note[], weights : Weight[], image: string){
         this._name = name;
         this._birthday = birthday;
         this._type = type;

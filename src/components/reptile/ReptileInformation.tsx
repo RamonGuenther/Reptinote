@@ -14,22 +14,21 @@ const ReptileInformation = ({reptile, deleteReptile}: any) => {
     //     )
     // }
 
-    const [open, setOpen] = React.useState(false);
+    const [showDeleteDialog, setShowDeleteDialog] = React.useState(false);
 
     const toggleDeleteDialog = () => {
-        setOpen(!open);
+        setShowDeleteDialog(!showDeleteDialog);
     };
-
-
 
 
     return (
         <>
-            <DeleteDialog open={open} toggleDeleteDialog={toggleDeleteDialog} action = {deleteReptile} name ={reptile.name} />
+            <DeleteDialog open={showDeleteDialog} toggleDeleteDialog={toggleDeleteDialog} action={deleteReptile}
+                          name={reptile.name}/>
 
             <Card id={"reptile-information-card"}>
-                    <h2 id={"reptile-information-name"}>{reptile.name}</h2>
-                    <h2 id={"reptile-information-species_type"}>{reptile.species} | {reptile.type}</h2>
+                <h2 id={"reptile-information-name"}>{reptile.name}</h2>
+                <h2 id={"reptile-information-species_type"}>{reptile.species} | {reptile.type}</h2>
 
                 {/*<CardHeader*/}
                 {/*    title="Shrimp and Chorizo Paella"*/}
@@ -39,30 +38,41 @@ const ReptileInformation = ({reptile, deleteReptile}: any) => {
                 {/*</CardHeader>*/}
 
                 <CardContent className={"reptileInfoContent"}>
-                    <CardMedia
-                        id={"reptile-information-image"}
+                    {reptile.image !== "" ? <CardMedia
+                        className={"image"}
                         component={"img"}
                         image={reptile.image}
-                    />
-                    <div className={"cardText"}>
+
+                    /> : <CardMedia
+                        className={"image"}
+                        component={"img"}
+                        image={"https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/No_image_available_600_x_450.svg/600px-No_image_available_600_x_450.svg.png?20150903195108"}
+                    />}
+                    <div className={"reptile-information-card-text"}>
                         {/*TODO: WIe ivonne machen einfach und unten Tabelle benutzen für die Beschriftung*/}
 
-                        <h2><span className={"cardTextSpan"}>Geburtstag:</span> {reptile.birthday}</h2>
-                        <h2><span className={"cardTextSpan"}>Geschlecht:</span> {reptile.gender}</h2>
-                        <h2><span className={"cardTextSpan"}>Morph: </span>{reptile.morph}</h2>
-                        <h2><span className={"cardTextSpan"}>Letzte Fütterung: </span> {reptile.birthday}</h2>
-                        <h2><span className={"cardTextSpan"}>Gewicht: </span> {reptile.gender}</h2>
-                        <h2><span className={"cardTextSpan"}>Aktuellste Notiz:  </span>{reptile.morph}</h2>
+                        <div>
+                            <h2><span className={"cardTextSpan"}>Geburtstag:</span> {reptile.birthday}</h2>
+                            <h2><span className={"cardTextSpan"}>Geschlecht:</span> {reptile.gender}</h2>
+                            <h2><span className={"cardTextSpan"}>Morph: </span>{reptile.morph}</h2>
+                        </div>
+
+                        <div>
+                            <h2><span className={"cardTextSpan"}>Letzte Fütterung: </span> {reptile.birthday}</h2>
+                            <h2><span className={"cardTextSpan"}>Gewicht: </span> {reptile.gender}</h2>
+                            <h2><span className={"cardTextSpan"}>Aktuellste Notiz:  </span>{reptile.morph}</h2>
+                        </div>
 
                     </div>
                     {/*{!reptile._breeder.name? <Button > Züchter hinzufügen</Button> : ""}*/}
 
                 </CardContent>
 
-                <CardActions className={"reptileInfoActions"} >
-                        <Button variant="contained" className={"detailsButton bg-info"} onClick={() => {
-                         toggleDeleteDialog()}}> <MdDelete size={"25px"}/>
-                        </Button>
+                <CardActions className={"reptileInfoActions"}>
+                    <Button variant="contained" className={"detailsButton bg-info"} onClick={() => {
+                        toggleDeleteDialog()
+                    }}> <MdDelete size={"25px"}/>
+                    </Button>
 
                     {}
                 </CardActions>

@@ -17,8 +17,8 @@ import {LocalizationProvider} from "@mui/lab";
 
 
 const AddFeedingModal = ({
-                             toggleShow,
-                             basicModal,
+                             toggleAddFeedingModal,
+                             showAddFeedingModal,
                              handleInputChange,
                              values,
                              submit,
@@ -27,10 +27,10 @@ const AddFeedingModal = ({
                          }: any) => {
     return (
         <>
-            <Dialog open={basicModal} onClose={toggleShow}>
+            <Dialog open={showAddFeedingModal} onClose={toggleAddFeedingModal}>
                 <DialogTitle>
                     Fütterung hinzufügen
-                    <Button className='btn-close' onClick={toggleShow}/>
+                    <Button className='btn-close' onClick={toggleAddFeedingModal}/>
                 </DialogTitle>
              <Divider/>
             <DialogContent>
@@ -76,7 +76,7 @@ const AddFeedingModal = ({
                 <Divider/>
 
                 <DialogActions>
-                    <Button color='secondary' onClick={toggleShow}>
+                    <Button color='secondary' onClick={toggleAddFeedingModal}>
                         Abbrechen
                     </Button>
                     <Button onClick={submit}>Fütterung hinzufügen</Button>

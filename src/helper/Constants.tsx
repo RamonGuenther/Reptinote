@@ -28,6 +28,18 @@ export const initialValuesFeeding = {
     weight: "",
 }
 
+export const initialValuesBreeder={
+    companyName: '',
+    firstName: '',
+    lastName: '',
+    street: '',
+    postal: '',
+    place: '',
+    country: '',
+    email: '',
+    phone: ''
+}
+
 
 export const reptilesExample = [
     {
@@ -62,5 +74,33 @@ export const reptilesExample = [
         morph: 'Classic',
         image: 'https://i.ibb.co/BLnjXz7/Hektor.jpg',
         feedings: []
+    },
+];
+
+
+export const breedersExample = [
+    {
+        id: '0',
+        companyName: '',
+        firstName: 'Unbekannt',
+        lastName: '',
+        street: '',
+        postal: '',
+        place: '',
+        country: '',
+        email: '',
+        phone: ''
+    },
+    {
+        id: '1',
+        companyName: 'Reptifit',
+        firstName: 'Wilco',
+        lastName: 'van Ee',
+        street: '',
+        postal: '',
+        place: 'Apeldoorn',
+        country: 'Niederlande',
+        email: 'info@reptifit.nl',
+        phone: ''
     },
 ];

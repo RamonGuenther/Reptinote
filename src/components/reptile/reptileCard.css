@@ -6,6 +6,7 @@
 
 }
 
+/*TODO: vllt doch grid und größe zuweisen*/
 #reptile-card-body {
     display: flex;
     background-color: #5d5858;
@@ -47,7 +48,7 @@
     margin-top: 10px;
     border-radius: 10px;
     padding: 10px;
-    background-color: #7e3d3d !important;
+    background-color: #a25353 !important;
     margin-right: 5px;
     margin-left: 5px;
 }

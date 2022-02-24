@@ -40,16 +40,16 @@ const ReptileCard = ({
                          toggleReptileEditModal
                      }: any) => {
 
-    const [open, setOpen] = React.useState(false);
+    const [showDeleteDialog, setShowDeleteDialog] = React.useState(false);
 
     const toggleDeleteDialog = () => {
-        setOpen(!open);
+        setShowDeleteDialog(!showDeleteDialog);
     };
 
 
     return (
         <div>
-            <DeleteDialog open={open} toggleDeleteDialog={toggleDeleteDialog} name ={name} action = {onDeleteReptile}/>
+            <DeleteDialog open={showDeleteDialog} toggleDeleteDialog={toggleDeleteDialog} name ={name} action = {onDeleteReptile}/>
             <Card id={"reptile-card"}>
                 <CardHeader
                     avatar={<Link to={`/reptileDetails/${id}`}> <Chip onClick={() => {
@@ -59,11 +59,17 @@ const ReptileCard = ({
                 {/*              alt='...'/>*/}
 
                 <CardContent id={"reptile-card-body"}>
-                    <CardMedia
+                    {image !== "" ? <CardMedia
                         className={"image"}
                         component={"img"}
                         image={image}
-                    />
+
+                    /> : <CardMedia
+                        className={"image"}
+                        component={"img"}
+                        image={"https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/No_image_available_600_x_450.svg/600px-No_image_available_600_x_450.svg.png?20150903195108"}
+                    />}
+
                     <div className={"reptile-card-text"}>
                         <h2><span className={"cardTextSpan"}>Name:</span> {name}</h2>
                         <h2><span className={"cardTextSpan"}>Geburtstag:</span> {birthday}</h2>
@@ -74,7 +80,7 @@ const ReptileCard = ({
                         <div className={"badgeLayout"}>
                             {weights[weights.length - 1] !== undefined &&
                             <h3><Badge className={"lastWeightBadge"}> <GiWeight size={"25px"}/>
-                                {+weights[weights.length - 1]._weight}g</Badge></h3>}
+                                {weights[weights.length - 1]._weight}g</Badge></h3>}
 
                             {feedings[feedings.length - 1] !== undefined &&
                             <h3><Badge className={"lastFeedingBadge"}> <IoFastFoodOutline size={"25px"}/>

@@ -11,15 +11,15 @@ import {
     TableRow
 } from "@mui/material";
 import TablePagination from '@mui/material/TablePagination';
-import NoteClass from "../../data/NoteClass";
+import Note from "../../data/Note";
 import {notifyFailure, notifySuccess} from "../../helper/Toasts";
 import AddNoteModal from "../modals/AddNoteModal";
 import {MdDelete} from "react-icons/md";
 
 const NotesTable = ({reptiles, setReptiles, index, startDate, setStartDate}: any) => {
 
-    const [tableData, setTableData] = useState<NoteClass[]>(reptiles[index].notes);
-    const [noteModal, setNoteModal] = useState(false);
+    const [tableData, setTableData] = useState<Note[]>(reptiles[index].notes);
+    const [showAddNoteModal, setShowAddNoteModal] = useState(false);
     const [inputNote, setInputNote] = useState("");
 
 
@@ -29,7 +29,7 @@ const NotesTable = ({reptiles, setReptiles, index, startDate, setStartDate}: any
             return;
         }
         const newReptiles = [...reptiles];
-        let newNote = new NoteClass();
+        let newNote = new Note();
         newNote.setNote(inputNote, startDate.toLocaleDateString());
         newReptiles[index].notes.push(newNote);
         setReptiles(newReptiles);
@@ -39,7 +39,7 @@ const NotesTable = ({reptiles, setReptiles, index, startDate, setStartDate}: any
         handleDataChange(newReptiles[index].notes)
 
         notifySuccess("Die Notiz wurde gespeichert.");
-        toggleNoteModal();
+        toggleAddNoteModal();
     }
 
     function deleteNote(id: string) {
@@ -55,7 +55,7 @@ const NotesTable = ({reptiles, setReptiles, index, startDate, setStartDate}: any
         handleDataChange(newReptile[index].notes);
     }
 
-    function handleDataChange(newTableData: NoteClass[]) {
+    function handleDataChange(newTableData: Note[]) {
         const newReptiles = [...newTableData];
         setTableData(newReptiles);
     }
@@ -65,8 +65,8 @@ const NotesTable = ({reptiles, setReptiles, index, startDate, setStartDate}: any
     }
 
 
-    function toggleNoteModal(): void {
-        setNoteModal(!noteModal);
+    function toggleAddNoteModal(): void {
+        setShowAddNoteModal(!showAddNoteModal);
     }
 
 
@@ -93,9 +93,8 @@ const NotesTable = ({reptiles, setReptiles, index, startDate, setStartDate}: any
         <div>
 
             <AddNoteModal
-                toggleShow={toggleNoteModal}
-                setBasicModal={setNoteModal}
-                basicModal={noteModal}
+                toggleAddNoteModal={toggleAddNoteModal}
+                showAddNoteModal={showAddNoteModal}
                 startDate={startDate}
                 setStartDate={setStartDate}
                 inputNote={inputNote}
@@ -103,7 +102,7 @@ const NotesTable = ({reptiles, setReptiles, index, startDate, setStartDate}: any
                 submit={addNote}
             />
 
-            <Button className={"tableAddButton"} variant={"contained"} onClick={toggleNoteModal}>Notiz hinzufügen</Button>
+            <Button className={"tableAddButton"} variant={"contained"} onClick={toggleAddNoteModal}>Notiz hinzufügen</Button>
 
             <TableContainer component={Paper}>
                 <Table size="medium">
@@ -118,12 +117,12 @@ const NotesTable = ({reptiles, setReptiles, index, startDate, setStartDate}: any
                         {(rowsPerPage > 0
                                 ? tableData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                 : tableData
-                        ).map((item: NoteClass) => (
+                        ).map((item: Note) => (
                             <TableRow
                                 key={item.id}
                                 sx={{'&:last-child td, &:last-child th': {border: 0}}}>
                                 <TableCell component="th">{item.date}</TableCell>
-                                <TableCell component="th">{item.note} g</TableCell>
+                                <TableCell component="th">{item.note}</TableCell>
                                 <TableCell component="th"><Button onClick={() => {
                                     deleteNote(item.id)
                                 }}><MdDelete size={"25px"} style={{color: "#c54a4a"}}/></Button></TableCell>

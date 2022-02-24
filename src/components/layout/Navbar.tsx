@@ -8,7 +8,7 @@ const Navbar = () => {
             <Link to={'/'} id="navbar-projectName" className="projectTitle navbar-brand">Reptinote </Link>
             <div className="navbar-verticalLine"/>
             <Link to={'/'} id="navbar-reptile-overview"> Reptilienübersicht</Link>
-            <Link to={'Breeder'} id="navbar-breeder"> Züchter </Link>
+            <Link to={'breeder'} id="navbar-breeder"> Züchter </Link>
         </div>
     )
 }

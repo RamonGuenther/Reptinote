@@ -18,8 +18,8 @@ import {LocalizationProvider} from "@mui/lab";
 
 
 const AddNoteModal = ({
-                          toggleShow,
-                          basicModal,
+                          toggleAddNoteModal,
+                          showAddNoteModal,
                           submit,
                           startDate,
                           setStartDate,
@@ -30,10 +30,10 @@ const AddNoteModal = ({
 
     return (
         <>
-            <Dialog open={basicModal} onClose={toggleShow}>
+            <Dialog open={showAddNoteModal} onClose={toggleAddNoteModal}>
                 <DialogTitle>
                     Notiz hinzufügen
-                    <Button className='btn-close' onClick={toggleShow}/>
+                    <Button className='btn-close' onClick={toggleAddNoteModal}/>
                 </DialogTitle>
                 <Divider/>
 
@@ -68,7 +68,7 @@ const AddNoteModal = ({
                 <Divider/>
 
                 <DialogActions>
-                    <Button color='secondary' onClick={toggleShow}>
+                    <Button color='secondary' onClick={toggleAddNoteModal}>
                         Abbrechen
                     </Button>
                     <Button onClick={submit}>Notiz hinzufügen</Button>

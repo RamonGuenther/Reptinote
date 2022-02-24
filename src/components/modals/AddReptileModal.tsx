@@ -13,8 +13,8 @@ import {optionsGender, optionsSpecies} from "../../helper/Constants";
 
 
 const AddReptileModal = ({
-                             toggleShow,
-                             basicModal,
+                             toggleAddReptileModal,
+                             showAddReptileModal,
                              handleInputChange,
                              values,
                              submit,
@@ -25,12 +25,12 @@ const AddReptileModal = ({
                          }: any) => {
     return (
         <>
-            <Button variant="outlined" onClick={toggleShow}>Reptil hinzufügen</Button>
+            <Button variant="outlined" onClick={toggleAddReptileModal}>Reptil hinzufügen</Button>
 
-            <Dialog  open={basicModal} onClose={toggleShow}>
+            <Dialog  open={showAddReptileModal} onClose={toggleAddReptileModal}>
                 <DialogTitle>
                     Reptil hinzufügen
-                    <Button className='btn-close' onClick={toggleShow}/>
+                    <Button className='btn-close' onClick={toggleAddReptileModal}/>
                 </DialogTitle>
                 <Divider/>
                 <DialogContent className={"dialog"}>
@@ -130,7 +130,7 @@ const AddReptileModal = ({
                 </DialogContent>
                 <Divider/>
                 <DialogActions>
-                    <Button color='secondary' onClick={toggleShow}>
+                    <Button color='secondary' onClick={toggleAddReptileModal}>
                         Abbrechen
                     </Button>
                     <Button onClick={submit}>Reptil hinzufügen</Button>

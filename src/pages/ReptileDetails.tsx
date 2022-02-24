@@ -8,10 +8,7 @@ import {TabContext, TabList, TabPanel} from "@mui/lab";
 import NotesTable from "../components/tables/NotesTable";
 import WeightsTable from "../components/tables/WeightsTable";
 
-/**
- *
- * TODO: Wie Ivonne Löschen und hinzufügen auf dem Tab
- */
+
 const ReptileDetails = ({reptiles, setReptiles}: any) => {
 
     const history = useNavigate();
@@ -44,7 +41,6 @@ const ReptileDetails = ({reptiles, setReptiles}: any) => {
         history("/reptilienUebersicht");
     }
 
-
     return (
         <>
             <div className={"reptileDetails"}>
@@ -55,6 +51,7 @@ const ReptileDetails = ({reptiles, setReptiles}: any) => {
                         reptile={reptiles[index]} deleteReptile = {deleteReptile}
                     />
                 </section>
+
 
                 <section className="section2">
                     <TabContext value={value}>

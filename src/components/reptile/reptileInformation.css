@@ -34,3 +34,8 @@
 
 }
 
+.reptile-information-card-text{
+    display: grid;
+    grid-template-areas: "a b";
+}
+

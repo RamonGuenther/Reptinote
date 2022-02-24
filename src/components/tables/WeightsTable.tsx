@@ -11,15 +11,15 @@ import {
     TableRow
 } from "@mui/material";
 import TablePagination from '@mui/material/TablePagination';
-import WeightClass from "../../data/WeightClass";
+import Weight from "../../data/Weight";
 import AddWeightModal from "../modals/AddWeightModal";
 import {notifyFailure, notifySuccess} from "../../helper/Toasts";
 import {MdDelete} from "react-icons/md";
 
 const WeightsTable = ({reptiles, setReptiles, index, startDate, setStartDate}: any) => {
 
-    const [tableData, setTableData] = useState<WeightClass[]>(reptiles[index].weights);
-    const [weightModal, setWeightModal] = useState(false);
+    const [tableData, setTableData] = useState<Weight[]>(reptiles[index].weights);
+    const [showAddWeightModal, setShowAddWeightModal] = useState(false);
     const [inputWeight, setInputWeight] = useState("");
 
 
@@ -29,7 +29,7 @@ const WeightsTable = ({reptiles, setReptiles, index, startDate, setStartDate}: a
             return;
         }
         const newReptiles = [...reptiles];
-        let newWeight = new WeightClass();
+        let newWeight = new Weight();
         newWeight.setWeight(inputWeight, startDate.toLocaleDateString());
         newReptiles[index].weights.push(newWeight);
         setReptiles(newReptiles);
@@ -39,7 +39,7 @@ const WeightsTable = ({reptiles, setReptiles, index, startDate, setStartDate}: a
         handleDataChange(newReptiles[index].weights)
 
         notifySuccess("Die Notiz wurde gespeichert.");
-        toggleWeightModal();
+        toggleAddWeightModal();
     }
 
 
@@ -56,7 +56,7 @@ const WeightsTable = ({reptiles, setReptiles, index, startDate, setStartDate}: a
         handleDataChange(newReptile[index].weights);
     }
 
-    function handleDataChange(newTableData: WeightClass[]) {
+    function handleDataChange(newTableData: Weight[]) {
         const newReptiles = [...newTableData];
         setTableData(newReptiles);
     }
@@ -65,8 +65,8 @@ const WeightsTable = ({reptiles, setReptiles, index, startDate, setStartDate}: a
         setInputWeight(event.target.value)
     }
 
-    function toggleWeightModal(): void {
-        setWeightModal(!weightModal);
+    function toggleAddWeightModal(): void {
+        setShowAddWeightModal(!showAddWeightModal);
     }
 
 
@@ -92,8 +92,8 @@ const WeightsTable = ({reptiles, setReptiles, index, startDate, setStartDate}: a
     return (
         <div>
             <AddWeightModal
-                toggleShow={toggleWeightModal}
-                basicModal={weightModal}
+                toggleAddWeightModal={toggleAddWeightModal}
+                showAddWeightModal={showAddWeightModal}
                 startDate={startDate}
                 setStartDate={setStartDate}
                 inputWeight={inputWeight}
@@ -101,7 +101,7 @@ const WeightsTable = ({reptiles, setReptiles, index, startDate, setStartDate}: a
                 submit={addWeight}
             />
 
-            <Button className={"tableAddButton"} variant={"contained"} onClick={toggleWeightModal}>Gewicht hinzufügen</Button>
+            <Button className={"tableAddButton"} variant={"contained"} onClick={toggleAddWeightModal}>Gewicht hinzufügen</Button>
 
             <TableContainer component={Paper}>
                 <Table size="medium">
@@ -116,7 +116,7 @@ const WeightsTable = ({reptiles, setReptiles, index, startDate, setStartDate}: a
                         {(rowsPerPage > 0
                                 ? tableData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                 : tableData
-                        ).map((item: WeightClass) => (
+                        ).map((item: Weight) => (
                             <TableRow
                                 key={item.id}
                                 sx={{'&:last-child td, &:last-child th': {border: 0}}}>

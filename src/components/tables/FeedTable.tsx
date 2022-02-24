@@ -10,7 +10,7 @@ import {
     TableHead,
     TableRow
 } from "@mui/material";
-import FeedingClass from "../../data/FeedingClass";
+import Feeding from "../../data/Feeding";
 import TablePagination from '@mui/material/TablePagination';
 import {initialValuesFeeding} from "../../helper/Constants";
 import AddFeedingModal from "../modals/AddFeedingModal";
@@ -20,17 +20,19 @@ import {MdDelete} from "react-icons/md";
 import {FiPlus} from "react-icons/fi";
 const FeedTable = ({reptiles, setReptiles, index, startDate, setStartDate}: any) => {
 
-    const [tableData, setTableData] = useState<FeedingClass[]>(reptiles[index].feedings);
+    const [tableData, setTableData] = useState<Feeding[]>(reptiles[index].feedings);
+
+
     const [feedingValues, setFeedingValues] = useState(initialValuesFeeding);
-    const [feedingModal, setFeedingModal] = useState(false);
+    const [showAddFeedingModal, setShowAddFeedingModal] = useState(false);
 
     function addFeeding(){
         if (feedingValues.type === "" || feedingValues.weight === " ") { //TODO: wie validieren
             notifyFailure("Bitte alle Felder ausfüllen!")
             return;
         }
-        let newFeeding = new FeedingClass();
-        newFeeding.setFoody(feedingValues.weight, feedingValues.type, startDate.toLocaleDateString());
+        let newFeeding = new Feeding();
+        newFeeding.setFeeding(feedingValues.weight, feedingValues.type, startDate.toLocaleDateString());
         const newReptiles = [...reptiles];
         newReptiles[index].feedings.push(newFeeding);
         setReptiles(newReptiles);
@@ -40,7 +42,7 @@ const FeedTable = ({reptiles, setReptiles, index, startDate, setStartDate}: any)
         setFeedingValues(initialValuesFeeding)
         setStartDate(new Date());
         notifySuccess("Die Fütterung wurde gespeichert.");
-        toggleFeedingModal();
+        toggleAddFeedingModal();
     }
 
     function deleteFeeding(id: string) {
@@ -58,7 +60,7 @@ const FeedTable = ({reptiles, setReptiles, index, startDate, setStartDate}: any)
 
 
 
-    function handleDataChange(newTableData: FeedingClass[]) {
+    function handleDataChange(newTableData: Feeding[]) {
         const newReptiles = [...newTableData];
         setTableData(newReptiles);
     }
@@ -71,8 +73,8 @@ const FeedTable = ({reptiles, setReptiles, index, startDate, setStartDate}: any)
         });
     }
 
-    function toggleFeedingModal(): void {
-        setFeedingModal(!feedingModal);
+    function toggleAddFeedingModal(): void {
+        setShowAddFeedingModal(!showAddFeedingModal);
     }
 
 
@@ -100,18 +102,17 @@ const FeedTable = ({reptiles, setReptiles, index, startDate, setStartDate}: any)
     return (
         <div>
             <AddFeedingModal
-                toggleShow={toggleFeedingModal}
-                setBasicModal={setFeedingModal}
-                basicModal={feedingModal}
+                toggleAddFeedingModal={toggleAddFeedingModal}
+                showAddFeedingModal={showAddFeedingModal}
                 values={feedingValues}
                 handleInputChange={handleInputChangeFeeding}
                 submit={addFeeding}
                 startDate={startDate}
                 setStartDate={setStartDate}
             />
-            {/*<Fab className={"tableAddButton"}  size={"small"} onClick={toggleFeedingModal}><FiPlus size={"25px"}/></Fab>*/}
+            {/*<Fab className={"tableAddButton"}  size={"small"} onClick={toggleAddFeedingModal}><FiPlus size={"25px"}/></Fab>*/}
 
-            <Button className={"tableAddButton"} variant={"contained"} onClick={toggleFeedingModal}>Fütterung hinzufügen</Button>
+            <Button className={"tableAddButton"} variant={"contained"} onClick={toggleAddFeedingModal}>Fütterung hinzufügen</Button>
             <TableContainer component={Paper}>
                 {/*<Button variant={"contained"}>Hinzufügen</Button>*/}
                 <Table size="medium">
@@ -128,13 +129,13 @@ const FeedTable = ({reptiles, setReptiles, index, startDate, setStartDate}: any)
                         {(rowsPerPage > 0
                                 ? tableData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                 : tableData
-                        ).map((item: FeedingClass) => (
+                        ).map((item: Feeding) => (
                             <TableRow
                                 key={item.id}
                                 sx={{'&:last-child td, &:last-child th': {border: 0}}}>
                                 {/*<TableCell component="th">{item.id}</TableCell>*/}
                                 <TableCell component="th">{item.date}</TableCell>
-                                <TableCell component="th">{item.feeding} </TableCell>
+                                <TableCell component="th">{item.food} </TableCell>
                                 <TableCell component="th">{item.weight}g</TableCell>
                                 <TableCell component="th"><Button onClick={e => {
                                     deleteFeeding(item.id)

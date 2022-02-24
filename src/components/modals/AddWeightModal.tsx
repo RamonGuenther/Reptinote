@@ -19,10 +19,9 @@ import {LocalizationProvider} from "@mui/lab";
 
 
 const AddWeightModal = ({
-                            toggleShow,
-                            basicModal,
+                            toggleAddWeightModal,
+                            showAddWeightModal,
                             submit,
-                            index,
                             startDate,
                             setStartDate,
                             inputWeight,
@@ -32,10 +31,10 @@ const AddWeightModal = ({
 
     return (
         <>
-            <Dialog open={basicModal} onClose={toggleShow}>
+            <Dialog open={showAddWeightModal} onClose={toggleAddWeightModal}>
                 <DialogTitle>
                     Gewicht hinzufügen
-                    <Button className='btn-close' onClick={toggleShow}/>
+                    <Button className='btn-close' onClick={toggleAddWeightModal}/>
                 </DialogTitle>
                 <Divider/>
 
@@ -71,7 +70,7 @@ const AddWeightModal = ({
                 <Divider/>
 
                 <DialogActions>
-                    <Button color='secondary' onClick={toggleShow}>
+                    <Button color='secondary' onClick={toggleAddWeightModal}>
                         Abbrechen
                     </Button>
                     <Button onClick={submit}> Fütterung hinzufügen</Button>

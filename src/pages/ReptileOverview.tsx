@@ -1,14 +1,14 @@
 import React, {useEffect, useState} from "react";
 import ReptileCard from "../components/reptile/ReptileCard";
-import {ReptileClass} from "../data/ReptileClass";
+import {Reptile} from "../data/Reptile";
 import AddReptileModal from "../components/modals/AddReptileModal";
 import 'react-toastify/dist/ReactToastify.css';
-import FeedingClass from "../data/FeedingClass";
+import Feeding from "../data/Feeding";
 import AddFeedingModal from "../components/modals/AddFeedingModal";
 import AddWeightModal from "../components/modals/AddWeightModal";
 import AddNoteModal from "../components/modals/AddNoteModal";
-import NoteClass from "../data/NoteClass";
-import WeightClass from "../data/WeightClass";
+import Note from "../data/Note";
+import Weight from "../data/Weight";
 import EditReptileModal from "../components/modals/EditReptileModal";
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -16,16 +16,15 @@ import {initialValuesFeeding, initialValuesReptile} from "../helper/Constants";
 import {notifyFailure, notifySuccess} from "../helper/Toasts";
 
 
-//TODO: Statt klassen interfaces??? // WAHrscheinlich keine neuen States
 function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editReptile}: any) {
 
     const [reptileValues, setReptileValues] = useState(initialValuesReptile);
     const [feedingValues, setFeedingValues] = useState(initialValuesFeeding);
 
-    const [reptileModal, setReptileModal] = useState(false);
-    const [feedingModal, setFeedingModal] = useState(false);
-    const [weightModal, setWeightModal] = useState(false);
-    const [noteModal, setNoteModal] = useState(false);
+    const [showAddReptileModal, setShowAddReptileModal] = useState(false);
+    const [showAddFeedingModal, setShowAddFeedingModal] = useState(false);
+    const [showAddWeightModal, setShowAddWeightModal] = useState(false);
+    const [showAddNoteModal, setShowAddNoteModal] = useState(false);
 
     const [selectedGenderOption, setSelectedGenderOption] = useState("");
     const [selectedSpeciesOption, setSelectedSpeciesOption] = useState("");
@@ -37,19 +36,19 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
             notifyFailure("Bitte alle Pflichtfelder ausfüllen!");
             return;
         }
-        let newReptile = new ReptileClass();
+        let newReptile = new Reptile();
         newReptile.setReptile(reptileValues.name, reptileValues.birthday, reptileValues.type, reptileValues.morph, selectedGenderOption, selectedSpeciesOption, reptileValues.image);
 
-        if (reptileModal) {
+        if (showAddReptileModal) {
             saveReptile(newReptile);
             setReptileValues(initialValuesReptile); //reset
             notifySuccess("Das Reptil " + reptileValues.name + " wurde gespeichert.");
-            toggleReptileModal();
-        } else if (reptileEditModal) {
+            toggleAddReptileModal();
+        } else if (showEditReptileModal) {
             editReptile(newReptile, reptileId)
             setReptileValues(initialValuesReptile); //reset
             notifySuccess("Das Reptil " + reptileValues.name + " wurde bearbeitet.");
-            toggle();
+            toggleEditReptileModal();
         }
     }
 
@@ -59,13 +58,13 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
             notifyFailure("Bitte alle Felder ausfüllen!")
             return;
         }
-        let feeding = new FeedingClass();
-        feeding.setFoody(feedingValues.weight, feedingValues.type, startDate.toLocaleDateString());
+        let feeding = new Feeding();
+        feeding.setFeeding(feedingValues.weight, feedingValues.type, startDate.toLocaleDateString());
         saveFeeding(feeding, reptileId);
         setFeedingValues(initialValuesFeeding)
         setStartDate(new Date());
         notifySuccess("Die Fütterung wurde gespeichert.");
-        toggleFeedingModal();
+        toggleAddFeedingModal();
     }
 
 
@@ -95,23 +94,23 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
     }
 
 
-    const [reptileId, setReptileId] = useState(0);
+    const [reptileId, setReptileId] = useState(0); //TODO uuid benutzen
 
-    function toggleReptileModal(): void {
+    function toggleAddReptileModal(): void {
         setReptileValues(initialValuesReptile);
-        setReptileModal(!reptileModal);
+        setShowAddReptileModal(!showAddReptileModal);
     }
 
-    function toggleFeedingModal(): void {
-        setFeedingModal(!feedingModal);
+    function toggleAddFeedingModal(): void {
+        setShowAddFeedingModal(!showAddFeedingModal);
     }
 
-    function toggleWeightModal(): void {
-        setWeightModal(!weightModal);
+    function toggleAddWeightModal(): void {
+        setShowAddWeightModal(!showAddWeightModal);
     }
 
-    function toggleNoteModal(): void {
-        setNoteModal(!noteModal);
+    function toggleAddNoteModal(): void {
+        setShowAddNoteModal(!showAddNoteModal);
     }
 
 
@@ -143,14 +142,14 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
             return;
         }
         const newTodos = [...reptiles];
-        let note = new NoteClass();
+        let note = new Note();
         note.setNote(inputNote, startDate.toLocaleDateString());
         newTodos[reptileId].notes.push(note);
         setReptiles(newTodos);
         setInputNote("");
         setStartDate(new Date());
         notifySuccess("Die Notiz wurde gespeichert.");
-        toggleNoteModal();
+        toggleAddNoteModal();
 
     }
 
@@ -160,21 +159,21 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
             return;
         }
         const newTodos = [...reptiles];
-        let weight = new WeightClass();
+        let weight = new Weight();
         weight.setWeight(inputWeight, startDate.toLocaleDateString());
         newTodos[reptileId].weights.push(weight);
         setReptiles(newTodos);
         setInputWeight("");
         setStartDate(new Date());
         notifySuccess("Das Gewicht wurde gespeichert.");
-        toggleWeightModal();
+        toggleAddWeightModal();
     }
 
 
-    const [reptileEditModal, setReptileEditModal] = useState(false);
+    const [showEditReptileModal, setShowEditReptileModal] = useState(false);
 
     function initializeEdit() {
-        if(reptiles.length===0){
+        if (reptiles.length === 0) {
             return;
         }
         let name = reptiles[reptileId].name;
@@ -187,13 +186,14 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
         setReptileValues({name: name, birthday: birthday, type: type, morph: morph, image: image})
     }
 
-    function toggle() {
-        setReptileEditModal(!reptileEditModal);
+    function toggleEditReptileModal() {
+        setShowEditReptileModal(!showEditReptileModal);
     }
 
 
-    const [searchValue, setSearchValue] = useState("")
+    const [searchValue, setSearchValue] = useState<string>("")
 
+    //TODO: isOptionEqualToValue
     function test(event: any) {
 
         setSearchValue(event.target.value);
@@ -201,20 +201,19 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
 
     }
 
-    //TODO: Ivonne zeigen wie behindert das schon wieder ist
     useEffect(() => {
         initializeEdit();
-    }, [reptileEditModal])
+    }, [showEditReptileModal])
 
     return (
         <div className={" mt-3 rounded p-5 container"}>
 
             {/*<Autocomplete*/}
-            {/*    disablePortal*/}
-            {/*    options={reptiles.map((item: any, index: number) =>{return {label: item.name}})}*/}
+            {/*    options={reptiles.map((item: any) =>{return {label: item.name}})}*/}
             {/*    sx={{ width: 300 }}*/}
             {/*    onChange={(e: any) => test(e)}*/}
             {/*    value={searchValue}*/}
+            {/*    isOptionEqualToValue={(option : string, value : string) => true}*/}
             {/*    renderInput={(params:any) => <TextField {...params} label="Reptil suchen" />}*/}
             {/*/>*/}
 
@@ -227,8 +226,8 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
 
 
             <AddReptileModal
-                toggleShow={toggleReptileModal}
-                basicModal={reptileModal}
+                toggleAddReptileModal={toggleAddReptileModal}
+                showAddReptileModal={showAddReptileModal}
                 handleInputChange={handleInputChangeReptile}
                 values={reptileValues}
                 submit={addReptile}
@@ -239,9 +238,8 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
             />
 
             <AddFeedingModal
-                toggleShow={toggleFeedingModal}
-                setBasicModal={setFeedingModal}
-                basicModal={feedingModal}
+                toggleAddFeedingModal={toggleAddFeedingModal}
+                showAddFeedingModal={showAddFeedingModal}
                 values={feedingValues}
                 handleInputChange={handleInputChangeFeeding}
                 submit={addFeeding}
@@ -250,8 +248,8 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
             />
 
             <AddWeightModal
-                toggleShow={toggleWeightModal}
-                basicModal={weightModal}
+                toggleAddWeightModal={toggleAddWeightModal}
+                showAddWeightModal={showAddWeightModal}
                 startDate={startDate}
                 setStartDate={setStartDate}
                 inputWeight={inputWeight}
@@ -260,9 +258,8 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
             />
 
             <AddNoteModal
-                toggleShow={toggleNoteModal}
-                setBasicModal={setNoteModal}
-                basicModal={noteModal}
+                toggleAddNoteModal={toggleAddNoteModal}
+                showAddNoteModal={showAddNoteModal}
                 startDate={startDate}
                 setStartDate={setStartDate}
                 inputNote={inputNote}
@@ -271,8 +268,8 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
             />
 
             <EditReptileModal
-                toggleShow={toggle}
-                basicModal={reptileEditModal}
+                toggleShow={toggleEditReptileModal}
+                basicModal={showEditReptileModal}
                 handleInputChange={handleInputChangeReptile}
                 values={reptileValues}
                 submit={addReptile}
@@ -286,9 +283,9 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
                 return (
                     <ReptileCard
 
-                        key = {index}
+                        key={index}
 
-                        id = {item.id}
+                        id={item.id}
                         name={item._name}
                         birthday={item._birthday}
                         type={item._type}
@@ -302,10 +299,10 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
                         index={index}
                         onDeleteReptile={deleteReptile}
                         addFeeding={addFeeding}
-                        toggleFeedingModal={toggleFeedingModal}
-                        toggleWeightModal={toggleWeightModal}
-                        toggleNoteModal={toggleNoteModal}
-                        toggleReptileEditModal={toggle}
+                        toggleFeedingModal={toggleAddFeedingModal}
+                        toggleWeightModal={toggleAddWeightModal}
+                        toggleNoteModal={toggleAddNoteModal}
+                        toggleReptileEditModal={toggleEditReptileModal}
                         setReptileId={setReptileId}
                     />
                 )
