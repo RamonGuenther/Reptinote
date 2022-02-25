@@ -8,9 +8,10 @@ import {initialValuesReptile} from "../../helper/Constants";
 import {notifyFailure, notifySuccess} from "../../helper/Toasts";
 import {Reptile} from "../../data/Reptile";
 import {FiEdit} from "react-icons/fi";
+import {Breeder} from "../../data/Breeder";
 
 
-const ReptileInformation = ({reptile, deleteReptile, editReptile}: any) => {
+const ReptileInformation = ({reptile, deleteReptile, editReptile, breeders}: any) => {
 
     const [showDeleteDialog, setShowDeleteDialog] = React.useState(false);
     const [showEditReptileModal, setShowEditReptileModal] = useState(false);
@@ -18,6 +19,8 @@ const ReptileInformation = ({reptile, deleteReptile, editReptile}: any) => {
 
     const [selectedGenderOption, setSelectedGenderOption] = useState("");
     const [selectedSpeciesOption, setSelectedSpeciesOption] = useState("");
+    const [selectedBreederOption, setSelectedBreederOption] = useState("");
+
 
     function handleSpeciesSelect(event: any) {
         setSelectedSpeciesOption(event.target.value)
@@ -25,6 +28,10 @@ const ReptileInformation = ({reptile, deleteReptile, editReptile}: any) => {
 
     function handleGenderSelect(event: any) {
         setSelectedGenderOption(event.target.value)
+    }
+
+    function handleBreederSelect(event: any){
+        setSelectedBreederOption(event.target.value);
     }
 
     function handleInputChangeReptile(e: any): void {
@@ -49,8 +56,22 @@ const ReptileInformation = ({reptile, deleteReptile, editReptile}: any) => {
             notifyFailure("Bitte alle Pflichtfelder ausfüllen!");
             return;
         }
-        let newReptile = new Reptile();
+
+
+        let newReptile = reptile;
+
         newReptile.setReptile(reptileValues.name, reptileValues.birthday, reptileValues.type, reptileValues.morph, selectedGenderOption, selectedSpeciesOption, reptileValues.image);
+
+        if(selectedBreederOption !== ""){
+            for(let i = 0 ; i<breeders.length; i++){
+                if(breeders[i].lastName === selectedBreederOption){
+                    let breeder : Breeder = breeders[i];
+                    newReptile.setBreeder(breeder);
+                    break;
+                }
+            }
+        }
+
         editReptile(newReptile, reptile.id)
         setReptileValues(initialValuesReptile); //reset
         notifySuccess("Das Reptil " + reptileValues.name + " wurde bearbeitet.");
@@ -70,6 +91,7 @@ const ReptileInformation = ({reptile, deleteReptile, editReptile}: any) => {
         let image = reptile.image;
         setSelectedGenderOption(reptile.gender);
         setSelectedSpeciesOption(reptile.species);
+        setSelectedBreederOption(reptile.breeder.lastName)
         setReptileValues({name: name, birthday: birthday, type: type, morph: morph, image: image})
     }
 
@@ -92,6 +114,10 @@ const ReptileInformation = ({reptile, deleteReptile, editReptile}: any) => {
                 handleGenderSelect={handleGenderSelect}
                 selectedSpeciesOption={selectedSpeciesOption}
                 handleSpeciesSelect={handleSpeciesSelect}
+
+                selectedBreederOption={selectedBreederOption}
+                handleBreederSelect={handleBreederSelect}
+                breeders={breeders}
             />
 
             <DeleteDialog open={showDeleteDialog} toggleDeleteDialog={toggleDeleteDialog} action={deleteReptile}
@@ -131,13 +157,15 @@ const ReptileInformation = ({reptile, deleteReptile, editReptile}: any) => {
                             <h2 className={"reptile-information-h2"}><span className={"reptile-information-span"}>
                                 Letzte Fütterung:</span> {feedings[feedings.length - 1].date}</h2>}
 
-                            {notes[notes.length - 1] !== undefined &&
                             <h2 className={"reptile-information-h2"}><span className={"reptile-information-span"}>
-                                Aktuellste Notiz:  </span>{notes[notes.length - 1].note.substring(0, 20)}...</h2>}
+                                Züchter:  </span>{reptile.breeder.firstName + " " + reptile.breeder.lastName}</h2>
+
                         </div>
 
-                        <h2>Züchter: Krasser Züchter</h2>
                     </div>
+                    {notes[notes.length - 1] !== undefined &&
+                    <h2 className={"reptile-information-h2"}><span className={"reptile-information-span"}>
+                                Aktuellste Notiz:  </span>{notes[notes.length - 1].note}...</h2>}
                 </CardContent>
 
                 <CardActions className={"reptileInfoActions"}>

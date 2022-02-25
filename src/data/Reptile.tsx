@@ -22,6 +22,7 @@ export class Reptile {
     constructor() {
         this._id = uuidv4();
         this._breeder = new Breeder();
+        this._breeder.lastName= "Unbekannt"
         this._feedings = [];
         this._notes = [];
         this._weights = [];
@@ -127,6 +128,10 @@ export class Reptile {
         return this._image;
     }
 
+    public setBreeder(breeder: Breeder){
+        this._breeder = breeder;
+    }
+
     public setReptile(name: string, birthday : string, type : string, morph : string, gender: string, species : string, image : string){
         this._name = name;
         this._birthday = birthday;
@@ -136,6 +141,8 @@ export class Reptile {
         this._species = species;
         this._image = image;
     }
+
+
 
 
     public loadReptile(name: string, birthday : string, type : string, morph : string, gender: string, species : string, image: string, feedings : Feeding[], notes : Note[], weights : Weight[]){

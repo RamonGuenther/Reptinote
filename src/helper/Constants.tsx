@@ -1,3 +1,5 @@
+import {makeStyles} from "@material-ui/styles";
+
 export const optionsGender = [
     'Weiblich',
     'Männlich',
@@ -25,19 +27,19 @@ export const initialValuesReptile = {
 export const initialValuesFeeding = {
     type: "",
     weight: "",
-}
+};
 
 export const initialValuesBreeder = {
-    companyName: '',
-    firstName: '',
-    lastName: '',
-    street: '',
-    postal: '',
-    place: '',
-    country: '',
-    email: '',
-    phone: ''
-}
+    companyName: "",
+    firstName: "",
+    lastName: "",
+    street: "",
+    postal: "",
+    place: "",
+    country: "",
+    mail: "",
+    phone: "",
+};
 
 
 export const reptilesExample = [
@@ -168,8 +170,8 @@ export const noteExample = [
 export const breedersExample = [
     {
         companyName: '',
-        firstName: 'Unbekannt',
-        lastName: '',
+        firstName: '',
+        lastName: 'Unbekannt',
         street: '',
         postal: '',
         place: '',
@@ -179,24 +181,41 @@ export const breedersExample = [
     },
     {
         companyName: 'Reptifit',
-        firstName: 'Wilco',
-        lastName: 'van Ee',
-        street: '',
-        postal: '',
-        place: 'Apeldoorn',
-        country: 'Niederlande',
-        email: 'info@reptifit.nl',
-        phone: ''
-    },
-    {
-        companyName: 'R & I',
         firstName: 'Ramon',
         lastName: 'Günther',
-        street: '',
-        postal: '',
-        place: 'Apeldoorn',
-        country: 'Niederlande',
-        email: 'info@ka.de',
-        phone: ''
+        street: 'Schulstraße 95',
+        postal: '58636',
+        place: 'Iserlohn',
+        country: 'Deutschland',
+        email: 'info@reptifit.nl',
+        phone: '02371/879845'
+    },
+    {
+        companyName: 'Reptifit',
+        firstName: 'Ivonne',
+        lastName: 'Kneißig',
+        street: 'Im Wiesengrund 12',
+        postal: '58636',
+        place: 'Iserlohn',
+        country: 'Deutschland',
+        email: 'info@reptifit.nl',
+        phone: '02371/879845'
     },
 ];
+
+export const useStyles = makeStyles(theme => ({
+    textField: {
+        width: "300px"
+    },
+    cssOutlinedInput: {
+        "&$cssFocused $notchedOutline": {
+            borderColor: ` #0275d8  !important`
+        }
+    },
+    cssFocused: { color: "white !important" },
+
+    notchedOutline: {
+        borderWidth: "1px",
+        borderColor: " white  !important"
+    }
+}));

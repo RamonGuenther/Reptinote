@@ -116,7 +116,7 @@ const NotesTable = ({reptiles, setReptiles, index, startDate, setStartDate}: any
                             <TableCell>Entfernen</TableCell>
                         </TableRow>
                     </TableHead>
-                    <TableBody>
+                    <TableBody style={{background:"#a6a1a1"}}>
                         {(rowsPerPage > 0
                                 ? tableData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                 : tableData
@@ -137,7 +137,7 @@ const NotesTable = ({reptiles, setReptiles, index, startDate, setStartDate}: any
                             </TableRow>
                         )}
                     </TableBody>
-                    <TableFooter>
+                    <TableFooter style={{background:"#a6a1a1"}}>
                         <TableRow>
                             <TablePagination
                                 rowsPerPageOptions={[5, 10 ]}

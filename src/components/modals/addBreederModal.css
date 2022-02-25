@@ -1,4 +1,14 @@
-.test{
-    display: grid;
-    grid-template-areas: "a b";
+
+.add-breeder-modal-content{
+    width: 500px;
+    background-color: #948c8c;
 }
+
+.add-breeder-modal-title{
+    background-color: #444549;
+}
+
+.add-breeder-modal-actions{
+    background-color: #444549;
+}
+

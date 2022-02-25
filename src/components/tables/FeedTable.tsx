@@ -126,7 +126,7 @@ const FeedTable = ({reptiles, setReptiles, index, startDate, setStartDate}: any)
 
                         </TableRow>
                     </TableHead>
-                    <TableBody>
+                    <TableBody style={{background:"#a6a1a1"}}>
                         {(rowsPerPage > 0
                                 ? tableData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                 : tableData
@@ -134,7 +134,6 @@ const FeedTable = ({reptiles, setReptiles, index, startDate, setStartDate}: any)
                             <TableRow
                                 key={item.id}
                                 sx={{'&:last-child td, &:last-child th': {border: 0}}}>
-                                {/*<TableCell component="th">{item.id}</TableCell>*/}
                                 <TableCell component="th">{item.date}</TableCell>
                                 <TableCell component="th">{item.food} </TableCell>
                                 <TableCell component="th">{item.weight}g</TableCell>
@@ -149,7 +148,7 @@ const FeedTable = ({reptiles, setReptiles, index, startDate, setStartDate}: any)
                             </TableRow>
                         )}
                     </TableBody>
-                    <TableFooter>
+                    <TableFooter style={{background:"#a6a1a1"}}>
                         <TableRow>
                             <TablePagination
                                 rowsPerPageOptions={[5, 10]}

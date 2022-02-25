@@ -21,7 +21,7 @@ const EditBreederModal = ({
         <>
             <Dialog open={showEditBreederModal} onClose={toggleEditBreederModal}>
                 <DialogTitle>
-                    Züchter hinzufügen
+                    Züchter bearbeiten
                     <Button className='btn-close' onClick={toggleEditBreederModal}/>
                 </DialogTitle>
                 <Divider/>
@@ -99,10 +99,10 @@ const EditBreederModal = ({
                                 />
                                 <TextField
                                     className={"mt-3"}
-                                    value={values.email}
+                                    value={values.mail}
                                     label={"Email"}
                                     onChange={handleInputChange}
-                                    name="email"
+                                    name="mail"
                                     type="text"
                                     placeholder="Email..."
                                 />

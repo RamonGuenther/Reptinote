@@ -13,30 +13,13 @@ import EditReptileModal from "../components/modals/EditReptileModal";
 import TextField from '@mui/material/TextField';
 import {initialValuesFeeding, initialValuesReptile} from "../helper/Constants";
 import {notifyFailure, notifySuccess} from "../helper/Toasts";
-import {Button} from "@mui/material";
+import {Button, FormControl, InputLabel, MenuItem, Select as MuiSelect} from "@mui/material";
 import "./reptileOverview.css"
-import {makeStyles} from "@material-ui/styles";
+import {useStyles} from "../helper/Constants";
+import {Breeder} from "../data/Breeder";
 
 
-const useStyles = makeStyles(theme => ({
-    textField: {
-        width: "300px"
-    },
-    cssOutlinedInput: {
-        "&$cssFocused $notchedOutline": {
-            borderColor: ` #0275d8  !important`
-        }
-    },
-    cssFocused: { color: "white !important" },
-
-    notchedOutline: {
-        borderWidth: "1px",
-        borderColor: " white  !important"
-    }
-}));
-
-
-function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editReptile}: any) {
+function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editReptile, breeders}: any) {
 
     const [reptileValues, setReptileValues] = useState(initialValuesReptile);
     const [feedingValues, setFeedingValues] = useState(initialValuesFeeding);
@@ -48,13 +31,7 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
 
     const [selectedGenderOption, setSelectedGenderOption] = useState("");
     const [selectedSpeciesOption, setSelectedSpeciesOption] = useState("");
-
-    const [error, setError] = useState(false);
-
-    function handlError(){
-        setError(!error);
-    }
-
+    const [selectedBreederOption, setSelectedBreederOption] = useState("");
 
     //add
     function addReptile(): void {
@@ -62,8 +39,18 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
             notifyFailure("Bitte alle Pflichtfelder ausfüllen!");
             return;
         }
-        let newReptile = new Reptile();
+        let newReptile = reptiles[findReptileId()];
         newReptile.setReptile(reptileValues.name, reptileValues.birthday, reptileValues.type, reptileValues.morph, selectedGenderOption, selectedSpeciesOption, reptileValues.image);
+
+        if(selectedBreederOption !== ""){
+            for(let i = 0 ; i<breeders.length; i++){
+                if(breeders[i].lastName === selectedBreederOption){
+                    let breeder : Breeder = breeders[i];
+                    newReptile.setBreeder(breeder);
+                    break;
+                }
+            }
+        }
 
         if(showAddReptileModal){
             saveReptile(newReptile);
@@ -162,6 +149,9 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
     function handleGenderSelect(event: any) {
         setSelectedGenderOption(event.target.value)
     }
+    function handleBreederSelect(event: any){
+        setSelectedBreederOption(event.target.value);
+    }
 
     function addNote() {
         if (inputNote === "") { //TODO: wie validieren
@@ -209,9 +199,11 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
         let type = reptiles[index].type;
         let morph = reptiles[index].morph;
         let image = reptiles[index].image;
+
         setSelectedGenderOption(reptiles[index].gender);
         setSelectedSpeciesOption(reptiles[index].species);
-        setReptileValues({name: name, birthday: birthday, type: type, morph: morph, image: image})
+        setSelectedBreederOption(reptiles[index].breeder.lastName)
+        setReptileValues({name: name, birthday: birthday, type: type, morph: morph, image: image});
     }
 
     function toggleEditReptileModal() {
@@ -223,10 +215,8 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
 
     //TODO: isOptionEqualToValue
     function test(event: any) {
-
         setSearchValue(event.target.value);
         console.log(searchValue);
-
     }
 
 
@@ -259,7 +249,7 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
                 value={searchValue}
                 label={"Reptil suchen"}
                 onChange={(e: any) => setSearchValue(e.target.value)}
-
+                placeholder={"Name des Reptils..."}
                 className={classes.textField}
                 InputLabelProps={{
                     style: { color: '#ffffff'},
@@ -272,6 +262,22 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
                     }
                 }}
             />
+
+
+            {/*<FormControl className={"mt-3"} fullWidth>*/}
+            {/*    <InputLabel required>Spezies</InputLabel>*/}
+            {/*    <MuiSelect*/}
+            {/*        value={searchValue}*/}
+            {/*        label="Spezies"*/}
+            {/*        onChange={test}*/}
+            {/*    >*/}
+            {/*        {reptiles.map((item: any, index: number) => {*/}
+            {/*            return <MenuItem value={item.name}>*/}
+            {/*                {item.name}*/}
+            {/*            </MenuItem>*/}
+            {/*        })}*/}
+            {/*    </MuiSelect>*/}
+            {/*</FormControl>*/}
 
             <Button id={"reptile-overview-add_reptile_button"} variant="contained" onClick={toggleAddReptileModal}>Reptil
                 hinzufügen</Button>
@@ -292,10 +298,16 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
                 handleInputChange={handleInputChangeReptile}
                 values={reptileValues}
                 submit={addReptile}
+
                 selectedGenderOption={selectedGenderOption}
                 handleGenderSelect={handleGenderSelect}
                 selectedSpeciesOption={selectedSpeciesOption}
                 handleSpeciesSelect={handleSpeciesSelect}
+                selectedBreederOption = {selectedBreederOption}
+                handleBreederSelect={handleBreederSelect}
+                breeders = {breeders}
+                test={test}
+                searchValue={searchValue}
             />
 
             <AddFeedingModal
@@ -338,6 +350,9 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
                 handleGenderSelect={handleGenderSelect}
                 selectedSpeciesOption={selectedSpeciesOption}
                 handleSpeciesSelect={handleSpeciesSelect}
+                selectedBreederOption = {selectedBreederOption}
+                handleBreederSelect={handleBreederSelect}
+                breeders = {breeders}
             />
 
             {reptiles.filter((reptil: { name: string; }) => reptil.name.match(new RegExp(searchValue, "i"))).map((item: any, index: number) => {

@@ -97,6 +97,7 @@ function App() {
                         notes.push(newNote);
                     }
 
+
                     let newReptile = new Reptile();
                     newReptile.loadReptile(
                         parsed[i]._name,
@@ -110,6 +111,22 @@ function App() {
                         notes,
                         weights
                     );
+
+                    if (parsed[i]._breeder._lastName !== "") {
+                        let breeder = new Breeder();
+                        breeder.setBreeder(
+                            parsed[i]._breeder._companyName,
+                            parsed[i]._breeder._firstName,
+                            parsed[i]._breeder._lastName,
+                            parsed[i]._breeder._street,
+                            parsed[i]._breeder._postal,
+                            parsed[i]._breeder._place,
+                            parsed[i]._breeder._country,
+                            parsed[i]._breeder._mail,
+                            parsed[i]._breeder._phone,
+                        );
+                        newReptile.setBreeder(breeder)
+                    }
 
                     reptileList.push(newReptile);
                 }
@@ -184,7 +201,7 @@ function App() {
                 return [];
             }
         } else {
-            let breederList: Breeder[] = [];
+            let breederList: Breeder[] = []; //TODO Breeder wie oben auslagern
 
             for (let i = 0; i < breedersExample.length; i++) {
                 let newBreeder = new Breeder();
@@ -232,14 +249,14 @@ function App() {
 
                         <Route path={'/'} element={<ReptileOverview reptiles={reptiles} setReptiles={setReptiles}
                                                                     saveReptile={saveReptile} saveFeeding={saveFeeding}
-                                                                    editReptile={editReptile}/>}/>
+                                                                    editReptile={editReptile} breeders={breeders}/>}/>
                         <Route path={'reptilienUebersicht'}
                                element={<ReptileOverview reptiles={reptiles} setReptiles={setReptiles}
                                                          saveReptile={saveReptile} saveFeeding={saveFeeding}
                                                          editReptile={editReptile}/>}/>
                         <Route path={'reptileDetails/:id'}
                                element={<ReptileDetails reptiles={reptiles} setReptiles={setReptiles}
-                                                        editReptile={editReptile}/>}/>
+                                                        editReptile={editReptile}  breeders = {breeders} />}/>
 
                         <Route path={'breeder'}
                                element={<BreederOverview breeders={breeders} setBreeders={setBreeders}/>}/>

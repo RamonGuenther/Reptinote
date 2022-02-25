@@ -114,7 +114,7 @@ const WeightsTable = ({reptiles, setReptiles, index, startDate, setStartDate}: a
                             <TableCell>Entfernen</TableCell>
                         </TableRow>
                     </TableHead>
-                    <TableBody>
+                    <TableBody style={{background:"#a6a1a1"}}>
                         {(rowsPerPage > 0
                                 ? tableData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                 : tableData
@@ -122,7 +122,6 @@ const WeightsTable = ({reptiles, setReptiles, index, startDate, setStartDate}: a
                             <TableRow
                                 key={item.id}
                                 sx={{'&:last-child td, &:last-child th': {border: 0}}}>
-                                {/*<TableCell component="th">{item.id}</TableCell>*/}
                                 <TableCell component="th">{item.date}</TableCell>
                                 <TableCell component="th">{item.weight} g</TableCell>
                                 <TableCell component="th"><Button onClick={() => {
@@ -136,7 +135,7 @@ const WeightsTable = ({reptiles, setReptiles, index, startDate, setStartDate}: a
                             </TableRow>
                         )}
                     </TableBody>
-                    <TableFooter>
+                    <TableFooter style={{background:"#a6a1a1"}}>
                         <TableRow>
                             <TablePagination
                                 rowsPerPageOptions={[5, 10]}

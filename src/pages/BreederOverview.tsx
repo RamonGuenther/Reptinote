@@ -2,11 +2,11 @@ import React, {useEffect, useState} from "react";
 import BreederCard from "../components/breeder/BreederCard";
 import {Breeder} from "../data/Breeder";
 import {Button, TextField} from "@mui/material";
-import {initialValuesBreeder, initialValuesReptile} from "../helper/Constants";
+import {initialValuesBreeder, initialValuesReptile, useStyles} from "../helper/Constants";
 import AddBreederModal from "../components/modals/AddBreederModal";
 import EditBreederModal from "../components/modals/EditBreederModal";
 import DeleteDialog from "../components/modals/DeleteDialog";
-
+import "./breederOverview.css"
 /**
  * TODO: ZÜCHTER AUSLAGERN in APP also SAVE Edit und Delete
  *
@@ -15,10 +15,11 @@ import DeleteDialog from "../components/modals/DeleteDialog";
  * @constructor
  */
 const BreederOverview = ({breeders, setBreeders}: any) => {
+
     const [showAddBreederModal, setShowAddBreederModal] = useState(false);
     const [showEditBreederModal, setShowEditBreederModal] = useState(false);
-    const [breederValues, setBreederValues] = useState(initialValuesBreeder);
 
+    const [breederValues, setBreederValues] = useState(initialValuesBreeder);
 
     const [copyBreeder, setCopyBreeder] = useState<Breeder[]>(() => {
         return [...breeders].slice(1);
@@ -26,7 +27,6 @@ const BreederOverview = ({breeders, setBreeders}: any) => {
 
     const [breederId, setBreederId] = useState("");
 
-//TODO eigentlich schmutz aber egal
     function findBreederId(): number {
         let index = 0;
         for (let i = 0; i < breeders.length; i++) {
@@ -48,6 +48,7 @@ const BreederOverview = ({breeders, setBreeders}: any) => {
     }
 
     function toggleAddBreederModal(): void {
+        setBreederValues(initialValuesBreeder)
         setShowAddBreederModal(!showAddBreederModal);
     }
 
@@ -67,7 +68,7 @@ const BreederOverview = ({breeders, setBreeders}: any) => {
             breederValues.postal,
             breederValues.place,
             breederValues.country,
-            breederValues.email,
+            breederValues.mail,
             breederValues.phone
         );
 
@@ -84,7 +85,6 @@ const BreederOverview = ({breeders, setBreeders}: any) => {
             toggleEditBreederModal();
             setBreederValues(initialValuesBreeder);
         }
-
 
     }
 
@@ -108,8 +108,10 @@ const BreederOverview = ({breeders, setBreeders}: any) => {
         let postal = breeders[index].postal;
         let place = breeders[index].place;
         let country = breeders[index].country;
-        let email = breeders[index].email;
+        let mail = breeders[index].mail;
         let phone = breeders[index].phone;
+
+        console.log(mail);
 
         setBreederValues({
             companyName: companyName,
@@ -119,8 +121,8 @@ const BreederOverview = ({breeders, setBreeders}: any) => {
             postal: postal,
             place: place,
             country: country,
-            email: email,
-            phone: phone
+            mail: mail,
+            phone: phone,
         });
     }
 
@@ -132,7 +134,9 @@ const BreederOverview = ({breeders, setBreeders}: any) => {
 
 
     useEffect(() => {
-        initializeEdit();
+            console.log("AUFRUF")
+            initializeEdit();
+
     }, [showEditBreederModal])
 
 
@@ -143,8 +147,10 @@ const BreederOverview = ({breeders, setBreeders}: any) => {
     const [searchValue, setSearchValue] = useState<string>("")
 
 
+    const classes = useStyles();
+
     return (
-        <div>
+        <div className={"breeder-overview-layout"}>
 
             <AddBreederModal
                 showAddBreederModal={showAddBreederModal}
@@ -162,19 +168,36 @@ const BreederOverview = ({breeders, setBreeders}: any) => {
                 submit={addBreeder}
             />
 
+            <DeleteDialog open={showDeleteDialog} toggleDeleteDialog={toggleDeleteDialog} action={deleteBreeder}
+                          name={"Züchter"}
+            />
 
-            <div>
-                <Button variant="outlined" onClick={toggleAddBreederModal}>Züchter hinzufügen</Button>
 
-                <Button>Test</Button>
+            <div className={"breeder-overview-button_textfield"}>
+
                 <TextField
                     variant={"outlined"}
                     sx={{input: {color: 'white'}}}
                     type={"text"}
                     value={searchValue}
-                    label={"Reptil suchen"}
+                    label={"Züchter suchen"}
                     onChange={(e: any) => setSearchValue(e.target.value)}
+                    placeholder={"Nachname des Züchters..."}
+                    className={classes.textField}
+                    InputLabelProps={{
+                        style: { color: '#ffffff'},
+                    }}
+                    InputProps={{
+                        classes: {
+                            root: classes.cssOutlinedInput,
+                            focused: classes.cssFocused,
+                            notchedOutline: classes.notchedOutline
+                        }
+                    }}
                 />
+
+                <Button id={"breeder-overview-button_add"} variant="contained" onClick={toggleAddBreederModal}>Züchter hinzufügen</Button>
+
             </div>
 
             {copyBreeder.filter((breeder: { lastName: string; }) => breeder.lastName.match(new RegExp(searchValue, "i"))).map((item: any, index: number) => {
@@ -189,7 +212,7 @@ const BreederOverview = ({breeders, setBreeders}: any) => {
                         postal={item.postal}
                         place={item.place}
                         country={item.country}
-                        email={item.email}
+                        mail={item.mail}
                         phone={item.phone}
                         index={index}
                         deleteBreeder={deleteBreeder}

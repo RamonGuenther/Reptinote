@@ -18,6 +18,7 @@ import {
     Chip,
 } from "@mui/material";
 import DeleteDialog from "../modals/DeleteDialog";
+import {useStyles} from "../../helper/Constants";
 
 const ReptileCard = ({
                          id,
@@ -48,6 +49,7 @@ const ReptileCard = ({
     };
 
 
+
     return (
         <div>
             <DeleteDialog open={showDeleteDialog} toggleDeleteDialog={toggleDeleteDialog} name={name}
@@ -55,7 +57,7 @@ const ReptileCard = ({
             <Card id={"reptile-card"}>
                 <CardHeader
                     avatar={<Link to={`/reptileDetails/${id}`}> <Chip onClick={() => {
-                    }} id={"reptile-card-name_badge"} variant="outlined" label={name}/> </Link>}
+                    }} id={"reptile-card-name_badge"} variant="filled" label={name}/> </Link>}
                 />
                 <CardContent id={"reptile-card-body"}>
                     {image !== "" ? <CardMedia
@@ -71,12 +73,9 @@ const ReptileCard = ({
 
                     <div className={"reptile-card-text"}>
                         <h2 className={"reptile-card-h2"}><span className={"reptile-card-span"}>Name:</span> {name}</h2>
-                        <h2 className={"reptile-card-h2"}><span
-                            className={"reptile-card-span"}>Geburtstag:</span> {birthday}</h2>
-                        <h2 className={"reptile-card-h2"}><span
-                            className={"reptile-card-span"}>Geschlecht:</span> {gender}</h2>
-                        <h2 className={"reptile-card-h2"}><span
-                            className={"reptile-card-span"}>Spezies: </span> {species}</h2>
+                        <h2 className={"reptile-card-h2"}><span className={"reptile-card-span"}>Geburtstag:</span> {birthday}</h2>
+                        <h2 className={"reptile-card-h2"}><span className={"reptile-card-span"}>Geschlecht:</span> {gender}</h2>
+                        <h2 className={"reptile-card-h2"}><span className={"reptile-card-span"}>Spezies: </span> {species}</h2>
                         <h2 className={"reptile-card-h2"}><span className={"reptile-card-span"}>Typ: </span> {type}</h2>
                         <h2 className={"reptile-card-h2"}><span className={"reptile-card-span"}>Morph: </span>{morph}
                         </h2>

@@ -23,6 +23,9 @@ const EditReptileModal = ({
                               handleGenderSelect,
                               selectedSpeciesOption,
                               handleSpeciesSelect,
+                              selectedBreederOption,
+                              handleBreederSelect,
+                              breeders
                           }: any) => {
     return (
         <>
@@ -86,33 +89,42 @@ const EditReptileModal = ({
 
                         </FormControl>
                         <FormControl className={"mt-3"} fullWidth>
-                            <InputLabel>Geschlecht</InputLabel>
+                            <InputLabel required>Geschlecht</InputLabel>
                             <MuiSelect
                                 value={selectedGenderOption ? selectedGenderOption : ""}
                                 label="Geschlecht"
                                 onChange={handleGenderSelect}
                             >
-                                <MenuItem value={optionsGender[0]}>{optionsGender[0]}</MenuItem>
-                                <MenuItem value={optionsGender[1]}>{optionsGender[1]}</MenuItem>
-                                <MenuItem value={optionsGender[2]}>{optionsGender[2]}</MenuItem>
+                                {optionsGender.map((item:string, index: number) =>{
+                                    return <MenuItem key={index} value = {item} > {item} </MenuItem>
+                                })}
                             </MuiSelect>
                         </FormControl>
 
                         <FormControl className={"mt-3"} fullWidth>
-                            <InputLabel>Spezies</InputLabel>
+                            <InputLabel required>Spezies</InputLabel>
                             <MuiSelect
                                 value={selectedSpeciesOption ? selectedSpeciesOption : ""}
                                 label="Spezies"
                                 onChange={handleSpeciesSelect}
                             >
-                                <MenuItem value={optionsSpecies[0]}>{optionsSpecies[0]}</MenuItem>
-                                <MenuItem value={optionsSpecies[1]}>{optionsSpecies[1]}</MenuItem>
-                                <MenuItem value={optionsSpecies[2]}>{optionsSpecies[2]}</MenuItem>
-                                <MenuItem value={optionsSpecies[3]}>{optionsSpecies[3]}</MenuItem>
-                                <MenuItem value={optionsSpecies[4]}>{optionsSpecies[4]}</MenuItem>
-                                <MenuItem value={optionsSpecies[5]}>{optionsSpecies[5]}</MenuItem>
-                                <MenuItem value={optionsSpecies[6]}>{optionsSpecies[6]}</MenuItem>
-
+                                {optionsSpecies.map((item: string, index: number) => {
+                                    return <MenuItem key={index} value={item}>{item}</MenuItem>
+                                })}
+                            </MuiSelect>
+                        </FormControl>
+                        <FormControl className={"mt-3"} fullWidth>
+                            <InputLabel required>Spezies</InputLabel>
+                            <MuiSelect
+                                value={selectedBreederOption ? selectedBreederOption : ""}
+                                label="Spezies"
+                                onChange={handleBreederSelect}
+                            >
+                                {breeders.map((item: any, index: number) => {
+                                    return <MenuItem key={index} value={item.lastName}>
+                                        {item.lastName}
+                                    </MenuItem>
+                                })}
                             </MuiSelect>
                         </FormControl>
                     </form>
