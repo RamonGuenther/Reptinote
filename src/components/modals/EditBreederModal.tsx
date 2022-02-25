@@ -10,19 +10,19 @@ import {
 
 
 
-const AddBreederModal = ({
-                             showAddBreederModal,
-                             toggleAddBreederModal,
+const EditBreederModal = ({
+                             showEditBreederModal,
+                             toggleEditBreederModal,
                              handleInputChange,
                              values,
                              submit,
                          }: any) => {
     return (
         <>
-            <Dialog open={showAddBreederModal} onClose={toggleAddBreederModal}>
+            <Dialog open={showEditBreederModal} onClose={toggleEditBreederModal}>
                 <DialogTitle>
                     Züchter hinzufügen
-                    <Button className='btn-close' onClick={toggleAddBreederModal}/>
+                    <Button className='btn-close' onClick={toggleEditBreederModal}/>
                 </DialogTitle>
                 <Divider/>
                 <DialogContent className={"dialog"}>
@@ -121,7 +121,7 @@ const AddBreederModal = ({
                 </DialogContent>
                 <Divider/>
                 <DialogActions>
-                    <Button color='secondary' onClick={toggleAddBreederModal}>
+                    <Button color='secondary' onClick={toggleEditBreederModal}>
                         Abbrechen
                     </Button>
                     <Button onClick={submit}>Züchter hinzufügen</Button>
@@ -132,4 +132,4 @@ const AddBreederModal = ({
 }
 
 
-export default AddBreederModal;
+export default EditBreederModal;

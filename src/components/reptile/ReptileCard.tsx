@@ -55,9 +55,6 @@ const ReptileCard = ({
                     avatar={<Link to={`/reptileDetails/${id}`}> <Chip onClick={() => {
                     }} className={"nameBadge"} variant="outlined" label={name}/> </Link>}
                 />
-                {/*<MDBCardImage className={"image"} src='https://mdbootstrap.com/img/new/standard/nature/182.webp'*/}
-                {/*              alt='...'/>*/}
-
                 <CardContent id={"reptile-card-body"}>
                     {image !== "" ? <CardMedia
                         className={"image"}
@@ -146,4 +143,3 @@ const ReptileCard = ({
 export default ReptileCard;
 
 
-// <h1>{done ? "Erledigt" : "Nicht erledigt"}</h1>

@@ -25,78 +25,67 @@ const AddReptileModal = ({
                          }: any) => {
     return (
         <>
-            <Button variant="outlined" onClick={toggleAddReptileModal}>Reptil hinzufügen</Button>
-
-            <Dialog  open={showAddReptileModal} onClose={toggleAddReptileModal}>
+            <Dialog open={showAddReptileModal} onClose={toggleAddReptileModal}>
                 <DialogTitle>
                     Reptil hinzufügen
                     <Button className='btn-close' onClick={toggleAddReptileModal}/>
                 </DialogTitle>
                 <Divider/>
-                <DialogContent className={"dialog"}>
+                <DialogContent style={{width: "500px"}}>
                     <form>
-                        {/*value= textinput = TwoWayDatabinding für das resetten */}
-
-                        {/*<div>*/}
-                        {/*    <img src={image}/>*/}
-                        {/*    <h1>Select Image</h1>*/}
-                        {/*    <input type="file" name="myImage" onChange={onImageChange}/>*/}
-                        {/*</div>*/}
                         <FormControl fullWidth>
-                        <TextField
-                            className={"mt-3"}
-                            value={values.name}
-                            onChange={handleInputChange}
-                            name="name" //TODO: ohne name Attribut funktioniert es nicht
-                            type="text"
-                            label={"Name"}
-                            placeholder="Name des Reptils..."
-                            required
-                        />
-                        <TextField
-                            className={"mt-3"}
-                            value={values.birthday}
-                            onChange={handleInputChange}
-                            type="text"
-                            label={"Geburtstag"}
-                            name="birthday"
-                            placeholder="Geburtstag des Reptils..."
-                            required
-                        />
-                        <TextField
-                            className={"mt-3"}
-                            value={values.type}
-                            onChange={handleInputChange}
-                            label={"Art"}
-                            name="type"
-                            type="text"
-                            placeholder="Art des Reptils..."
-                            required
-                        />
-                        <TextField
-                            className={"mt-3"}
-                            value={values.morph}
-                            label={"Morph"}
-                            onChange={handleInputChange}
-                            name="morph"
-                            type="text"
-                            placeholder="Morph des Reptils..."
-                        />
-                        <TextField
-                            className={"mt-3"}
-                            value={values.image}
-                            label={"Bild"}
-                            onChange={handleInputChange}
-                            name="image"
-                            type="text"
-                            placeholder="Image Url eingeben"
-                        />
+                            <TextField
+                                className={"mt-3"}
+                                value={values.name}
+                                onChange={handleInputChange}
+                                name="name" //TODO: ohne name Attribut funktioniert es nicht
+                                type="text"
+                                label={"Name"}
+                                placeholder="Name des Reptils..."
+                                required
+                            />
+                            <TextField
+                                className={"mt-3"}
+                                value={values.birthday}
+                                onChange={handleInputChange}
+                                type="text"
+                                label={"Geburtstag"}
+                                name="birthday"
+                                placeholder="Geburtstag des Reptils..."
+                                required
+                            />
+                            <TextField
+                                className={"mt-3"}
+                                value={values.type}
+                                onChange={handleInputChange}
+                                label={"Art"}
+                                name="type"
+                                type="text"
+                                placeholder="Art des Reptils..."
+                                required
+                            />
+                            <TextField
+                                className={"mt-3"}
+                                value={values.morph}
+                                label={"Morph"}
+                                onChange={handleInputChange}
+                                name="morph"
+                                type="text"
+                                placeholder="Morph des Reptils..."
+                            />
+                            <TextField
+                                className={"mt-3"}
+                                value={values.image}
+                                label={"Bild"}
+                                onChange={handleInputChange}
+                                name="image"
+                                type="text"
+                                placeholder="Image Url eingeben"
+                            />
                         </FormControl>
-                        <FormControl className={"mt-3"}  fullWidth>
-                            <InputLabel id="demo-simple-select-label" required>Geschlecht</InputLabel>
+                        <FormControl className={"mt-3"} fullWidth>
+                            <InputLabel required>Geschlecht</InputLabel>
                             <MuiSelect
-                                labelId="demo-simple-select-label"
-                                id="demo-simple-select"
                                 value={selectedGenderOption ? selectedGenderOption : ""}
                                 label="Geschlecht"
                                 onChange={handleGenderSelect}
@@ -108,11 +97,9 @@ const AddReptileModal = ({
                             </MuiSelect>
                         </FormControl>
 
-                        <FormControl className={"mt-3"}  fullWidth>
-                            <InputLabel id="demo-simple-select-label" required>Spezies</InputLabel>
+                        <FormControl className={"mt-3"} fullWidth>
+                            <InputLabel required>Spezies</InputLabel>
                             <MuiSelect
-                                labelId="demo-simple-select-label"
-                                id="demo-simple-select"
                                 value={selectedSpeciesOption ? selectedSpeciesOption : ""}
                                 label="Spezies"
                                 onChange={handleSpeciesSelect}
@@ -142,9 +129,3 @@ const AddReptileModal = ({
 
 
 export default AddReptileModal;
-
-
-//.dialog{
-//     width: 600px;
-//     background-color: #9a8e8e;
-// }

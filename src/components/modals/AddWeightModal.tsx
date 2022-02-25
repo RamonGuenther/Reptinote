@@ -1,6 +1,5 @@
 import React from "react";
 
-import {ToastContainer} from 'react-toastify';
 import {
     Button,
     Dialog,
@@ -43,11 +42,12 @@ const AddWeightModal = ({
                         <FormControl fullWidth>
 
                         <TextField
-                            className={"mt-3 mb-3"}
+                            className={"mt-2 mb-4"}
                             value={inputWeight}
                             onChange={changeWeight}
                             type="text"
                             label={"Gewicht"}
+                            helperText={"Numerische Werte"}
                             placeholder="Aktuelles Gewicht des Reptils..."
                             InputProps={
                                 {endAdornment : <InputAdornment position="end">g</InputAdornment>,}

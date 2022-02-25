@@ -38,7 +38,7 @@ const AddFeedingModal = ({
                         <FormControl fullWidth>
 
                             <TextField
-                                className={"mt-3"}
+                                className={"mt-2"}
                                 value={values.type}
                                 onChange={handleInputChange}
                                 name="type"
@@ -48,13 +48,14 @@ const AddFeedingModal = ({
                                 required
                             />
                             <TextField
-                                className={"mt-3 mb-3"}
+                                className={"mt-4 mb-4"}
                                 value={values.weight}
                                 onChange={handleInputChange}
                                 type="text"
                                 label={"Gewicht"}
                                 name="weight"
                                 placeholder="Gewicht des Futters..."
+                                helperText={"Numerische Werte"}
                                 InputProps={{
                                     endAdornment : <InputAdornment position="end">g</InputAdornment>
                                 }}

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {
     Button,
     Paper,
@@ -17,18 +17,19 @@ import AddFeedingModal from "../modals/AddFeedingModal";
 import {notifyFailure, notifySuccess} from "../../helper/Toasts";
 import "../reptile/reptileInformation.css"
 import {MdDelete} from "react-icons/md";
-import {FiPlus} from "react-icons/fi";
 const FeedTable = ({reptiles, setReptiles, index, startDate, setStartDate}: any) => {
 
-    const [tableData, setTableData] = useState<Feeding[]>(reptiles[index].feedings);
+    const [tableData, setTableData] = useState<Feeding[]>(()=>{
+        return [...reptiles[index].feedings].reverse();
+    });
 
 
     const [feedingValues, setFeedingValues] = useState(initialValuesFeeding);
     const [showAddFeedingModal, setShowAddFeedingModal] = useState(false);
 
     function addFeeding(){
-        if (feedingValues.type === "" || feedingValues.weight === " ") { //TODO: wie validieren
-            notifyFailure("Bitte alle Felder ausfüllen!")
+        if (feedingValues.type === "" || isNaN(parseInt(feedingValues.weight))){ //TODO: wie validieren
+            notifyFailure("Bitte alle Felder und im richtigen Format ausfüllen!")
             return;
         }
         let newFeeding = new Feeding();
@@ -61,7 +62,7 @@ const FeedTable = ({reptiles, setReptiles, index, startDate, setStartDate}: any)
 
 
     function handleDataChange(newTableData: Feeding[]) {
-        const newReptiles = [...newTableData];
+        const newReptiles = [...newTableData].reverse();
         setTableData(newReptiles);
     }
 
@@ -151,7 +152,7 @@ const FeedTable = ({reptiles, setReptiles, index, startDate, setStartDate}: any)
                     <TableFooter>
                         <TableRow>
                             <TablePagination
-                                rowsPerPageOptions={[5, 10, 25, {label: 'All', value: -1}]}
+                                rowsPerPageOptions={[5, 10]}
                                 count={tableData.length}
                                 rowsPerPage={rowsPerPage}
                                 page={page}

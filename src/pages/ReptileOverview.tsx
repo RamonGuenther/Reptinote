@@ -14,6 +14,8 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import {initialValuesFeeding, initialValuesReptile} from "../helper/Constants";
 import {notifyFailure, notifySuccess} from "../helper/Toasts";
+import {Button} from "@mui/material";
+import "./reptileOverview.css"
 
 
 function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editReptile}: any) {
@@ -32,30 +34,23 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
 
     //add
     function addReptile(): void {
-        if (reptileValues.name === "" || reptileValues.birthday === "" || reptileValues.type === "" || reptileValues.morph === "" || selectedGenderOption === null || selectedSpeciesOption === null) {
+        if (reptileValues.name === "" || reptileValues.birthday === "" || reptileValues.type === "" || selectedGenderOption === null || selectedSpeciesOption === null) {
             notifyFailure("Bitte alle Pflichtfelder ausfüllen!");
             return;
         }
         let newReptile = new Reptile();
         newReptile.setReptile(reptileValues.name, reptileValues.birthday, reptileValues.type, reptileValues.morph, selectedGenderOption, selectedSpeciesOption, reptileValues.image);
 
-        if (showAddReptileModal) {
-            saveReptile(newReptile);
-            setReptileValues(initialValuesReptile); //reset
-            notifySuccess("Das Reptil " + reptileValues.name + " wurde gespeichert.");
-            toggleAddReptileModal();
-        } else if (showEditReptileModal) {
-            editReptile(newReptile, reptileId)
-            setReptileValues(initialValuesReptile); //reset
-            notifySuccess("Das Reptil " + reptileValues.name + " wurde bearbeitet.");
-            toggleEditReptileModal();
-        }
+        saveReptile(newReptile);
+        setReptileValues(initialValuesReptile); //reset
+        notifySuccess("Das Reptil " + reptileValues.name + " wurde gespeichert.");
+        toggleAddReptileModal();
     }
 
 
     function addFeeding(): void { //TODO: onClick={() => {onDeleteReptile(index)}}
-        if (feedingValues.type === "" || feedingValues.weight === " ") { //TODO: wie validieren
-            notifyFailure("Bitte alle Felder ausfüllen!")
+        if (feedingValues.type === "" || isNaN(parseInt(feedingValues.weight))) { //TODO: wie validieren
+            notifyFailure("Bitte alle Felder und im richtigen Format ausfüllen!")
             return;
         }
         let feeding = new Feeding();
@@ -92,7 +87,6 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
             [name]: value,
         });
     }
-
 
     const [reptileId, setReptileId] = useState(0); //TODO uuid benutzen
 
@@ -154,8 +148,8 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
     }
 
     function addWeight() {
-        if (inputWeight === "") { //TODO: wie validieren
-            notifyFailure("Bitte alle Felder ausfüllen."); //TODO eigenes
+        if (isNaN(parseInt(inputWeight))) { //TODO: wie validieren
+            notifyFailure("Bitte alle Felder und im richtigen Format ausfüllen!")
             return;
         }
         const newTodos = [...reptiles];
@@ -201,12 +195,25 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
 
     }
 
+
     useEffect(() => {
         initializeEdit();
     }, [showEditReptileModal])
 
     return (
         <div className={" mt-3 rounded p-5 container"}>
+
+            <TextField
+                sx={{input: {color: 'white'}}}
+                type={"text"}
+                value={searchValue}
+                label={"Reptil suchen"}
+                onChange={(e: any) => setSearchValue(e.target.value)}
+                focused
+            />
+
+            <Button id={"reptile-overview-add_reptile_button"} variant="outlined" onClick={toggleAddReptileModal}>Reptil
+                hinzufügen</Button>
 
             {/*<Autocomplete*/}
             {/*    options={reptiles.map((item: any) =>{return {label: item.name}})}*/}
@@ -216,13 +223,6 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
             {/*    isOptionEqualToValue={(option : string, value : string) => true}*/}
             {/*    renderInput={(params:any) => <TextField {...params} label="Reptil suchen" />}*/}
             {/*/>*/}
-
-            <TextField
-                type={"text"}
-                value={searchValue}
-                label={"Reptil suchen"}
-                onChange={(e: any) => setSearchValue(e.target.value)}
-            />
 
 
             <AddReptileModal

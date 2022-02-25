@@ -138,7 +138,7 @@ export class Reptile {
     }
 
 
-    public loadReptile(name: string, birthday : string, type : string, morph : string, gender: string, species : string, feedings : Feeding[], notes : Note[], weights : Weight[], image: string){
+    public loadReptile(name: string, birthday : string, type : string, morph : string, gender: string, species : string, image: string, feedings : Feeding[], notes : Note[], weights : Weight[]){
         this._name = name;
         this._birthday = birthday;
         this._type = type;

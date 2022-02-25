@@ -9,19 +9,58 @@ import Feeding from "./data/Feeding";
 import NotFound from "./pages/NotFound";
 import Note from "./data/Note";
 import Weight from "./data/Weight";
-import {breedersExample, optionsGender, optionsSpecies, reptilesExample} from "./helper/Constants";
+import {breedersExample, feedingExample, noteExample, reptilesExample, weightExample} from "./helper/Constants";
 import {ToastContainer} from "react-toastify";
 import BreederOverview from "./pages/BreederOverview";
 import {Breeder} from "./data/Breeder";
 
+function createExampleReptile(): Reptile[] {
+    let feedings: Feeding[] = [];
+    let weights: Weight[] = [];
+    let notes: Note[] = [];
 
-//TODO: Dummy daten auch für feedings und notes machen
+    for (let j = 0; j < feedingExample.length; j++) {
+        let newFeeding = new Feeding();
+        newFeeding.setFeeding(feedingExample[j].weight, feedingExample[j].food, feedingExample[j].date)
+        feedings.push(newFeeding);
+    }
+
+    for (let k = 0; k < weightExample.length; k++) {
+        let newWeight = new Weight();
+        newWeight.setWeight(weightExample[k].weight, weightExample[k].date)
+        weights.push(newWeight);
+    }
+
+    for (let l = 0; l < noteExample.length; l++) {
+        let newNote = new Note();
+        newNote.setNote(noteExample[l].note, noteExample[l].date)
+        notes.push(newNote);
+    }
+
+    let reptileList: Reptile[] = [];
+
+    for (let i = 0; i < reptilesExample.length; i++) {
+        let newReptile = new Reptile();
+
+        newReptile.loadReptile(
+            reptilesExample[i].name,
+            reptilesExample[i].geburtsdatum,
+            reptilesExample[i].art,
+            reptilesExample[i].morph,
+            reptilesExample[i].geschlecht,
+            reptilesExample[i].ordnung,
+            reptilesExample[i].image,
+            feedings,
+            notes,
+            weights
+        );
+
+        reptileList.push(newReptile);
+    }
+    return reptileList;
+}
+
 function App() {
-
-    // function loadReptileData(reptil: Reptile, feeding: Feeding[], note: Note[], weight: Weight[]) {
-    //
-    //
-    // }
 
     const [reptiles, setReptiles] = useState<Reptile[]>(() => {
         const items = localStorage.getItem("reptiles");
@@ -42,7 +81,7 @@ function App() {
 
                     for (let j = 0; j < parsed[i]._feedings.length; j++) {
                         let newFeeding = new Feeding();
-                        newFeeding.setFeeding(parsed[i]._feedings[j]._weight, parsed[i]._feedings[j]._feeding, parsed[i]._feedings[j]._date)
+                        newFeeding.setFeeding(parsed[i]._feedings[j]._weight, parsed[i]._feedings[j]._food, parsed[i]._feedings[j]._date)
                         feedings.push(newFeeding);
                     }
 
@@ -66,10 +105,10 @@ function App() {
                         parsed[i]._morph,
                         parsed[i]._gender,
                         parsed[i]._species,
+                        parsed[i]._image,
                         feedings,
                         notes,
-                        weights,
-                        parsed[i]._image
+                        weights
                     );
 
                     reptileList.push(newReptile);
@@ -80,38 +119,19 @@ function App() {
                 return []
             }
         } else {
-            let reptileList: Reptile[] = [];
-
-            for (let i = 0; i < reptilesExample.length; i++) {
-                let reptile1 = new Reptile();
-
-                reptile1.loadReptile(
-                    reptilesExample[i].name,
-                    reptilesExample[i].geburtsdatum,
-                    reptilesExample[i].art,
-                    reptilesExample[i].morph,
-                    reptilesExample[i].geschlecht,
-                    reptilesExample[i].ordnung,
-                    [],
-                    [],
-                    [],
-                    reptilesExample[i].image
-                );
-
-                reptileList.push(reptile1);
-            }
-            return reptileList;
+            return createExampleReptile();
         }
     });
+
 
     function saveReptile(newReptile: Reptile): void {
         const newReptiles = [...reptiles, newReptile];
         setReptiles(newReptiles);
     }
 
-    function editReptile(newReptile: Reptile, index: number): void {
+    function editReptile(newReptile: Reptile, id: string): void {
         const newReptiles = [...reptiles];
-        newReptiles[index] = newReptile;
+        newReptiles[findBreederId(id)] = newReptile;
         setReptiles(newReptiles);
     }
 
@@ -119,6 +139,17 @@ function App() {
         const newReptiles = [...reptiles];
         newReptiles[index].feedings.push(newFeeding);
         setReptiles(newReptiles);
+    }
+
+
+    function findBreederId(id: String): number {
+        let index = 0;
+        for (let i = 0; i < breeders.length; i++) {
+            if (id === breeders[i].id) {
+                index = i;
+            }
+        }
+        return index;
     }
 
 
@@ -185,7 +216,7 @@ function App() {
     }, [reptiles]);
 
     useEffect(() => {
-        if (breeders.length !== 0) {
+        if (breeders.length > 1) {
             localStorage.setItem("breeders", JSON.stringify(breeders))
         } else {
             localStorage.removeItem("breeders")
@@ -207,7 +238,8 @@ function App() {
                                                          saveReptile={saveReptile} saveFeeding={saveFeeding}
                                                          editReptile={editReptile}/>}/>
                         <Route path={'reptileDetails/:id'}
-                               element={<ReptileDetails reptiles={reptiles} setReptiles={setReptiles}/>}/>
+                               element={<ReptileDetails reptiles={reptiles} setReptiles={setReptiles}
+                                                        editReptile={editReptile}/>}/>
 
                         <Route path={'breeder'}
                                element={<BreederOverview breeders={breeders} setBreeders={setBreeders}/>}/>

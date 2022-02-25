@@ -9,7 +9,7 @@ import NotesTable from "../components/tables/NotesTable";
 import WeightsTable from "../components/tables/WeightsTable";
 
 
-const ReptileDetails = ({reptiles, setReptiles}: any) => {
+const ReptileDetails = ({reptiles, setReptiles, editReptile}: any) => {
 
     const history = useNavigate();
 
@@ -46,9 +46,8 @@ const ReptileDetails = ({reptiles, setReptiles}: any) => {
             <div className={"reptileDetails"}>
 
                 <section className={"section1"}>
-
                     <ReptileInformation
-                        reptile={reptiles[index]} deleteReptile = {deleteReptile}
+                        reptile={reptiles[index]} deleteReptile = {deleteReptile} editReptile={editReptile}
                     />
                 </section>
 

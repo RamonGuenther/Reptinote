@@ -18,14 +18,16 @@ import {MdDelete} from "react-icons/md";
 
 const WeightsTable = ({reptiles, setReptiles, index, startDate, setStartDate}: any) => {
 
-    const [tableData, setTableData] = useState<Weight[]>(reptiles[index].weights);
+    const [tableData, setTableData] = useState<Weight[]>(()=>{
+        return [...reptiles[index].weights].reverse();
+    });
     const [showAddWeightModal, setShowAddWeightModal] = useState(false);
     const [inputWeight, setInputWeight] = useState("");
 
 
     function addWeight() {
-        if (inputWeight === "") { //TODO: wie validieren
-            notifyFailure("Bitte alle Felder ausfüllen."); //TODO eigenes
+        if (isNaN(parseInt(inputWeight))) { //TODO: wie validieren
+            notifyFailure("Bitte alle Felder und im richtigen Format ausfüllen!")
             return;
         }
         const newReptiles = [...reptiles];
@@ -57,7 +59,7 @@ const WeightsTable = ({reptiles, setReptiles, index, startDate, setStartDate}: a
     }
 
     function handleDataChange(newTableData: Weight[]) {
-        const newReptiles = [...newTableData];
+        const newReptiles = [...newTableData].reverse();
         setTableData(newReptiles);
     }
 
@@ -137,7 +139,7 @@ const WeightsTable = ({reptiles, setReptiles, index, startDate, setStartDate}: a
                     <TableFooter>
                         <TableRow>
                             <TablePagination
-                                rowsPerPageOptions={[5, 10, 25, {label: 'All', value: -1}]}
+                                rowsPerPageOptions={[5, 10]}
                                 count={tableData.length}
                                 rowsPerPage={rowsPerPage}
                                 page={page}

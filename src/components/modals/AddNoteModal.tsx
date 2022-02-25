@@ -1,5 +1,4 @@
 import React from "react";
-import {ToastContainer} from 'react-toastify';
 import {
     Button,
     Dialog,
@@ -43,7 +42,7 @@ const AddNoteModal = ({
                         <FormControl fullWidth>
 
                         <TextField
-                            className={"mt-3 mb-3"}
+                            className={"mt-2 mb-4"}
                             value={inputNote}
                             onChange={changeNote}
                             name="type"

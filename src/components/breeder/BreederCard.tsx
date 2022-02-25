@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {Button, Card, CardActions, CardContent, Typography} from "@mui/material";
 import "./breedercard.css"
 
@@ -14,9 +14,11 @@ const BreederCard = ({
                          country,
                          email,
                          phone,
-                         index
+                         deleteBreeder,
+                         findBreederId,
 
                      }: any) => {
+
 
     return(
         <div className="breeder-card-layout">
@@ -33,7 +35,7 @@ const BreederCard = ({
                     {phone}
                 </CardContent>
                 <CardActions>
-                    <Button size="small">Share</Button>
+                    <Button size="small" onClick={()=>{deleteBreeder(id)}}>Löschen</Button>
                     <Button size="small">Learn More</Button>
                 </CardActions>
             </Card>

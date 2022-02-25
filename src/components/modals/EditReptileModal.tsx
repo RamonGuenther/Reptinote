@@ -10,7 +10,6 @@ import {
     MenuItem,
     Select as MuiSelect, TextField
 } from "@mui/material";
-import {ToastContainer} from 'react-toastify';
 import {optionsGender, optionsSpecies} from "../../helper/Constants";
 
 
@@ -29,21 +28,13 @@ const EditReptileModal = ({
         <>
             <Dialog open={basicModal} onClose={toggleShow}>
                 <DialogTitle>
-                    Reptil hinzufügen
+                    Reptil Bearbeiten
                     <Button className='btn-close' onClick={toggleShow}/>
                 </DialogTitle>
                 <Divider/>
 
-                <DialogContent className={"dialog"}>
+                <DialogContent style={{width: "500px"}}>
                     <form>
-                        {/*value= textinput = TwoWayDatabinding für das resetten */}
-
-                        {/*<div>*/}
-                        {/*    <img src={image}/>*/}
-                        {/*    <h1>Select Image</h1>*/}
-                        {/*    <input type="file" name="myImage" onChange={onImageChange}/>*/}
-                        {/*</div>*/}
-
                         <FormControl fullWidth>
 
                             <TextField
@@ -94,12 +85,9 @@ const EditReptileModal = ({
                             />
 
                         </FormControl>
-                        <FormControl fullWidth>
-                            <InputLabel id="demo-simple-select-label">Geschlecht</InputLabel>
+                        <FormControl className={"mt-3"} fullWidth>
+                            <InputLabel>Geschlecht</InputLabel>
                             <MuiSelect
-                                className={"mt-3"}
-                                labelId="demo-simple-select-label"
-                                id="demo-simple-select"
                                 value={selectedGenderOption ? selectedGenderOption : ""}
                                 label="Geschlecht"
                                 onChange={handleGenderSelect}
@@ -110,12 +98,9 @@ const EditReptileModal = ({
                             </MuiSelect>
                         </FormControl>
 
-                        <FormControl fullWidth>
-                            <InputLabel id="demo-simple-select-label">Spezies</InputLabel>
+                        <FormControl className={"mt-3"} fullWidth>
+                            <InputLabel>Spezies</InputLabel>
                             <MuiSelect
-                                className={"mt-3"}
-                                labelId="demo-simple-select-label"
-                                id="demo-simple-select"
                                 value={selectedSpeciesOption ? selectedSpeciesOption : ""}
                                 label="Spezies"
                                 onChange={handleSpeciesSelect}

@@ -1,4 +1,3 @@
-
 export const optionsGender = [
     'Weiblich',
     'Männlich',
@@ -28,7 +27,7 @@ export const initialValuesFeeding = {
     weight: "",
 }
 
-export const initialValuesBreeder={
+export const initialValuesBreeder = {
     companyName: '',
     firstName: '',
     lastName: '',
@@ -77,10 +76,97 @@ export const reptilesExample = [
     },
 ];
 
+export const feedingExample = [
+    {
+        food: "Specki XL",
+        weight: "300",
+        date: new Date().toLocaleDateString()
+    },
+    {
+        food: "Specki XL",
+        weight: "300",
+        date: new Date().toLocaleDateString()
+
+    },
+    {
+        food: "Specki XL",
+        weight: "300",
+        date: new Date().toLocaleDateString()
+
+    },
+    {
+        food: "Specki XL",
+        weight: "300",
+        date: new Date().toLocaleDateString()
+
+    },
+    {
+        food: "Specki XL",
+        weight: "300",
+        date: new Date().toLocaleDateString()
+
+    },
+
+]
+
+export const weightExample = [
+    {
+        weight: "300",
+        date: new Date().toLocaleDateString()
+    },
+    {
+        weight: "320",
+        date: new Date().toLocaleDateString()
+
+    },
+    {
+        weight: "322",
+        date: new Date().toLocaleDateString()
+
+    },
+    {
+        weight: "322",
+        date: new Date().toLocaleDateString()
+
+    },
+    {
+        weight: "340",
+        date: new Date().toLocaleDateString()
+
+    },
+]
+
+export const noteExample = [
+    {
+        note: "Das ist eine Notiz",
+        date: new Date().toLocaleDateString()
+    },
+    {
+        note: "Das ist eine Notiz",
+        date: new Date().toLocaleDateString()
+
+    },
+    {
+        note: "Das ist eine Notiz",
+        date: new Date().toLocaleDateString()
+
+    },
+    {
+        note: "Das ist eine Notiz",
+        date: new Date().toLocaleDateString()
+
+    },
+    {
+        note: "Das ist eine Notiz",
+        date: new Date().toLocaleDateString()
+
+    },
+]
+
+
 
 export const breedersExample = [
     {
-        id: '0',
         companyName: '',
         firstName: 'Unbekannt',
         lastName: '',
@@ -92,7 +178,6 @@ export const breedersExample = [
         phone: ''
     },
     {
-        id: '1',
         companyName: 'Reptifit',
         firstName: 'Wilco',
         lastName: 'van Ee',
@@ -101,6 +186,17 @@ export const breedersExample = [
         place: 'Apeldoorn',
         country: 'Niederlande',
         email: 'info@reptifit.nl',
+        phone: ''
+    },
+    {
+        companyName: 'R & I',
+        firstName: 'Ramon',
+        lastName: 'Günther',
+        street: '',
+        postal: '',
+        place: 'Apeldoorn',
+        country: 'Niederlande',
+        email: 'info@ka.de',
         phone: ''
     },
 ];

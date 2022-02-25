@@ -18,7 +18,10 @@ import {MdDelete} from "react-icons/md";
 
 const NotesTable = ({reptiles, setReptiles, index, startDate, setStartDate}: any) => {
 
-    const [tableData, setTableData] = useState<Note[]>(reptiles[index].notes);
+    const [tableData, setTableData] = useState<Note[]>(()=>{
+       return [...reptiles[index].notes].reverse();
+    });
+
     const [showAddNoteModal, setShowAddNoteModal] = useState(false);
     const [inputNote, setInputNote] = useState("");
 
@@ -56,7 +59,7 @@ const NotesTable = ({reptiles, setReptiles, index, startDate, setStartDate}: any
     }
 
     function handleDataChange(newTableData: Note[]) {
-        const newReptiles = [...newTableData];
+        const newReptiles = [...newTableData].reverse();
         setTableData(newReptiles);
     }
 
@@ -137,7 +140,7 @@ const NotesTable = ({reptiles, setReptiles, index, startDate, setStartDate}: any
                     <TableFooter>
                         <TableRow>
                             <TablePagination
-                                rowsPerPageOptions={[5, 10, 25, {label: 'All', value: -1}]}
+                                rowsPerPageOptions={[5, 10 ]}
                                 count={tableData.length}
                                 rowsPerPage={rowsPerPage}
                                 page={page}

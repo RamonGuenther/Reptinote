@@ -1,17 +1,18 @@
 .reptileDetails{
-    display: grid;
-    grid-template-columns: 1fr 1.5fr;
+    display: flex;
+    /*display: grid;*/
+    /*grid-template-columns: 1fr 1.5fr;*/
 }
 
 .section1{
     padding: 20px;
-    width: 100%;
+    width: 40%;
 }
 
 .section2{
     border-left: 1px solid #a6a1a1;
     padding: 20px;
-    width: 100%;
+    width: 60%;
 }
 
 .tableAddButton{

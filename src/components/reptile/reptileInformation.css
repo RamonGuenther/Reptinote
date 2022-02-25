@@ -2,22 +2,19 @@
     background-color: #423c3c !important;
     border: 1px solid black;
     border-radius: 15px !important;
-    margin-top: 10px;
+    margin-top: 50px;
 }
 
 #reptile-information-name {
-    color: white;
     text-align: left;
-    padding-left: 5px;
+    padding-left: 10px;
 }
 
 
 #reptile-information-species_type {
     font-size: large;
     text-align: left;
-    padding-left: 5px;
-    color: white;
-
+    padding-left: 10px;
 }
 
 #reptile-information-image{
@@ -36,7 +33,17 @@
 
 .reptile-information-card-text{
     display: grid;
-    /*grid-template-columns: 1fr 1fr;*/
     grid-template-areas: "a b";
+    margin-top: 10px;
+    margin-left: 10px;
 }
 
+.reptile-information-h2{
+    font-size: large;
+    text-align: left;
+}
+
+.reptile-information-span{
+    font-weight: bold;
+    font-size: large;
+}
