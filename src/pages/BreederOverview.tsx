@@ -2,9 +2,10 @@ import React, {useEffect, useState} from "react";
 import BreederCard from "../components/breeder/BreederCard";
 import {Breeder} from "../data/Breeder";
 import {Button, TextField} from "@mui/material";
-import {initialValuesBreeder} from "../helper/Constants";
+import {initialValuesBreeder, initialValuesReptile} from "../helper/Constants";
 import AddBreederModal from "../components/modals/AddBreederModal";
 import EditBreederModal from "../components/modals/EditBreederModal";
+import DeleteDialog from "../components/modals/DeleteDialog";
 
 /**
  * TODO: ZÜCHTER AUSLAGERN in APP also SAVE Edit und Delete
@@ -14,32 +15,26 @@ import EditBreederModal from "../components/modals/EditBreederModal";
  * @constructor
  */
 const BreederOverview = ({breeders, setBreeders}: any) => {
-
-    /**
-     * bredder array kopieren und mit splice das erste element löscghen wegen unbekannt und dann das mappen
-     *
-     *
-     * züchter suchen nach nachname
-     */
-
-
-    const [breederValues, setBreederValues] = useState(initialValuesBreeder);
     const [showAddBreederModal, setShowAddBreederModal] = useState(false);
     const [showEditBreederModal, setShowEditBreederModal] = useState(false);
+    const [breederValues, setBreederValues] = useState(initialValuesBreeder);
 
-    const[breederId, setBreederId] = useState(0);
+
+    const [copyBreeder, setCopyBreeder] = useState<Breeder[]>(() => {
+        return [...breeders].slice(1);
+    });
+
+    const [breederId, setBreederId] = useState("");
 
 //TODO eigentlich schmutz aber egal
-    function findBreederId(id: String) : number {
-
+    function findBreederId(): number {
         let index = 0;
         for (let i = 0; i < breeders.length; i++) {
-            if (id === breeders[i].id) {
+            if (breederId === breeders[i].id) {
                 index = i;
-                setBreederId(i);
-                console.log(breederId);
             }
         }
+        console.log("TEST " + breederId + " : " + index);
         return index;
     }
 
@@ -76,17 +71,26 @@ const BreederOverview = ({breeders, setBreeders}: any) => {
             breederValues.phone
         );
 
-        const newBreeders = [...breeders, newBreeder];
+        if (showAddBreederModal) {
+            const newBreeders = [...breeders, newBreeder];
+            setBreeders(newBreeders);
+            setBreederValues(initialValuesBreeder)
+            toggleAddBreederModal();
+        }
+        if (showEditBreederModal) {
+            const newReptiles = [...breeders];
+            newReptiles[findBreederId()] = newBreeder;
+            setBreeders(newReptiles);
+            toggleEditBreederModal();
+            setBreederValues(initialValuesBreeder);
+        }
 
-        setBreeders(newBreeders);
 
-        setBreederValues(initialValuesBreeder)
-        toggleAddBreederModal();
     }
 
-    function deleteBreeder(id : string) {
+    function deleteBreeder() {
         const newBreeders = [...breeders];
-        newBreeders.splice(findBreederId(id), 1);
+        newBreeders.splice(findBreederId(), 1);
         setBreeders(newBreeders);
         console.log("delete")
     }
@@ -96,31 +100,47 @@ const BreederOverview = ({breeders, setBreeders}: any) => {
             return;
         }
 
-        let companyName
-        let firstName
-        let lastName
-        let street
-        let postal
-        let place
-        let country
-        let email
-        let phone
+        let index = findBreederId();
+        let companyName = breeders[index].companyName;
+        let firstName = breeders[index].firstName;
+        let lastName = breeders[index].lastName;
+        let street = breeders[index].street;
+        let postal = breeders[index].postal;
+        let place = breeders[index].place;
+        let country = breeders[index].country;
+        let email = breeders[index].email;
+        let phone = breeders[index].phone;
 
-        // let tiles[reptileId].name;
-        // let birthday = reptiles[reptileId].birthday;
-        // let type = reptiles[reptileId].type;
-        // let morph = reptiles[reptileId].morph;
-        // let image = reptiles[reptileId].image;
-        // setSelectedGenderOption(reptiles[reptileId].gender);
-        // setSelectedSpeciesOption(reptiles[reptileId].species);
-        // setReptileValues({name: name, birthday: birthday, type: type, morph: morph, image: image})
+        setBreederValues({
+            companyName: companyName,
+            firstName: firstName,
+            lastName: lastName,
+            street: street,
+            postal: postal,
+            place: place,
+            country: country,
+            email: email,
+            phone: phone
+        });
     }
+
+    const toggleDeleteDialog = () => {
+        setShowDeleteDialog(!showDeleteDialog);
+    };
+
+    const [showDeleteDialog, setShowDeleteDialog] = React.useState(false);
 
 
     useEffect(() => {
         initializeEdit();
-        console.log("breederId");
-    }, [breederId])
+    }, [showEditBreederModal])
+
+
+    useEffect(() => {
+        setCopyBreeder([...breeders].slice(1))
+    }, [breeders])
+
+    const [searchValue, setSearchValue] = useState<string>("")
 
 
     return (
@@ -147,14 +167,20 @@ const BreederOverview = ({breeders, setBreeders}: any) => {
                 <Button variant="outlined" onClick={toggleAddBreederModal}>Züchter hinzufügen</Button>
 
                 <Button>Test</Button>
-                <TextField> </TextField>
+                <TextField
+                    variant={"outlined"}
+                    sx={{input: {color: 'white'}}}
+                    type={"text"}
+                    value={searchValue}
+                    label={"Reptil suchen"}
+                    onChange={(e: any) => setSearchValue(e.target.value)}
+                />
             </div>
 
-            {breeders.slice(1).map((item: any, index: number) => {
+            {copyBreeder.filter((breeder: { lastName: string; }) => breeder.lastName.match(new RegExp(searchValue, "i"))).map((item: any, index: number) => {
                 return (
                     <BreederCard
                         key={index}
-
                         id={item.id}
                         companyName={item.companyName}
                         firstName={item.firstName}
@@ -167,7 +193,10 @@ const BreederOverview = ({breeders, setBreeders}: any) => {
                         phone={item.phone}
                         index={index}
                         deleteBreeder={deleteBreeder}
-                        findBreederId={findBreederId}
+                        toggleEditBreederModal={toggleEditBreederModal}
+                        toggleDeleteDialog={toggleDeleteDialog}
+                        showDeleteDialog={showDeleteDialog}
+                        setBreederId={setBreederId}
                     />
                 )
             })}

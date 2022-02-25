@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import "./reptileCard.css"
 import {MdDelete, MdSearch} from "react-icons/md";
 import {IoFastFoodOutline, IoRestaurantOutline} from "react-icons/io5";
@@ -31,6 +31,7 @@ const ReptileCard = ({
                          weights,
                          notes,
                          index,
+
                          onDeleteReptile,
                          toggleWeightModal,
                          toggleNoteModal,
@@ -40,7 +41,7 @@ const ReptileCard = ({
                          toggleReptileEditModal
                      }: any) => {
 
-    const [showDeleteDialog, setShowDeleteDialog] = React.useState(false);
+    const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
     const toggleDeleteDialog = () => {
         setShowDeleteDialog(!showDeleteDialog);
@@ -49,87 +50,92 @@ const ReptileCard = ({
 
     return (
         <div>
-            <DeleteDialog open={showDeleteDialog} toggleDeleteDialog={toggleDeleteDialog} name ={name} action = {onDeleteReptile}/>
+            <DeleteDialog open={showDeleteDialog} toggleDeleteDialog={toggleDeleteDialog} name={name}
+                          action={onDeleteReptile}/>
             <Card id={"reptile-card"}>
                 <CardHeader
                     avatar={<Link to={`/reptileDetails/${id}`}> <Chip onClick={() => {
-                    }} className={"nameBadge"} variant="outlined" label={name}/> </Link>}
+                    }} id={"reptile-card-name_badge"} variant="outlined" label={name}/> </Link>}
                 />
                 <CardContent id={"reptile-card-body"}>
                     {image !== "" ? <CardMedia
-                        className={"image"}
+                        id={"reptile-card-image"}
                         component={"img"}
                         image={image}
 
                     /> : <CardMedia
-                        className={"image"}
+                        id={"reptile-card-image"}
                         component={"img"}
                         image={"https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/No_image_available_600_x_450.svg/600px-No_image_available_600_x_450.svg.png?20150903195108"}
                     />}
 
                     <div className={"reptile-card-text"}>
-                        <h2><span className={"cardTextSpan"}>Name:</span> {name}</h2>
-                        <h2><span className={"cardTextSpan"}>Geburtstag:</span> {birthday}</h2>
-                        <h2><span className={"cardTextSpan"}>Geschlecht:</span> {gender}</h2>
-                        <h2><span className={"cardTextSpan"}>Spezies: </span> {species}</h2>
-                        <h2><span className={"cardTextSpan"}>Typ: </span> {type}</h2>
-                        <h2><span className={"cardTextSpan"}>Morph: </span>{morph}</h2>
-                        <div className={"badgeLayout"}>
+                        <h2 className={"reptile-card-h2"}><span className={"reptile-card-span"}>Name:</span> {name}</h2>
+                        <h2 className={"reptile-card-h2"}><span
+                            className={"reptile-card-span"}>Geburtstag:</span> {birthday}</h2>
+                        <h2 className={"reptile-card-h2"}><span
+                            className={"reptile-card-span"}>Geschlecht:</span> {gender}</h2>
+                        <h2 className={"reptile-card-h2"}><span
+                            className={"reptile-card-span"}>Spezies: </span> {species}</h2>
+                        <h2 className={"reptile-card-h2"}><span className={"reptile-card-span"}>Typ: </span> {type}</h2>
+                        <h2 className={"reptile-card-h2"}><span className={"reptile-card-span"}>Morph: </span>{morph}
+                        </h2>
+                        <div className={"reptile-card-badge_layout"}>
                             {weights[weights.length - 1] !== undefined &&
-                            <h3><Badge className={"lastWeightBadge"}> <GiWeight size={"25px"}/>
+                            <h3><Badge className="reptile-card-last_badge"> <GiWeight size={"25px"}/>
                                 {weights[weights.length - 1]._weight}g</Badge></h3>}
 
                             {feedings[feedings.length - 1] !== undefined &&
-                            <h3><Badge className={"lastFeedingBadge"}> <IoFastFoodOutline size={"25px"}/>
+                            <h3><Badge className="reptile-card-last_badge"> <IoFastFoodOutline size={"25px"}/>
                                 {feedings[feedings.length - 1]._date}</Badge></h3>}
 
                             {notes[notes.length - 1] !== undefined &&
-                            <h3><Badge className={"lastNoteBadge"}> <FaStickyNote size={"25px"}/>
+                            <h3><Badge className="reptile-card-last_badge"> <FaStickyNote size={"25px"}/>
                                 {notes[notes.length - 1]._note.substring(0, 30)}...</Badge></h3>}
 
                         </div>
                     </div>
                 </CardContent>
 
-                <CardActions className={"cardFooter"}>
+                <CardActions id={"reptile-card-actions"}>
 
-                    <div className={"buttonsLayout"}>
+                    <div className={"reptile-card-buttons_Layout"}>
                         <Link to={`/reptileDetails/${id}`}>
-                            <Button variant="contained" className={"detailsButton bg-info"} onClick={() => {
-                            }}> <MdSearch size={"25px"}/>
+                            <Button variant="contained" className={"reptile-card-details_button bg-info"}
+                                    onClick={() => {
+                                    }}> <MdSearch size={"25px"}/>
                             </Button>
 
                         </Link>
 
-                        <Button variant="contained" className={"weightButton bg-success"} onClick={() => {
+                        <Button variant="contained" className={"reptile-card-weight_button bg-success"} onClick={() => {
                             toggleWeightModal();
-                            setReptileId(index)
+                            setReptileId(id)
                         }}> <GiWeight size={"25px"}/>
                         </Button>
 
 
-                        <Button variant="contained" className={"noteButton bg-success"} onClick={() => {
+                        <Button variant="contained" className={"reptile-card-note_button bg-success"} onClick={() => {
                             toggleNoteModal();
-                            setReptileId(index)
+                            setReptileId(id)
                         }}> <FaStickyNote size={"25px"}/>
                         </Button>
 
-                        {/*TODO BEI TOGGLE DIE SCHREIBWEISE ÄNDERN */}
-                        <Button variant="contained" className={"feedButton bg-success"} onClick={() => {
+                        <Button variant="contained" className={"reptile-card-feed_button bg-success"} onClick={() => {
                             toggleFeedingModal();
-                            setReptileId(index)
+                            setReptileId(id)
                         }}> <IoRestaurantOutline size={"25px"}/>
                         </Button>
 
-                        <div className="verticalLine"/>
+                        <div id="verticalLine"/>
 
-                        <Button variant="contained" className={"editButton"} onClick={() => {
-                            setReptileId(index);
-                            toggleReptileEditModal(index);
+                        <Button variant="contained" className={"reptile-card-edit_button"} onClick={() => {
+                            setReptileId(id);
+                            toggleReptileEditModal();
                         }}> <FiEdit size={"25px"}/>
 
                         </Button>
-                        <Button variant="contained" className={"deleteButton bg-danger"} onClick={() => {
+                        <Button variant="contained" className={"reptile-card-delete_button bg-danger"} onClick={() => {
                             toggleDeleteDialog()
                         }}> <MdDelete size={"25px"}/>
                         </Button>

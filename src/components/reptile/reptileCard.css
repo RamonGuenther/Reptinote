@@ -6,10 +6,28 @@
 
 }
 
+#reptile-card-name_badge {
+    height: 50px;
+    min-width: 150px;
+    font-size: x-large !important;
+    color: white !important;
+    background-color: #7e3d3d !important;
+}
+
+
 /*TODO: vllt doch grid und größe zuweisen*/
 #reptile-card-body {
     display: flex;
+    /*display: grid;*/
+    /*grid-template-columns: 1fr 1fr;*/
     background-color: #5d5858;
+}
+
+#reptile-card-image {
+    width: 100%;
+    height: 400px;
+    border: 2px solid #383838;
+    border-radius: 10px;
 }
 
 .reptile-card-text {
@@ -21,135 +39,109 @@
     font-family: "Calibri Light", serif;
 }
 
-.cardFooter {
-    padding: 15px;
-
-}
-
-
-
-
-.nameBadge {
-    height: 50px;
-    min-width: 150px;
-    font-size: x-large !important;
-    color: white !important;
-    background-color: #7e3d3d !important;
-}
-
-.badgeLayout{
-    display: flex;
-}
-
-.lastFeedingBadge{
-    height: 50px;
-    font-size: large !important;
-    color: white !important;
-    margin-top: 10px;
-    border-radius: 10px;
-    padding: 10px;
-    background-color: #a25353 !important;
-    margin-right: 5px;
-    margin-left: 5px;
-}
-
-.lastNoteBadge{
-    height: 50px;
-    font-size: large !important;
-    color: white !important;
-    margin-top: 10px;
-    border-radius: 10px;
-    padding: 10px;
-    background-color: #a25353 !important;
-    margin-right: 5px;
-    margin-left: 5px;
-}
-
-.lastWeightBadge{
-    height: 50px;
-    font-size: large !important;
-    color: white !important;
-    margin-top: 10px;
-    border-radius: 10px;
-    padding: 10px;
-    background-color: #a25353 !important;
-    margin-right: 5px;
-    margin-left: 5px;
-}
-
-
-.image {
-    width: 100%;
-    height: 400px;
-    border: 2px solid #383838;
-    border-radius: 10px;
-}
-
-
-h2 {
+.reptile-card-h2 {
     font-size: xx-large;
     margin-top: 10px;
 }
 
-.cardTextSpan{
+.reptile-card-span {
     font-size: xx-large;
     font-weight: bold;
 }
 
-.buttonsLayout{
+
+.reptile-card-badge_layout {
+    display: flex;
+}
+
+.reptile-card-last_badge {
+    height: 50px;
+    font-size: large !important;
+    color: white !important;
+    margin-top: 10px;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: #a25353 !important;
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
+
+#reptile-card-actions {
+    padding: 10px;
+}
+
+
+.reptile-card-buttons_Layout {
     margin: auto
 }
 
-.detailsButton {
+.reptile-card-details_button {
     width: 75px;
     font-size: large;
     margin: 10px 0 0 25px !important;
     height: 50px;
+    background-color: #7e3d3d !important;
 }
 
 
-.weightButton{
+.reptile-card-weight_button {
     width: 75px;
     font-size: large;
     margin: 10px 0 0 25px !important;
     height: 50px;
+    background-color: #7e3d3d !important;
 
 }
 
-.noteButton {
+.reptile-card-note_button {
     width: 75px;
     font-size: large;
     margin: 10px 0 0 25px !important;
     height: 50px;
+    background-color: #7e3d3d !important;
+
 
 }
 
-.feedButton {
+.reptile-card-feed_button {
     width: 75px;
     font-size: large;
     margin: 10px 0 0 25px !important;
     height: 50px;
+    background-color: #7e3d3d !important;
+
 }
 
+/*.reptile-card-buttons{*/
+/*    width: 75px;*/
+/*    font-size: large;*/
+/*    margin: 10px 0 0 25px !important;*/
+/*    height: 50px;*/
+/*    background-color: #7e3d3d !important;*/
+/*}*/
 
-.verticalLine {
+
+#verticalLine {
     display: inline-flex;
     margin-left: 20px;
     margin-bottom: -25px;
-    border-left: 1px solid #232323 ;
+    border-left: 1px solid #232323;
     height: 50px;
 }
 
 
-.editButton{
+.reptile-card-edit_button {
     width: 75px;
     height: 50px;
     margin: 10px 0 0 20px !important;
+    background-color: #7e3d3d !important;
 }
 
 
-.deleteButton {
+.reptile-card-delete_button {
     width: 75px;
     height: 50px;
     margin: 10px 0 0 25px !important;
+    background-color: #7e3d3d !important;
 }

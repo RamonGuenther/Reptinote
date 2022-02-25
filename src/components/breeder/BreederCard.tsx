@@ -1,6 +1,7 @@
 import React, {useEffect} from "react";
 import {Button, Card, CardActions, CardContent, Typography} from "@mui/material";
 import "./breedercard.css"
+import DeleteDialog from "../modals/DeleteDialog";
 
 
 const BreederCard = ({
@@ -15,13 +16,22 @@ const BreederCard = ({
                          email,
                          phone,
                          deleteBreeder,
-                         findBreederId,
+                         toggleEditBreederModal,
+                         setBreederId,
+
+
+                         toggleDeleteDialog,
+    showDeleteDialog
 
                      }: any) => {
 
 
-    return(
+    return (
         <div className="breeder-card-layout">
+
+            <DeleteDialog open={showDeleteDialog} toggleDeleteDialog={toggleDeleteDialog} action={deleteBreeder}
+                          name={" "}/>
+
             <Card id="breeder-card">
                 <CardContent>
                     Firma: {companyName}
@@ -35,8 +45,14 @@ const BreederCard = ({
                     {phone}
                 </CardContent>
                 <CardActions>
-                    <Button size="small" onClick={()=>{deleteBreeder(id)}}>Löschen</Button>
-                    <Button size="small">Learn More</Button>
+                    <Button size="small" onClick={() => {
+                        setBreederId(id);
+                        toggleDeleteDialog()
+                    }}>Löschen</Button>
+                    <Button size="small" onClick={() => {
+                        setBreederId(id);
+                        toggleEditBreederModal()
+                    }}>editieren</Button>
                 </CardActions>
             </Card>
         </div>

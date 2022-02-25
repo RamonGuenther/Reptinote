@@ -21,9 +21,7 @@ export default function DeleteDialog({open, toggleDeleteDialog, action, name}: a
                     {"Das Reptil \"" + name + "\" wirklich löschen?"}
                 </DialogTitle>
                 <DialogContent className={"delete-dialog"}>
-                    <DialogContentText className={"delete-dialog"}>
                         <h4 className={"delete-dialog"}>Die Daten können danach nicht mehr wiederhergestellt werden.</h4>
-                    </DialogContentText>
                 </DialogContent>
                 <DialogActions className={"delete-dialog"}>
                     <Button className="delete-dialog-buttons" onClick={toggleDeleteDialog}>Abbrechen</Button>

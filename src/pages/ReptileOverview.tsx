@@ -11,11 +11,29 @@ import Note from "../data/Note";
 import Weight from "../data/Weight";
 import EditReptileModal from "../components/modals/EditReptileModal";
 import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
 import {initialValuesFeeding, initialValuesReptile} from "../helper/Constants";
 import {notifyFailure, notifySuccess} from "../helper/Toasts";
 import {Button} from "@mui/material";
 import "./reptileOverview.css"
+import {makeStyles} from "@material-ui/styles";
+
+
+const useStyles = makeStyles(theme => ({
+    textField: {
+        width: "300px"
+    },
+    cssOutlinedInput: {
+        "&$cssFocused $notchedOutline": {
+            borderColor: ` #0275d8  !important`
+        }
+    },
+    cssFocused: { color: "white !important" },
+
+    notchedOutline: {
+        borderWidth: "1px",
+        borderColor: " white  !important"
+    }
+}));
 
 
 function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editReptile}: any) {
@@ -31,6 +49,12 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
     const [selectedGenderOption, setSelectedGenderOption] = useState("");
     const [selectedSpeciesOption, setSelectedSpeciesOption] = useState("");
 
+    const [error, setError] = useState(false);
+
+    function handlError(){
+        setError(!error);
+    }
+
 
     //add
     function addReptile(): void {
@@ -41,10 +65,20 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
         let newReptile = new Reptile();
         newReptile.setReptile(reptileValues.name, reptileValues.birthday, reptileValues.type, reptileValues.morph, selectedGenderOption, selectedSpeciesOption, reptileValues.image);
 
-        saveReptile(newReptile);
-        setReptileValues(initialValuesReptile); //reset
-        notifySuccess("Das Reptil " + reptileValues.name + " wurde gespeichert.");
-        toggleAddReptileModal();
+        if(showAddReptileModal){
+            saveReptile(newReptile);
+            setReptileValues(initialValuesReptile); //reset
+            notifySuccess("Das Reptil " + reptileValues.name + " wurde gespeichert.");
+            toggleAddReptileModal();
+        }
+        if(showEditReptileModal){
+            const newReptiles = [...reptiles];
+            newReptiles[findReptileId()] = newReptile;
+            setReptiles(newReptiles);
+            toggleEditReptileModal();
+            setReptileValues(initialValuesReptile);
+        }
+
     }
 
 
@@ -55,7 +89,7 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
         }
         let feeding = new Feeding();
         feeding.setFeeding(feedingValues.weight, feedingValues.type, startDate.toLocaleDateString());
-        saveFeeding(feeding, reptileId);
+        saveFeeding(feeding, findReptileId());
         setFeedingValues(initialValuesFeeding)
         setStartDate(new Date());
         notifySuccess("Die Fütterung wurde gespeichert.");
@@ -65,14 +99,13 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
 
     function deleteReptile(): void {
         const newTodos = [...reptiles];
-        newTodos.splice(reptileId, 1);
+        newTodos.splice(findReptileId(), 1);
         setReptiles(newTodos);
     }
 
 
     function handleInputChangeReptile(e: any): void {
         const {name, value} = e.target;
-
         setReptileValues({
             ...reptileValues,
             [name]: value,
@@ -88,7 +121,7 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
         });
     }
 
-    const [reptileId, setReptileId] = useState(0); //TODO uuid benutzen
+    const [reptileId, setReptileId] = useState(""); //TODO uuid benutzen
 
     function toggleAddReptileModal(): void {
         setReptileValues(initialValuesReptile);
@@ -138,13 +171,12 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
         const newTodos = [...reptiles];
         let note = new Note();
         note.setNote(inputNote, startDate.toLocaleDateString());
-        newTodos[reptileId].notes.push(note);
+        newTodos[findReptileId()].notes.push(note);
         setReptiles(newTodos);
         setInputNote("");
         setStartDate(new Date());
         notifySuccess("Die Notiz wurde gespeichert.");
         toggleAddNoteModal();
-
     }
 
     function addWeight() {
@@ -155,7 +187,7 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
         const newTodos = [...reptiles];
         let weight = new Weight();
         weight.setWeight(inputWeight, startDate.toLocaleDateString());
-        newTodos[reptileId].weights.push(weight);
+        newTodos[findReptileId()].weights.push(weight);
         setReptiles(newTodos);
         setInputWeight("");
         setStartDate(new Date());
@@ -170,13 +202,15 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
         if (reptiles.length === 0) {
             return;
         }
-        let name = reptiles[reptileId].name;
-        let birthday = reptiles[reptileId].birthday;
-        let type = reptiles[reptileId].type;
-        let morph = reptiles[reptileId].morph;
-        let image = reptiles[reptileId].image;
-        setSelectedGenderOption(reptiles[reptileId].gender);
-        setSelectedSpeciesOption(reptiles[reptileId].species);
+
+        let index = findReptileId();
+        let name = reptiles[index].name;
+        let birthday = reptiles[index].birthday;
+        let type = reptiles[index].type;
+        let morph = reptiles[index].morph;
+        let image = reptiles[index].image;
+        setSelectedGenderOption(reptiles[index].gender);
+        setSelectedSpeciesOption(reptiles[index].species);
         setReptileValues({name: name, birthday: birthday, type: type, morph: morph, image: image})
     }
 
@@ -196,23 +230,50 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
     }
 
 
+    function findReptileId(): number {
+        let index = 0;
+        for (let i = 0; i < reptiles.length; i++) {
+            if (reptileId === reptiles[i].id) {
+                index = i;
+            }
+        }
+        return index;
+    }
+
+
     useEffect(() => {
         initializeEdit();
     }, [showEditReptileModal])
+
+
+
+    const classes = useStyles();
 
     return (
         <div className={" mt-3 rounded p-5 container"}>
 
             <TextField
-                sx={{input: {color: 'white'}}}
+                variant={"outlined"}
+                // sx={{input: {color: 'white'}}}
                 type={"text"}
                 value={searchValue}
                 label={"Reptil suchen"}
                 onChange={(e: any) => setSearchValue(e.target.value)}
-                focused
+
+                className={classes.textField}
+                InputLabelProps={{
+                    style: { color: '#ffffff'},
+                }}
+                InputProps={{
+                    classes: {
+                        root: classes.cssOutlinedInput,
+                        focused: classes.cssFocused,
+                        notchedOutline: classes.notchedOutline
+                    }
+                }}
             />
 
-            <Button id={"reptile-overview-add_reptile_button"} variant="outlined" onClick={toggleAddReptileModal}>Reptil
+            <Button id={"reptile-overview-add_reptile_button"} variant="contained" onClick={toggleAddReptileModal}>Reptil
                 hinzufügen</Button>
 
             {/*<Autocomplete*/}
