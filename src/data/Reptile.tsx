@@ -9,9 +9,9 @@ export class Reptile {
     private _id: string;
     private _name: string ="";
     private _birthday: string ="";
-    private _type : string =""; //ART ALSO HAKENNASEN
+    private _type : string ="";
     private _morph: string ="";
-    private _species: string =""; //Spezies (Ordnung)
+    private _species: string ="";
     private _gender: string = "";
     private _feedings : Feeding[];
     private _notes : Note[];

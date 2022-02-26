@@ -1,22 +1,21 @@
 import React, {useEffect, useState} from "react";
 import ReptileCard from "../components/reptile/ReptileCard";
-import {Reptile} from "../data/Reptile";
-import AddReptileModal from "../components/modals/AddReptileModal";
+import AddReptileModal from "../components/modals/reptile/AddReptileModal";
 import 'react-toastify/dist/ReactToastify.css';
 import Feeding from "../data/Feeding";
-import AddFeedingModal from "../components/modals/AddFeedingModal";
-import AddWeightModal from "../components/modals/AddWeightModal";
-import AddNoteModal from "../components/modals/AddNoteModal";
+import AddFeedingModal from "../components/modals/reptile/AddFeedingModal";
+import AddWeightModal from "../components/modals/reptile/AddWeightModal";
+import AddNoteModal from "../components/modals/reptile/AddNoteModal";
 import Note from "../data/Note";
 import Weight from "../data/Weight";
-import EditReptileModal from "../components/modals/EditReptileModal";
+import EditReptileModal from "../components/modals/reptile/EditReptileModal";
 import TextField from '@mui/material/TextField';
 import {initialValuesFeeding, initialValuesReptile} from "../helper/Constants";
 import {notifyFailure, notifySuccess} from "../helper/Toasts";
-import {Button, FormControl, InputLabel, MenuItem, Select as MuiSelect} from "@mui/material";
+import {Button} from "@mui/material";
 import "./reptileOverview.css"
-import {useStyles} from "../helper/Constants";
 import {Breeder} from "../data/Breeder";
+import {useStyles} from "../helper/Functions";
 
 
 function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editReptile, breeders}: any) {
@@ -42,26 +41,27 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
         let newReptile = reptiles[findReptileId()];
         newReptile.setReptile(reptileValues.name, reptileValues.birthday, reptileValues.type, reptileValues.morph, selectedGenderOption, selectedSpeciesOption, reptileValues.image);
 
-        if(selectedBreederOption !== ""){
-            for(let i = 0 ; i<breeders.length; i++){
-                if(breeders[i].lastName === selectedBreederOption){
-                    let breeder : Breeder = breeders[i];
+        if (selectedBreederOption !== "") {
+            for (let i = 0; i < breeders.length; i++) {
+                if (breeders[i].lastName === selectedBreederOption) {
+                    let breeder: Breeder = breeders[i];
                     newReptile.setBreeder(breeder);
                     break;
                 }
             }
         }
 
-        if(showAddReptileModal){
+        if (showAddReptileModal) {
             saveReptile(newReptile);
             setReptileValues(initialValuesReptile); //reset
             notifySuccess("Das Reptil " + reptileValues.name + " wurde gespeichert.");
             toggleAddReptileModal();
         }
-        if(showEditReptileModal){
+        if (showEditReptileModal) {
             const newReptiles = [...reptiles];
             newReptiles[findReptileId()] = newReptile;
             setReptiles(newReptiles);
+            notifySuccess("Die Änderungen des Reptils " + reptileValues.name + " wurden gespeichert.");
             toggleEditReptileModal();
             setReptileValues(initialValuesReptile);
         }
@@ -149,7 +149,8 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
     function handleGenderSelect(event: any) {
         setSelectedGenderOption(event.target.value)
     }
-    function handleBreederSelect(event: any){
+
+    function handleBreederSelect(event: any) {
         setSelectedBreederOption(event.target.value);
     }
 
@@ -211,11 +212,11 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
     }
 
 
-    const [searchValue, setSearchValue] = useState<string>("")
+    const [searchValue, setSearchValue] = useState("");
 
     //TODO: isOptionEqualToValue
     function test(event: any) {
-        setSearchValue(event.target.value);
+        setSearchValue(event.target.innerText);
         console.log(searchValue);
     }
 
@@ -236,61 +237,65 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
     }, [showEditReptileModal])
 
 
-
     const classes = useStyles();
 
     return (
-        <div className={" mt-3 rounded p-5 container"}>
+        <div className={"mt-3 p-5 container"}>
 
-            <TextField
-                variant={"outlined"}
-                // sx={{input: {color: 'white'}}}
-                type={"text"}
-                value={searchValue}
-                label={"Reptil suchen"}
-                onChange={(e: any) => setSearchValue(e.target.value)}
-                placeholder={"Name des Reptils..."}
-                className={classes.textField}
-                InputLabelProps={{
-                    style: { color: '#ffffff'},
-                }}
-                InputProps={{
-                    classes: {
-                        root: classes.cssOutlinedInput,
-                        focused: classes.cssFocused,
-                        notchedOutline: classes.notchedOutline
-                    }
-                }}
-            />
+            <div className={"reptile-overview-search_button"}>
+
+                <TextField
+                    variant={"outlined"}
+                    type={"text"}
+                    value={searchValue}
+                    label={"Reptil suchen"}
+                    onChange={(e: any) => setSearchValue(e.target.value)}
+                    placeholder={"Name des Reptils..."}
+                    className={classes.textField}
+                    InputLabelProps={{
+                        style: { color: '#ffffff'},
+                    }}
+                    InputProps={{
+                        classes: {
+                            root: classes.cssOutlinedInput,
+                            focused: classes.cssFocused,
+                            notchedOutline: classes.notchedOutline
+                        }
+                    }}
+                />
+
+                {/*<Autocomplete*/}
+                {/*    options={(reptiles.map((item: any) => item.name))}*/}
+                {/*    sx={{width: 300, margin: "auto"}}*/}
+                {/*    onChange={test}*/}
+                {/*    value={searchValue}*/}
+                {/*    renderInput={(params: any) =>*/}
+                {/*        <TextField*/}
+                {/*            {...params}*/}
+                {/*            label="Reptil suchen"*/}
+                {/*            sx={{input: {color: 'white'}}}*/}
+                {/*            InputLabelProps={{*/}
+                {/*                ...params.InputProps,*/}
+                {/*                style: {color: '#ffffff'},*/}
+                {/*            }}*/}
+                {/*            InputProps={{*/}
+                {/*                ...params.InputProps,*/}
+                {/*                classes: {*/}
+                {/*                    root: classes.cssOutlinedInput,*/}
+                {/*                    focused: classes.cssFocused,*/}
+                {/*                    notchedOutline: classes.notchedOutline*/}
+                {/*                }*/}
+                {/*            }}/>}*/}
+                {/*/>*/}
 
 
-            {/*<FormControl className={"mt-3"} fullWidth>*/}
-            {/*    <InputLabel required>Spezies</InputLabel>*/}
-            {/*    <MuiSelect*/}
-            {/*        value={searchValue}*/}
-            {/*        label="Spezies"*/}
-            {/*        onChange={test}*/}
-            {/*    >*/}
-            {/*        {reptiles.map((item: any, index: number) => {*/}
-            {/*            return <MenuItem value={item.name}>*/}
-            {/*                {item.name}*/}
-            {/*            </MenuItem>*/}
-            {/*        })}*/}
-            {/*    </MuiSelect>*/}
-            {/*</FormControl>*/}
+                <Button id={"reptile-overview-add_reptile_button"} variant="contained" onClick={toggleAddReptileModal}>Reptil
+                    hinzufügen</Button>
 
-            <Button id={"reptile-overview-add_reptile_button"} variant="contained" onClick={toggleAddReptileModal}>Reptil
-                hinzufügen</Button>
 
-            {/*<Autocomplete*/}
-            {/*    options={reptiles.map((item: any) =>{return {label: item.name}})}*/}
-            {/*    sx={{ width: 300 }}*/}
-            {/*    onChange={(e: any) => test(e)}*/}
-            {/*    value={searchValue}*/}
-            {/*    isOptionEqualToValue={(option : string, value : string) => true}*/}
-            {/*    renderInput={(params:any) => <TextField {...params} label="Reptil suchen" />}*/}
-            {/*/>*/}
 
+
+            </div>
 
             <AddReptileModal
                 toggleAddReptileModal={toggleAddReptileModal}
@@ -303,9 +308,9 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
                 handleGenderSelect={handleGenderSelect}
                 selectedSpeciesOption={selectedSpeciesOption}
                 handleSpeciesSelect={handleSpeciesSelect}
-                selectedBreederOption = {selectedBreederOption}
+                selectedBreederOption={selectedBreederOption}
                 handleBreederSelect={handleBreederSelect}
-                breeders = {breeders}
+                breeders={breeders}
                 test={test}
                 searchValue={searchValue}
             />
@@ -350,9 +355,9 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
                 handleGenderSelect={handleGenderSelect}
                 selectedSpeciesOption={selectedSpeciesOption}
                 handleSpeciesSelect={handleSpeciesSelect}
-                selectedBreederOption = {selectedBreederOption}
+                selectedBreederOption={selectedBreederOption}
                 handleBreederSelect={handleBreederSelect}
-                breeders = {breeders}
+                breeders={breeders}
             />
 
             {reptiles.filter((reptil: { name: string; }) => reptil.name.match(new RegExp(searchValue, "i"))).map((item: any, index: number) => {

@@ -32,7 +32,6 @@ const AddNoteModal = ({
             <Dialog open={showAddNoteModal} onClose={toggleAddNoteModal}>
                 <DialogTitle>
                     Notiz hinzufügen
-                    <Button className='btn-close' onClick={toggleAddNoteModal}/>
                 </DialogTitle>
                 <Divider/>
 

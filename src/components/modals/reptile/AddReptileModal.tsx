@@ -10,7 +10,7 @@ import {
     MenuItem,
     Select as MuiSelect, TextField
 } from "@mui/material";
-import {optionsGender, optionsSpecies} from "../../helper/Constants";
+import {optionsGender, optionsSpecies} from "../../../helper/Constants";
 
 
 const AddReptileModal = ({
@@ -32,7 +32,6 @@ const AddReptileModal = ({
             <Dialog open={showAddReptileModal} onClose={toggleAddReptileModal}>
                 <DialogTitle>
                     Reptil hinzufügen
-                    <Button className='btn-close' onClick={toggleAddReptileModal}/>
                 </DialogTitle>
                 <Divider/>
                 <DialogContent style={{width: "500px"}}>

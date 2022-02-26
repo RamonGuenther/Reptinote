@@ -2,8 +2,8 @@ import React, {useEffect, useState} from "react";
 import {Button, Card, CardActions, CardContent, CardMedia} from "@mui/material";
 import {MdDelete} from "react-icons/md";
 import "./reptileInformation.css"
-import DeleteDialog from "../modals/DeleteDialog";
-import EditReptileModal from "../modals/EditReptileModal";
+import DeleteDialog from "../modals/reptile/DeleteDialog";
+import EditReptileModal from "../modals/reptile/EditReptileModal";
 import {initialValuesReptile} from "../../helper/Constants";
 import {notifyFailure, notifySuccess} from "../../helper/Toasts";
 import {Reptile} from "../../data/Reptile";
@@ -30,7 +30,7 @@ const ReptileInformation = ({reptile, deleteReptile, editReptile, breeders}: any
         setSelectedGenderOption(event.target.value)
     }
 
-    function handleBreederSelect(event: any){
+    function handleBreederSelect(event: any) {
         setSelectedBreederOption(event.target.value);
     }
 
@@ -62,10 +62,10 @@ const ReptileInformation = ({reptile, deleteReptile, editReptile, breeders}: any
 
         newReptile.setReptile(reptileValues.name, reptileValues.birthday, reptileValues.type, reptileValues.morph, selectedGenderOption, selectedSpeciesOption, reptileValues.image);
 
-        if(selectedBreederOption !== ""){
-            for(let i = 0 ; i<breeders.length; i++){
-                if(breeders[i].lastName === selectedBreederOption){
-                    let breeder : Breeder = breeders[i];
+        if (selectedBreederOption !== "") {
+            for (let i = 0; i < breeders.length; i++) {
+                if (breeders[i].lastName === selectedBreederOption) {
+                    let breeder: Breeder = breeders[i];
                     newReptile.setBreeder(breeder);
                     break;
                 }
@@ -169,15 +169,21 @@ const ReptileInformation = ({reptile, deleteReptile, editReptile, breeders}: any
                 </CardContent>
 
                 <CardActions className={"reptileInfoActions"}>
-                    <Button variant="contained" className={"detailsButton bg-info"} onClick={() => {
-                        toggleDeleteDialog()
-                    }}> <MdDelete size={"25px"}/>
-                    </Button>
 
-                    <Button variant="contained" className={"editButton"} onClick={() => {
-                        toggleEditReptileModal();
-                    }}> <FiEdit size={"25px"}/>
-                    </Button>
+                    <div className={"reptile-information-button_layout"}>
+
+                        <Button variant="contained" className={"reptile-information-buttons bg-primary"} onClick={() => {
+                            toggleEditReptileModal();
+                        }}> <FiEdit size={"25px"}/>
+                        </Button>
+
+                        <Button variant="contained" className={"reptile-information-buttons bg-danger"} onClick={() => {
+                            toggleDeleteDialog()
+                        }}> <MdDelete size={"25px"}/>
+                        </Button>
+
+
+                    </div>
                 </CardActions>
             </Card>
         </>

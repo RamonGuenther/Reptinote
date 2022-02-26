@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import TablePagination from '@mui/material/TablePagination';
 import Weight from "../../data/Weight";
-import AddWeightModal from "../modals/AddWeightModal";
+import AddWeightModal from "../modals/reptile/AddWeightModal";
 import {notifyFailure, notifySuccess} from "../../helper/Toasts";
 import {MdDelete} from "react-icons/md";
 

@@ -35,7 +35,6 @@
     display: grid;
     grid-template-areas: "a b";
     margin-top: 10px;
-    margin-left: 10px;
 }
 
 .reptile-information-h2{
@@ -46,4 +45,16 @@
 .reptile-information-span{
     font-weight: bold;
     font-size: large;
+    margin-left: 10px;
+}
+
+.reptile-information-button_layout{
+
+}
+
+.reptile-information-buttons{
+    width: 75px;
+    font-size: large;
+    margin: 10px 0 0 25px !important;
+    height: 50px;
 }

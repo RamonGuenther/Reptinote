@@ -10,7 +10,7 @@ import {
     MenuItem,
     Select as MuiSelect, TextField
 } from "@mui/material";
-import {optionsGender, optionsSpecies} from "../../helper/Constants";
+import {optionsGender, optionsSpecies} from "../../../helper/Constants";
 
 
 const EditReptileModal = ({
@@ -32,7 +32,6 @@ const EditReptileModal = ({
             <Dialog open={basicModal} onClose={toggleShow}>
                 <DialogTitle>
                     Reptil Bearbeiten
-                    <Button className='btn-close' onClick={toggleShow}/>
                 </DialogTitle>
                 <Divider/>
 

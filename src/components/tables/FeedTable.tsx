@@ -13,7 +13,7 @@ import {
 import Feeding from "../../data/Feeding";
 import TablePagination from '@mui/material/TablePagination';
 import {initialValuesFeeding} from "../../helper/Constants";
-import AddFeedingModal from "../modals/AddFeedingModal";
+import AddFeedingModal from "../modals/reptile/AddFeedingModal";
 import {notifyFailure, notifySuccess} from "../../helper/Toasts";
 import "../reptile/reptileInformation.css"
 import {MdDelete} from "react-icons/md";

@@ -75,46 +75,13 @@
     margin: auto
 }
 
-.reptile-card-details_button {
+
+.reptile-card-buttons{
     width: 75px;
     font-size: large;
     margin: 10px 0 0 25px !important;
     height: 50px;
 }
-
-
-.reptile-card-weight_button {
-    width: 75px;
-    font-size: large;
-    margin: 10px 0 0 25px !important;
-    height: 50px;
-
-}
-
-.reptile-card-note_button {
-    width: 75px;
-    font-size: large;
-    margin: 10px 0 0 25px !important;
-    height: 50px;
-
-
-}
-
-.reptile-card-feed_button {
-    width: 75px;
-    font-size: large;
-    margin: 10px 0 0 25px !important;
-    height: 50px;
-
-}
-
-/*.reptile-card-buttons{*/
-/*    width: 75px;*/
-/*    font-size: large;*/
-/*    margin: 10px 0 0 25px !important;*/
-/*    height: 50px;*/
-/*    background-color: #7e3d3d !important;*/
-/*}*/
 
 
 #verticalLine {
@@ -126,15 +93,3 @@
 }
 
 
-.reptile-card-edit_button {
-    width: 75px;
-    height: 50px;
-    margin: 10px 0 0 20px !important;
-}
-
-
-.reptile-card-delete_button {
-    width: 75px;
-    height: 50px;
-    margin: 10px 0 0 25px !important;
-}

@@ -17,8 +17,7 @@ import {
     CardMedia,
     Chip,
 } from "@mui/material";
-import DeleteDialog from "../modals/DeleteDialog";
-import {useStyles} from "../../helper/Constants";
+import DeleteDialog from "../modals/reptile/DeleteDialog";
 
 const ReptileCard = ({
                          id,
@@ -49,7 +48,6 @@ const ReptileCard = ({
     };
 
 
-
     return (
         <div>
             <DeleteDialog open={showDeleteDialog} toggleDeleteDialog={toggleDeleteDialog} name={name}
@@ -73,9 +71,12 @@ const ReptileCard = ({
 
                     <div className={"reptile-card-text"}>
                         <h2 className={"reptile-card-h2"}><span className={"reptile-card-span"}>Name:</span> {name}</h2>
-                        <h2 className={"reptile-card-h2"}><span className={"reptile-card-span"}>Geburtstag:</span> {birthday}</h2>
-                        <h2 className={"reptile-card-h2"}><span className={"reptile-card-span"}>Geschlecht:</span> {gender}</h2>
-                        <h2 className={"reptile-card-h2"}><span className={"reptile-card-span"}>Spezies: </span> {species}</h2>
+                        <h2 className={"reptile-card-h2"}><span
+                            className={"reptile-card-span"}>Geburtstag:</span> {birthday}</h2>
+                        <h2 className={"reptile-card-h2"}><span
+                            className={"reptile-card-span"}>Geschlecht:</span> {gender}</h2>
+                        <h2 className={"reptile-card-h2"}><span
+                            className={"reptile-card-span"}>Spezies: </span> {species}</h2>
                         <h2 className={"reptile-card-h2"}><span className={"reptile-card-span"}>Typ: </span> {type}</h2>
                         <h2 className={"reptile-card-h2"}><span className={"reptile-card-span"}>Morph: </span>{morph}
                         </h2>
@@ -99,28 +100,29 @@ const ReptileCard = ({
                 <CardActions id={"reptile-card-actions"}>
 
                     <div className={"reptile-card-buttons_Layout"}>
+
                         <Link to={`/reptileDetails/${id}`}>
-                            <Button variant="contained" className={"reptile-card-details_button bg-info"}
+                            <Button variant="contained" className={"reptile-card-buttons bg-info"}
                                     onClick={() => {
                                     }}> <MdSearch size={"25px"}/>
                             </Button>
 
                         </Link>
 
-                        <Button variant="contained" className={"reptile-card-weight_button bg-success"} onClick={() => {
+                        <Button variant="contained" className={"reptile-card-buttons bg-success"} onClick={() => {
                             toggleWeightModal();
                             setReptileId(id)
                         }}> <GiWeight size={"25px"}/>
                         </Button>
 
 
-                        <Button variant="contained" className={"reptile-card-note_button bg-success"} onClick={() => {
+                        <Button variant="contained" className={"reptile-card-buttons bg-success"} onClick={() => {
                             toggleNoteModal();
                             setReptileId(id)
                         }}> <FaStickyNote size={"25px"}/>
                         </Button>
 
-                        <Button variant="contained" className={"reptile-card-feed_button bg-success"} onClick={() => {
+                        <Button variant="contained" className={"reptile-card-buttons bg-success"} onClick={() => {
                             toggleFeedingModal();
                             setReptileId(id)
                         }}> <IoRestaurantOutline size={"25px"}/>
@@ -128,13 +130,13 @@ const ReptileCard = ({
 
                         <div id="verticalLine"/>
 
-                        <Button variant="contained" className={"reptile-card-edit_button"} onClick={() => {
+                        <Button variant="contained" className={"reptile-card-buttons"} onClick={() => {
                             setReptileId(id);
                             toggleReptileEditModal();
                         }}> <FiEdit size={"25px"}/>
 
                         </Button>
-                        <Button variant="contained" className={"reptile-card-delete_button bg-danger"} onClick={() => {
+                        <Button variant="contained" className={"reptile-card-buttons bg-danger"} onClick={() => {
                             toggleDeleteDialog()
                         }}> <MdDelete size={"25px"}/>
                         </Button>

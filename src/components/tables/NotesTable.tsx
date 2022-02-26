@@ -13,7 +13,7 @@ import {
 import TablePagination from '@mui/material/TablePagination';
 import Note from "../../data/Note";
 import {notifyFailure, notifySuccess} from "../../helper/Toasts";
-import AddNoteModal from "../modals/AddNoteModal";
+import AddNoteModal from "../modals/reptile/AddNoteModal";
 import {MdDelete} from "react-icons/md";
 
 const NotesTable = ({reptiles, setReptiles, index, startDate, setStartDate}: any) => {

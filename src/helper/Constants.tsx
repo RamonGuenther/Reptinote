@@ -203,19 +203,3 @@ export const breedersExample = [
     },
 ];
 
-export const useStyles = makeStyles(theme => ({
-    textField: {
-        width: "300px"
-    },
-    cssOutlinedInput: {
-        "&$cssFocused $notchedOutline": {
-            borderColor: ` #0275d8  !important`
-        }
-    },
-    cssFocused: { color: "white !important" },
-
-    notchedOutline: {
-        borderWidth: "1px",
-        borderColor: " white  !important"
-    }
-}));

@@ -33,7 +33,6 @@ const AddWeightModal = ({
             <Dialog open={showAddWeightModal} onClose={toggleAddWeightModal}>
                 <DialogTitle>
                     Gewicht hinzufügen
-                    <Button className='btn-close' onClick={toggleAddWeightModal}/>
                 </DialogTitle>
                 <Divider/>
 

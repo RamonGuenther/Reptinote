@@ -1,7 +1,6 @@
 const NotFound = () => {
   return(
-      <h2> Notfound</h2>
-  //    Hier kommen alle möglichen Routen hn
+      <h1 style={{color: "white", marginTop: 50}}> Die angegebene Route existiert nicht! :(</h1>
   )
 }
 

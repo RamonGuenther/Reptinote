@@ -2,11 +2,13 @@ import React, {useEffect, useState} from "react";
 import BreederCard from "../components/breeder/BreederCard";
 import {Breeder} from "../data/Breeder";
 import {Button, TextField} from "@mui/material";
-import {initialValuesBreeder, initialValuesReptile, useStyles} from "../helper/Constants";
-import AddBreederModal from "../components/modals/AddBreederModal";
-import EditBreederModal from "../components/modals/EditBreederModal";
-import DeleteDialog from "../components/modals/DeleteDialog";
+import {initialValuesBreeder} from "../helper/Constants";
+import AddBreederModal from "../components/modals/breeder/AddBreederModal";
+import EditBreederModal from "../components/modals/breeder/EditBreederModal";
+import DeleteDialog from "../components/modals/reptile/DeleteDialog";
 import "./breederOverview.css"
+import {useStyles} from "../helper/Functions";
+import {notifyFailure, notifySuccess} from "../helper/Toasts";
 /**
  * TODO: ZÜCHTER AUSLAGERN in APP also SAVE Edit und Delete
  *
@@ -34,7 +36,6 @@ const BreederOverview = ({breeders, setBreeders}: any) => {
                 index = i;
             }
         }
-        console.log("TEST " + breederId + " : " + index);
         return index;
     }
 
@@ -60,6 +61,11 @@ const BreederOverview = ({breeders, setBreeders}: any) => {
     function addBreeder() {
         let newBreeder = new Breeder();
 
+        if (breederValues.firstName === "" || breederValues.lastName === "" ) {
+            notifyFailure("Bitte alle Pflichtfelder ausfüllen!");
+            return;
+        }
+
         newBreeder.setBreeder(
             breederValues.companyName,
             breederValues.firstName,
@@ -76,12 +82,14 @@ const BreederOverview = ({breeders, setBreeders}: any) => {
             const newBreeders = [...breeders, newBreeder];
             setBreeders(newBreeders);
             setBreederValues(initialValuesBreeder)
+            notifySuccess("Der Züchter " + breederValues.firstName + " " + breederValues.lastName + " wurde gespeichert.");
             toggleAddBreederModal();
         }
         if (showEditBreederModal) {
             const newReptiles = [...breeders];
             newReptiles[findBreederId()] = newBreeder;
             setBreeders(newReptiles);
+            notifySuccess("Die Änderungen des Züchters " + breederValues.firstName + " " + breederValues.lastName + " wurden gespeichert.");
             toggleEditBreederModal();
             setBreederValues(initialValuesBreeder);
         }
@@ -92,7 +100,6 @@ const BreederOverview = ({breeders, setBreeders}: any) => {
         const newBreeders = [...breeders];
         newBreeders.splice(findBreederId(), 1);
         setBreeders(newBreeders);
-        console.log("delete")
     }
 
     function initializeEdit() {
@@ -110,8 +117,6 @@ const BreederOverview = ({breeders, setBreeders}: any) => {
         let country = breeders[index].country;
         let mail = breeders[index].mail;
         let phone = breeders[index].phone;
-
-        console.log(mail);
 
         setBreederValues({
             companyName: companyName,
@@ -134,9 +139,7 @@ const BreederOverview = ({breeders, setBreeders}: any) => {
 
 
     useEffect(() => {
-            console.log("AUFRUF")
             initializeEdit();
-
     }, [showEditBreederModal])
 
 

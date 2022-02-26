@@ -9,59 +9,13 @@ import Feeding from "./data/Feeding";
 import NotFound from "./pages/NotFound";
 import Note from "./data/Note";
 import Weight from "./data/Weight";
-import {breedersExample, feedingExample, noteExample, reptilesExample, weightExample} from "./helper/Constants";
 import {ToastContainer} from "react-toastify";
 import BreederOverview from "./pages/BreederOverview";
 import {Breeder} from "./data/Breeder";
+import {createExampleBreeders, createExampleReptile} from "./helper/Functions";
 
-function createExampleReptile(): Reptile[] {
-    let feedings: Feeding[] = [];
-    let weights: Weight[] = [];
-    let notes: Note[] = [];
-
-    for (let j = 0; j < feedingExample.length; j++) {
-        let newFeeding = new Feeding();
-        newFeeding.setFeeding(feedingExample[j].weight, feedingExample[j].food, feedingExample[j].date)
-        feedings.push(newFeeding);
-    }
-
-    for (let k = 0; k < weightExample.length; k++) {
-        let newWeight = new Weight();
-        newWeight.setWeight(weightExample[k].weight, weightExample[k].date)
-        weights.push(newWeight);
-    }
-
-    for (let l = 0; l < noteExample.length; l++) {
-        let newNote = new Note();
-        newNote.setNote(noteExample[l].note, noteExample[l].date)
-        notes.push(newNote);
-    }
-
-    let reptileList: Reptile[] = [];
-
-    for (let i = 0; i < reptilesExample.length; i++) {
-        let newReptile = new Reptile();
-
-        newReptile.loadReptile(
-            reptilesExample[i].name,
-            reptilesExample[i].geburtsdatum,
-            reptilesExample[i].art,
-            reptilesExample[i].morph,
-            reptilesExample[i].geschlecht,
-            reptilesExample[i].ordnung,
-            reptilesExample[i].image,
-            feedings,
-            notes,
-            weights
-        );
-
-        reptileList.push(newReptile);
-    }
-    return reptileList;
-}
 
 function App() {
-
     const [reptiles, setReptiles] = useState<Reptile[]>(() => {
         const items = localStorage.getItem("reptiles");
         if (items != null) {
@@ -201,25 +155,7 @@ function App() {
                 return [];
             }
         } else {
-            let breederList: Breeder[] = []; //TODO Breeder wie oben auslagern
-
-            for (let i = 0; i < breedersExample.length; i++) {
-                let newBreeder = new Breeder();
-                newBreeder.setBreeder(
-                    breedersExample[i].companyName,
-                    breedersExample[i].firstName,
-                    breedersExample[i].lastName,
-                    breedersExample[i].street,
-                    breedersExample[i].postal,
-                    breedersExample[i].place,
-                    breedersExample[i].country,
-                    breedersExample[i].email,
-                    breedersExample[i].phone
-                );
-
-                breederList.push(newBreeder);
-            }
-            return breederList;
+           return createExampleBreeders();
         }
     });
 

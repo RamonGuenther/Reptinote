@@ -1,5 +1,5 @@
 import React from "react";
-import "./addBreederModal.css"
+import "./addEditBreederModal.css"
 import {
     Button,
     Dialog, DialogActions,
@@ -7,7 +7,6 @@ import {
     DialogTitle, Divider, FormControl,
     TextField
 } from "@mui/material";
-import {useStyles} from "../../helper/Constants";
 
 
 const AddBreederModal = ({
@@ -18,14 +17,13 @@ const AddBreederModal = ({
                              submit,
                          }: any) => {
 
-    const classes = useStyles();
-
     return (
         <>
             <Dialog open={showAddBreederModal} onClose={toggleAddBreederModal}>
                 <DialogTitle className={"add-breeder-modal-title"}>
                     Züchter hinzufügen
                 </DialogTitle>
+                <Divider/>
                 <DialogContent className={"add-breeder-modal-content"}>
                     <form>
                         <FormControl fullWidth>
@@ -38,17 +36,6 @@ const AddBreederModal = ({
                             type="text"
                             label={"Firmenname"}
                             placeholder="Name der Firma des Züchters..."
-                            required
-                            InputLabelProps={{
-                                style: { color: '#ffffff'},
-                            }}
-                            InputProps={{
-                                classes: {
-                                    root: classes.cssOutlinedInput,
-                                    focused: classes.cssFocused,
-                                    notchedOutline: classes.notchedOutline
-                                }
-                            }}
                         />
                         <TextField
                             className={"mt-3"}

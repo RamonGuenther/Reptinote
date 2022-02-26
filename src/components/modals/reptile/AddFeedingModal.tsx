@@ -30,7 +30,6 @@ const AddFeedingModal = ({
             <Dialog open={showAddFeedingModal} onClose={toggleAddFeedingModal}>
                 <DialogTitle>
                     Fütterung hinzufügen
-                    <Button className='btn-close' onClick={toggleAddFeedingModal}/>
                 </DialogTitle>
              <Divider/>
             <DialogContent>
