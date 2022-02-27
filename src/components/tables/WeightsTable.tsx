@@ -16,67 +16,62 @@ import AddWeightModal from "../modals/reptile/AddWeightModal";
 import {notifyFailure, notifySuccess} from "../../helper/Toasts";
 import {MdDelete} from "react-icons/md";
 
-const WeightsTable = ({reptiles, setReptiles, index, startDate, setStartDate}: any) => {
+const WeightsTable = ({reptiles, saveWeight, deleteWeight, index, startDate, setStartDate}: any) => {
 
-    const [tableData, setTableData] = useState<Weight[]>(()=>{
+    const [tableData, setTableData] = useState<Weight[]>(() => {
         return [...reptiles[index].weights].reverse();
     });
-
 
     const [showAddWeightModal, setShowAddWeightModal] = useState(false);
     const [inputWeight, setInputWeight] = useState("");
 
 
-    function addWeight() {
-        if (isNaN(parseInt(inputWeight))) { //TODO: wie validieren
+
+    function addWeight(): void {
+        if (isNaN(parseInt(inputWeight))) {
             notifyFailure("Bitte alle Felder und im richtigen Format ausfüllen!")
             return;
         }
-        const newReptiles = [...reptiles];
         let newWeight = new Weight();
         newWeight.setWeight(inputWeight, startDate.toLocaleDateString());
-        newReptiles[index].weights.push(newWeight);
-        setReptiles(newReptiles);
+        saveWeight(newWeight, index);
         setInputWeight("");
         setStartDate(new Date());
-
-        handleDataChange(newReptiles[index].weights)
-
+        handleDataChange([...reptiles[index].weights])
         notifySuccess("Die Notiz wurde gespeichert.");
         toggleAddWeightModal();
     }
 
 
-    function deleteWeight(id: string) {
-        const newReptile = [...reptiles];
+    function removeWeight(id: string): void {
         let indexNote: number = 0;
-        for (let i = 0; i < newReptile[index].weights.length; i++) {
-            if (id === newReptile[index].weights[i].id) {
+        for (let i = 0; i < reptiles[index].weights.length; i++) {
+            if (id === reptiles[index].weights[i].id) {
                 indexNote = i;
             }
         }
-        newReptile[index].weights.splice(indexNote, 1);
-        setReptiles(newReptile);
-        handleDataChange(newReptile[index].weights);
+        deleteWeight(index, indexNote);
+        handleDataChange([...reptiles[index].weights]);
     }
 
-    function handleDataChange(newTableData: Weight[]) {
+    function handleDataChange(newTableData: Weight[]): void {
         const newReptiles = [...newTableData].reverse();
         setTableData(newReptiles);
     }
 
-    function handleInputChangeWeight(event: any) {
+    function handleInputChangeWeight(event: any): void {
         setInputWeight(event.target.value)
     }
+
 
     function toggleAddWeightModal(): void {
         setShowAddWeightModal(!showAddWeightModal);
     }
 
 
-    /**
-     * TODO: TABELLENSHIT
-     */
+    /*---------------------------------------------------------------------------------------------------
+                                         Alles für die Tabelle an sich
+    -----------------------------------------------------------------------------------------------------*/
 
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
@@ -86,7 +81,7 @@ const WeightsTable = ({reptiles, setReptiles, index, startDate, setStartDate}: a
     };
 
     const [page, setPage] = React.useState(0);
-    // Avoid a layout jump when reaching the last page with empty rows.
+    //Um einen Layout-Sprung zu vermeiden beim Wechseln auf eine Seite die nicht voll gefüllt ist
     const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - tableData.length) : 0;
 
     const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number,) => {
@@ -105,18 +100,19 @@ const WeightsTable = ({reptiles, setReptiles, index, startDate, setStartDate}: a
                 submit={addWeight}
             />
 
-            <Button className={"tableAddButton"} variant={"contained"} onClick={toggleAddWeightModal}>Gewicht hinzufügen</Button>
+            <Button className={"tableAddButton"} variant={"contained"} onClick={toggleAddWeightModal}>Gewicht
+                hinzufügen</Button>
 
             <TableContainer component={Paper}>
                 <Table size="medium">
-                    <TableHead style={{background:"grey"}}>
+                    <TableHead style={{background: "grey"}}>
                         <TableRow>
                             <TableCell>Datum</TableCell>
                             <TableCell>Gewicht</TableCell>
                             <TableCell>Entfernen</TableCell>
                         </TableRow>
                     </TableHead>
-                    <TableBody style={{background:"#a6a1a1"}}>
+                    <TableBody style={{background: "#a6a1a1"}}>
                         {(rowsPerPage > 0
                                 ? tableData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                 : tableData
@@ -127,7 +123,7 @@ const WeightsTable = ({reptiles, setReptiles, index, startDate, setStartDate}: a
                                 <TableCell component="th">{item.date}</TableCell>
                                 <TableCell component="th">{item.weight} g</TableCell>
                                 <TableCell component="th"><Button onClick={() => {
-                                    deleteWeight(item.id)
+                                    removeWeight(item.id)
                                 }}><MdDelete size={"25px"} style={{color: "#c54a4a"}}/></Button></TableCell>
                             </TableRow>
                         ))}
@@ -137,7 +133,7 @@ const WeightsTable = ({reptiles, setReptiles, index, startDate, setStartDate}: a
                             </TableRow>
                         )}
                     </TableBody>
-                    <TableFooter style={{background:"#a6a1a1"}}>
+                    <TableFooter style={{background: "#a6a1a1"}}>
                         <TableRow>
                             <TablePagination
                                 rowsPerPageOptions={[5, 10]}

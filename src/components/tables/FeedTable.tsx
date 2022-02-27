@@ -15,9 +15,9 @@ import TablePagination from '@mui/material/TablePagination';
 import {initialValuesFeeding} from "../../helper/Constants";
 import AddFeedingModal from "../modals/reptile/AddFeedingModal";
 import {notifyFailure, notifySuccess} from "../../helper/Toasts";
-import "../reptile/reptileInformation.css"
+import "../../style/reptileInformation.css"
 import {MdDelete} from "react-icons/md";
-const FeedTable = ({reptiles, setReptiles, index, startDate, setStartDate}: any) => {
+const FeedTable = ({reptiles, saveFeeding, deleteFeeding, index, startDate, setStartDate}: any) => {
 
     const [tableData, setTableData] = useState<Feeding[]>(()=>{
         return [...reptiles[index].feedings].reverse();
@@ -34,29 +34,23 @@ const FeedTable = ({reptiles, setReptiles, index, startDate, setStartDate}: any)
         }
         let newFeeding = new Feeding();
         newFeeding.setFeeding(feedingValues.weight, feedingValues.type, startDate.toLocaleDateString());
-        const newReptiles = [...reptiles];
-        newReptiles[index].feedings.push(newFeeding);
-        setReptiles(newReptiles);
-
-        handleDataChange(newReptiles[index].feedings)
-
+        saveFeeding(newFeeding, index);
+        handleDataChange([...reptiles[index].feedings])
         setFeedingValues(initialValuesFeeding)
         setStartDate(new Date());
         notifySuccess("Die Fütterung wurde gespeichert.");
         toggleAddFeedingModal();
     }
 
-    function deleteFeeding(id: string) {
-        const newReptile = [...reptiles];
+    function removeFeeding(id: string) {
         let indexFood: number = 0;
-        for (let i = 0; i < newReptile[index].feedings.length; i++) {
-            if (id === newReptile[index].feedings[i].id) {
+        for (let i = 0; i < reptiles[index].feedings.length; i++) {
+            if (id === reptiles[index].feedings[i].id) {
                 indexFood = i;
             }
         }
-        newReptile[index].feedings.splice(indexFood, 1);
-        setReptiles(newReptile);
-        handleDataChange(newReptile[index].feedings);
+        deleteFeeding(index,indexFood);
+        handleDataChange([...reptiles[index].feedings]);
     }
 
 
@@ -79,9 +73,9 @@ const FeedTable = ({reptiles, setReptiles, index, startDate, setStartDate}: any)
     }
 
 
-    /***
-     * TODO: Tabellenshit
-     */
+    /*---------------------------------------------------------------------------------------------------
+                                         Alles für die Tabelle an sich
+    -----------------------------------------------------------------------------------------------------*/
 
     const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setRowsPerPage(parseInt(event.target.value, 10));
@@ -92,7 +86,7 @@ const FeedTable = ({reptiles, setReptiles, index, startDate, setStartDate}: any)
 
     const [page, setPage] = useState(0);
 
-    // Avoid a layout jump when reaching the last page with empty rows.
+    //Um einen Layout-Sprung zu vermeiden beim Wechseln auf eine Seite die nicht voll gefüllt ist
     const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - tableData.length) : 0;
 
     const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number,) => {
@@ -135,7 +129,7 @@ const FeedTable = ({reptiles, setReptiles, index, startDate, setStartDate}: any)
                                 <TableCell component="th">{item.food} </TableCell>
                                 <TableCell component="th">{item.weight}g</TableCell>
                                 <TableCell component="th"><Button onClick={e => {
-                                    deleteFeeding(item.id)
+                                    removeFeeding(item.id)
                                 }}><MdDelete size={"25px"} style={{color: "#c54a4a"}}/></Button></TableCell>
                             </TableRow>
                         ))}

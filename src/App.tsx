@@ -16,6 +16,10 @@ import {createExampleBreeders, createExampleReptile} from "./helper/Functions";
 
 
 function App() {
+
+    /*---------------------------------------------------------------------------------------------------
+                                            Reptildaten
+    -----------------------------------------------------------------------------------------------------*/
     const [reptiles, setReptiles] = useState<Reptile[]>(() => {
         const items = localStorage.getItem("reptiles");
         if (items != null) {
@@ -94,6 +98,10 @@ function App() {
         }
     });
 
+    /*---------------------------------------------------------------------------------------------------
+                                         Reptil - Funktionen
+    -----------------------------------------------------------------------------------------------------*/
+
 
     function saveReptile(newReptile: Reptile): void {
         const newReptiles = [...reptiles, newReptile];
@@ -106,9 +114,45 @@ function App() {
         setReptiles(newReptiles);
     }
 
-    function saveFeeding(newFeeding: Feeding, index: number) {
+    function deleteReptile(index: number): void {
+        const newReptiles = [...reptiles];
+        newReptiles.splice(index, 1);
+        setReptiles(newReptiles);
+    }
+
+    function saveFeeding(newFeeding: Feeding, index: number): void {
         const newReptiles = [...reptiles];
         newReptiles[index].feedings.push(newFeeding);
+        setReptiles(newReptiles);
+    }
+
+    function deleteFeeding(index: number, indexFood: number): void {
+        const newReptiles = [...reptiles];
+        newReptiles[index].feedings.splice(indexFood, 1);
+        setReptiles(newReptiles);
+    }
+
+    function saveWeight(newWeight: Weight, index: number): void {
+        const newReptiles = [...reptiles];
+        newReptiles[index].weights.push(newWeight);
+        setReptiles(newReptiles);
+    }
+
+    function deleteWeight(index: number, indexWeight: number): void {
+        const newReptiles = [...reptiles];
+        newReptiles[index].weights.splice(indexWeight, 1);
+        setReptiles(newReptiles);
+    }
+
+    function saveNote(newNote: Note, index: number): void {
+        const newReptiles = [...reptiles];
+        newReptiles[index].notes.push(newNote);
+        setReptiles(newReptiles);
+    }
+
+    function deleteNote(index: number, indexNote: number): void {
+        const newReptiles = [...reptiles];
+        newReptiles[index].notes.splice(indexNote, 1);
         setReptiles(newReptiles);
     }
 
@@ -123,7 +167,9 @@ function App() {
         return index;
     }
 
-
+    /*---------------------------------------------------------------------------------------------------
+                                             Züchterdaten
+    -----------------------------------------------------------------------------------------------------*/
     const [breeders, setBreeders] = useState<Breeder[]>(() => {
 
         const items = localStorage.getItem("breeders");
@@ -155,9 +201,46 @@ function App() {
                 return [];
             }
         } else {
-           return createExampleBreeders();
+            return createExampleBreeders();
         }
     });
+
+    /*---------------------------------------------------------------------------------------------------
+                                         Züchter Funktionen
+    -----------------------------------------------------------------------------------------------------*/
+
+
+    function saveBreeder(newBreeder: Breeder): void {
+        const newBreeders = [...breeders, newBreeder];
+        setBreeders(newBreeders);
+    }
+
+    function editBreeder(newBreeder: Breeder): void {
+        const newBreeders = [...breeders];
+        newBreeders[findBreederIndex(newBreeder.id)] = newBreeder;
+        setBreeders(newBreeders);
+    }
+
+    function deleteBreeder(index: number): void {
+        const newBreeders = [...breeders];
+        newBreeders.splice(index, 1);
+        setBreeders(newBreeders);
+    }
+
+    function findBreederIndex(id: String): number {
+        let index = 0;
+        for (let i = 0; i < breeders.length; i++) {
+            if (id === breeders[i].id) {
+                index = i;
+            }
+        }
+        return index;
+    }
+
+
+    /*---------------------------------------------------------------------------------------------------
+                                             Local Storage
+    -----------------------------------------------------------------------------------------------------*/
 
 
     useEffect(() => {
@@ -182,21 +265,53 @@ function App() {
                 <Navbar/>
                 <div className="App">
                     <Routes>
-
-                        <Route path={'/'} element={<ReptileOverview reptiles={reptiles} setReptiles={setReptiles}
-                                                                    saveReptile={saveReptile} saveFeeding={saveFeeding}
-                                                                    editReptile={editReptile} breeders={breeders}/>}/>
+                        <Route path={'/'}
+                               element={<ReptileOverview
+                                   reptiles={reptiles}
+                                   saveReptile={saveReptile}
+                                   saveFeeding={saveFeeding}
+                                   saveWeight={saveWeight}
+                                   saveNote={saveNote}
+                                   editReptile={editReptile}
+                                   deleteReptile={deleteReptile}
+                                   breeders={breeders}
+                               />}
+                        />
                         <Route path={'reptilienUebersicht'}
-                               element={<ReptileOverview reptiles={reptiles} setReptiles={setReptiles}
-                                                         saveReptile={saveReptile} saveFeeding={saveFeeding}
-                                                         editReptile={editReptile}/>}/>
+                               element={<ReptileOverview
+                                   reptiles={reptiles}
+                                   saveReptile={saveReptile}
+                                   saveFeeding={saveFeeding}
+                                   saveWeight={saveWeight}
+                                   saveNote={saveNote}
+                                   editReptile={editReptile}
+                                   deleteReptile={deleteReptile}
+                                   breeders={breeders}
+                               />}
+                        />
                         <Route path={'reptileDetails/:id'}
-                               element={<ReptileDetails reptiles={reptiles} setReptiles={setReptiles}
-                                                        editReptile={editReptile}  breeders = {breeders} />}/>
-
+                               element={<ReptileDetails
+                                   reptiles={reptiles}
+                                   saveFeeding={saveFeeding}
+                                   deleteFeeding={deleteFeeding}
+                                   saveWeight={saveWeight}
+                                   deleteWeight={deleteWeight}
+                                   saveNote={saveNote}
+                                   deleteNote={deleteNote}
+                                   setReptiles={setReptiles}
+                                   editReptile={editReptile}
+                                   deleteReptile={deleteReptile}
+                                   breeders={breeders}
+                               />}
+                        />
                         <Route path={'breeder'}
-                               element={<BreederOverview breeders={breeders} setBreeders={setBreeders}/>}/>
-
+                               element={<BreederOverview
+                                   breeders={breeders}
+                                   saveBreeder={saveBreeder}
+                                   editBreeder={editBreeder}
+                                   deleteBreeder={deleteBreeder}
+                               />}
+                        />
                         <Route path={'*'} element={<NotFound/>}/>
                     </Routes>
                 </div>

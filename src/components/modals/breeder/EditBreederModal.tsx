@@ -1,5 +1,5 @@
 import React from "react";
-import "../modal.css"
+import "../../../style/modal.css"
 import {
     Button,
     Dialog, DialogActions,
@@ -30,7 +30,7 @@ const EditBreederModal = ({
                                 className={"mt-3"}
                                 value={values.companyName}
                                 onChange={handleInputChange}
-                                name="companyName" //TODO: ohne name Attribut funktioniert es nicht
+                                name="companyName"
                                 type="text"
                                 label={"Firmenname"}
                                 placeholder="Name der Firma des Züchters..."

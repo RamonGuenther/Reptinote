@@ -5,7 +5,7 @@ import {
     CardActions,
     CardContent,
 } from "@mui/material";
-import "./breedercard.css"
+import "../../style/breedercard.css"
 import {FiEdit} from "react-icons/fi";
 import {MdDelete} from "react-icons/md";
 

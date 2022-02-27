@@ -13,16 +13,17 @@ import TextField from '@mui/material/TextField';
 import {initialValuesFeeding, initialValuesReptile} from "../helper/Constants";
 import {notifyFailure, notifySuccess} from "../helper/Toasts";
 import {Button} from "@mui/material";
-import "./reptileOverview.css"
+import "../style/reptileOverview.css"
 import {Breeder} from "../data/Breeder";
 import {useStyles} from "../helper/Functions";
+import {Reptile} from "../data/Reptile";
 
 
-function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editReptile, breeders}: any) {
+function ReptileOverview({reptiles, saveReptile, deleteReptile, saveFeeding, saveWeight, saveNote, editReptile, breeders}: any) {
 
-  /*---------------------------------------------------------------------------------------------------
-                                           States
-  -----------------------------------------------------------------------------------------------------*/
+    /*---------------------------------------------------------------------------------------------------
+                                             States
+    -----------------------------------------------------------------------------------------------------*/
     const [reptileId, setReptileId] = useState("");
 
     const [feedingValues, setFeedingValues] = useState(initialValuesFeeding);
@@ -40,7 +41,6 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
 
     const [searchValue, setSearchValue] = useState("");
 
-
     const [startDate, setStartDate] = useState(new Date());
     const [inputWeight, setInputWeight] = useState("");
     const [inputNote, setInputNote] = useState("");
@@ -50,7 +50,25 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
     -----------------------------------------------------------------------------------------------------*/
 
 
-    function updateReptiles(): void {
+    function addReptile(): void {
+        if (reptileValues.name === "" ||
+            reptileValues.birthday === "" ||
+            reptileValues.type === "" ||
+            selectedGenderOption === null ||
+            selectedSpeciesOption === null) {
+            notifyFailure("Bitte alle Pflichtfelder ausfüllen!");
+            return;
+        }
+        let newReptile = new Reptile();
+        setReptile(newReptile);
+        saveReptile(newReptile);
+        setReptileValues(initialValuesReptile);
+        notifySuccess("Das Reptil " + reptileValues.name + " wurde gespeichert.");
+        toggleAddReptileModal();
+
+    }
+
+    function updateReptile(): void {
         if (reptileValues.name === "" ||
             reptileValues.birthday === "" ||
             reptileValues.type === "" ||
@@ -60,47 +78,19 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
             return;
         }
         let newReptile = reptiles[findReptileId()];
-        newReptile.setReptile(
-            reptileValues.name,
-            reptileValues.birthday,
-            reptileValues.type,
-            reptileValues.morph,
-            selectedGenderOption,
-            selectedSpeciesOption,
-            reptileValues.image
-        );
+        setReptile(newReptile);
+        editReptile(newReptile);
+        setReptileValues(initialValuesReptile);
+        setSearchValue(reptileValues.name); //TODO
+        notifySuccess("Die Änderungen des Reptils " + reptileValues.name + " wurden gespeichert.");
+        toggleEditReptileModal();
 
-        if (selectedBreederOption !== "") {
-            for (let i = 0; i < breeders.length; i++) {
-                if (breeders[i].lastName === selectedBreederOption) {
-                    let breeder: Breeder = breeders[i];
-                    newReptile.setBreeder(breeder);
-                    break;
-                }
-            }
-        }
-
-        if (showAddReptileModal) {
-            saveReptile(newReptile);
-            setReptileValues(initialValuesReptile);
-            notifySuccess("Das Reptil " + reptileValues.name + " wurde gespeichert.");
-            toggleAddReptileModal();
-        }
-
-        if (showEditReptileModal) {
-            editReptile(newReptile);
-            setReptileValues(initialValuesReptile);
-            notifySuccess("Die Änderungen des Reptils " + reptileValues.name + " wurden gespeichert.");
-            toggleEditReptileModal();
-        }
     }
 
-    function deleteReptile(): void {
-        const newTodos = [...reptiles];
-        newTodos.splice(findReptileId(), 1);
-        setReptiles(newTodos);
-    }
 
+    function removeReptile(): void {
+        deleteReptile(findReptileId());
+    }
 
 
     function addFeeding(): void {
@@ -122,11 +112,9 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
             notifyFailure("Bitte alle Felder ausfüllen.");
             return;
         }
-        const newTodos = [...reptiles];
         let note = new Note();
         note.setNote(inputNote, startDate.toLocaleDateString());
-        newTodos[findReptileId()].notes.push(note);
-        setReptiles(newTodos);
+        saveNote(note,findReptileId())
         setInputNote("");
         setStartDate(new Date());
         notifySuccess("Die Notiz wurde gespeichert.");
@@ -138,15 +126,36 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
             notifyFailure("Bitte alle Felder und im richtigen Format ausfüllen!")
             return;
         }
-        const newTodos = [...reptiles];
         let weight = new Weight();
         weight.setWeight(inputWeight, startDate.toLocaleDateString());
-        newTodos[findReptileId()].weights.push(weight);
-        setReptiles(newTodos);
+        saveWeight(weight, findReptileId());
         setInputWeight("");
         setStartDate(new Date());
         notifySuccess("Das Gewicht wurde gespeichert.");
         toggleAddWeightModal();
+    }
+
+
+    function setReptile(newReptile: Reptile): void {
+        newReptile.setReptile(
+            reptileValues.name,
+            reptileValues.birthday,
+            reptileValues.type,
+            reptileValues.morph,
+            selectedGenderOption,
+            selectedSpeciesOption,
+            reptileValues.image
+        );
+
+        if (selectedBreederOption !== "") {
+            for (let i = 0; i < breeders.length; i++) {
+                if (breeders[i].lastName === selectedBreederOption) {
+                    let breeder: Breeder = breeders[i];
+                    newReptile.setBreeder(breeder);
+                    break;
+                }
+            }
+        }
     }
 
     function findReptileId(): number {
@@ -160,7 +169,7 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
     }
 
     /*---------------------------------------------------------------------------------------------------
-                                            Input Handler
+                                            Input Change Handler
     -----------------------------------------------------------------------------------------------------*/
 
 
@@ -266,7 +275,7 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
                 showAddReptileModal={showAddReptileModal}
                 handleInputChange={handleInputChangeReptile}
                 values={reptileValues}
-                submit={updateReptiles}
+                submit={addReptile}
                 selectedGenderOption={selectedGenderOption}
                 handleGenderSelect={handleGenderSelect}
                 selectedSpeciesOption={selectedSpeciesOption}
@@ -281,7 +290,7 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
                 basicModal={showEditReptileModal}
                 handleInputChange={handleInputChangeReptile}
                 values={reptileValues}
-                submit={updateReptiles}
+                submit={updateReptile}
                 selectedGenderOption={selectedGenderOption}
                 handleGenderSelect={handleGenderSelect}
                 selectedSpeciesOption={selectedSpeciesOption}
@@ -357,7 +366,7 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
                     <ReptileCard
                         key={index}
                         reptile={item}
-                        onDeleteReptile={deleteReptile}
+                        onDeleteReptile={removeReptile}
                         addFeeding={addFeeding}
                         toggleFeedingModal={toggleAddFeedingModal}
                         toggleWeightModal={toggleAddWeightModal}

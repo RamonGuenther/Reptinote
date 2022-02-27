@@ -6,30 +6,66 @@ import {initialValuesBreeder} from "../helper/Constants";
 import AddBreederModal from "../components/modals/breeder/AddBreederModal";
 import EditBreederModal from "../components/modals/breeder/EditBreederModal";
 import DeleteDialog from "../components/modals/DeleteDialog";
-import "./breederOverview.css"
+import "../style/breederOverview.css"
 import {useStyles} from "../helper/Functions";
 import {notifyFailure, notifySuccess} from "../helper/Toasts";
-/**
- * TODO: ZÜCHTER AUSLAGERN in APP also SAVE Edit und Delete
- *
- * @param breeders
- * @param setBreeders
- * @constructor
- */
-const BreederOverview = ({breeders, setBreeders}: any) => {
 
-    const [showAddBreederModal, setShowAddBreederModal] = useState(false);
-    const [showEditBreederModal, setShowEditBreederModal] = useState(false);
-
-    const [breederValues, setBreederValues] = useState(initialValuesBreeder);
+const BreederOverview = ({breeders, saveBreeder, editBreeder, deleteBreeder}: any) => {
+    /*---------------------------------------------------------------------------------------------------
+                                                 States
+    -----------------------------------------------------------------------------------------------------*/
 
     const [copyBreeder, setCopyBreeder] = useState<Breeder[]>(() => {
-        return [...breeders].slice(1);
+        return [...breeders].slice(1); //Um den unbekannten Breeder im ersten Feld nicht anzuzeigen
     });
 
     const [breederId, setBreederId] = useState("");
 
-    function findBreederId(): number {
+    const [breederValues, setBreederValues] = useState(initialValuesBreeder);
+
+    const [showAddBreederModal, setShowAddBreederModal] = useState(false);
+    const [showEditBreederModal, setShowEditBreederModal] = useState(false);
+    const [showDeleteDialog, setShowDeleteDialog] = React.useState(false);
+
+    const [searchValue, setSearchValue] = useState<string>("")
+
+    /*---------------------------------------------------------------------------------------------------
+                                             Submit-Funktionen
+    -----------------------------------------------------------------------------------------------------*/
+
+    function addBreeder(): void {
+        if (breederValues.firstName === "" || breederValues.lastName === "") {
+            notifyFailure("Bitte alle Pflichtfelder ausfüllen!");
+            return;
+        }
+        let newBreeder = new Breeder();
+        setBreeder(newBreeder);
+        saveBreeder(newBreeder);
+        setBreederValues(initialValuesBreeder)
+        notifySuccess("Der Züchter " + breederValues.firstName + " " + breederValues.lastName + " wurde gespeichert.");
+        toggleAddBreederModal();
+    }
+
+    function updateBreeder() {
+        if (breederValues.firstName === "" || breederValues.lastName === "") {
+            notifyFailure("Bitte alle Pflichtfelder ausfüllen!");
+            return;
+        }
+        let newBreeder = breeders[findBreederIndex()];
+        setBreeder(newBreeder);
+        editBreeder(newBreeder);
+        notifySuccess("Die Änderungen des Züchters " + breederValues.firstName + " " + breederValues.lastName + " wurden gespeichert.");
+        toggleEditBreederModal();
+        setBreederValues(initialValuesBreeder);
+    }
+
+
+    function removeBreeder() {
+        deleteBreeder(findBreederIndex());
+    }
+
+
+    function findBreederIndex(): number {
         let index = 0;
         for (let i = 0; i < breeders.length; i++) {
             if (breederId === breeders[i].id) {
@@ -39,33 +75,7 @@ const BreederOverview = ({breeders, setBreeders}: any) => {
         return index;
     }
 
-
-    function handleInputChangeBreeder(e: any): void {
-        const {name, value} = e.target;
-        setBreederValues({
-            ...breederValues,
-            [name]: value,
-        });
-    }
-
-    function toggleAddBreederModal(): void {
-        setBreederValues(initialValuesBreeder)
-        setShowAddBreederModal(!showAddBreederModal);
-    }
-
-    function toggleEditBreederModal(): void {
-        setShowEditBreederModal(!showEditBreederModal);
-    }
-
-
-    function addBreeder() {
-        let newBreeder = new Breeder();
-
-        if (breederValues.firstName === "" || breederValues.lastName === "" ) {
-            notifyFailure("Bitte alle Pflichtfelder ausfüllen!");
-            return;
-        }
-
+    function setBreeder(newBreeder: Breeder): void {
         newBreeder.setBreeder(
             breederValues.companyName,
             breederValues.firstName,
@@ -77,37 +87,51 @@ const BreederOverview = ({breeders, setBreeders}: any) => {
             breederValues.mail,
             breederValues.phone
         );
-
-        if (showAddBreederModal) {
-            const newBreeders = [...breeders, newBreeder];
-            setBreeders(newBreeders);
-            setBreederValues(initialValuesBreeder)
-            notifySuccess("Der Züchter " + breederValues.firstName + " " + breederValues.lastName + " wurde gespeichert.");
-            toggleAddBreederModal();
-        }
-        if (showEditBreederModal) {
-            const newReptiles = [...breeders];
-            newReptiles[findBreederId()] = newBreeder;
-            setBreeders(newReptiles);
-            notifySuccess("Die Änderungen des Züchters " + breederValues.firstName + " " + breederValues.lastName + " wurden gespeichert.");
-            toggleEditBreederModal();
-            setBreederValues(initialValuesBreeder);
-        }
-
     }
 
-    function deleteBreeder() {
-        const newBreeders = [...breeders];
-        newBreeders.splice(findBreederId(), 1);
-        setBreeders(newBreeders);
+    /*---------------------------------------------------------------------------------------------------
+                                         Input Change Handler
+    -----------------------------------------------------------------------------------------------------*/
+
+
+    function handleInputChangeBreeder(e: any): void {
+        const {name, value} = e.target;
+        setBreederValues({
+            ...breederValues,
+            [name]: value,
+        });
     }
+
+
+    /*---------------------------------------------------------------------------------------------------
+                                         Toggle Modal Funktionen
+    -----------------------------------------------------------------------------------------------------*/
+
+    const toggleDeleteDialog = () => {
+        setShowDeleteDialog(!showDeleteDialog);
+    };
+
+    function toggleAddBreederModal(): void {
+        setBreederValues(initialValuesBreeder)
+        setShowAddBreederModal(!showAddBreederModal);
+    }
+
+    function toggleEditBreederModal(): void {
+        setShowEditBreederModal(!showEditBreederModal);
+    }
+
+
+    /*---------------------------------------------------------------------------------------------------
+                                            Sonstiges
+    -----------------------------------------------------------------------------------------------------*/
+
 
     function initializeEdit() {
         if (breeders.length === 0) {
             return;
         }
 
-        let index = findBreederId();
+        let index = findBreederIndex();
         let companyName = breeders[index].companyName;
         let firstName = breeders[index].firstName;
         let lastName = breeders[index].lastName;
@@ -131,24 +155,16 @@ const BreederOverview = ({breeders, setBreeders}: any) => {
         });
     }
 
-    const toggleDeleteDialog = () => {
-        setShowDeleteDialog(!showDeleteDialog);
-    };
-
-    const [showDeleteDialog, setShowDeleteDialog] = React.useState(false);
-
 
     useEffect(() => {
-            initializeEdit();
-            // eslint-disable-next-line react-hooks/exhaustive-deps
+        initializeEdit();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [showEditBreederModal])
 
 
     useEffect(() => {
-        setCopyBreeder([...breeders].slice(1))
+        setCopyBreeder([...breeders].slice(1))  //Um den unbekannten Breeder im ersten Feld nicht anzuzeigen
     }, [breeders])
-
-    const [searchValue, setSearchValue] = useState<string>("")
 
 
     const classes = useStyles();
@@ -169,16 +185,15 @@ const BreederOverview = ({breeders, setBreeders}: any) => {
                 toggleEditBreederModal={toggleEditBreederModal}
                 handleInputChange={handleInputChangeBreeder}
                 values={breederValues}
-                submit={addBreeder}
+                submit={updateBreeder}
             />
 
-            <DeleteDialog open={showDeleteDialog} toggleDeleteDialog={toggleDeleteDialog} action={deleteBreeder}
+            <DeleteDialog open={showDeleteDialog} toggleDeleteDialog={toggleDeleteDialog} action={removeBreeder}
                           name={"Züchter"}
             />
 
 
             <div className={"breeder-overview-button_textfield"}>
-
                 <TextField
                     variant={"outlined"}
                     sx={{input: {color: 'white'}}}
@@ -189,7 +204,7 @@ const BreederOverview = ({breeders, setBreeders}: any) => {
                     placeholder={"Nachname des Züchters..."}
                     className={classes.textField}
                     InputLabelProps={{
-                        style: { color: '#ffffff'},
+                        style: {color: '#ffffff'},
                     }}
                     InputProps={{
                         classes: {
@@ -199,9 +214,8 @@ const BreederOverview = ({breeders, setBreeders}: any) => {
                         }
                     }}
                 />
-
-                <Button id={"breeder-overview-button_add"} variant="contained" onClick={toggleAddBreederModal}>Züchter hinzufügen</Button>
-
+                <Button id={"breeder-overview-button_add"} variant="contained" onClick={toggleAddBreederModal}>Züchter
+                    hinzufügen</Button>
             </div>
 
             {copyBreeder.filter((breeder: { lastName: string; }) => breeder.lastName.match(new RegExp(searchValue, "i"))).map((item: any, index: number) => {

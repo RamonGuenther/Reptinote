@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import {Tab} from "@mui/material";
 import FeedTable from "../components/tables/FeedTable";
@@ -9,52 +9,55 @@ import NotesTable from "../components/tables/NotesTable";
 import WeightsTable from "../components/tables/WeightsTable";
 
 
-const ReptileDetails = ({reptiles, setReptiles, editReptile, breeders}: any) => {
-
-    const history = useNavigate();
-
+const ReptileDetails = ({
+                            reptiles,
+                            editReptile,
+                            deleteReptile,
+                            breeders,
+                            saveFeeding,
+                            deleteFeeding,
+                            saveWeight,
+                            deleteWeight,
+                            saveNote,
+                            deleteNote,
+                        }: any) => {
 
     let {id} = useParams();
 
     let index: number = 0;
 
-    for(let i = 0; i< reptiles.length; i++){
-        if(reptiles[i].id === id){
+    for (let i = 0; i < reptiles.length; i++) {
+        if (reptiles[i].id === id) {
             index = i;
         }
     }
 
-
-    const [value, setValue] = React.useState('1');
-
-    const handleChange = (event: React.SyntheticEvent, newValue: string) => {
-        setValue(newValue);
-    };
-
+    const [value, setValue] = useState("1");
     const [startDate, setStartDate] = useState(new Date());
 
+    const history = useNavigate();
 
-    function deleteReptile(): void {
-        const newTodos = [...reptiles];
-        newTodos.splice(index, 1);
-        setReptiles(newTodos);
+    function removeReptile(): void {
+        deleteReptile(index);
         history("/reptilienUebersicht");
     }
+
+    const handleTabChange = (event: React.SyntheticEvent, newValue: string) => {
+        setValue(newValue);
+    };
 
     return (
         <>
             <div className={"reptileDetails"}>
-
-                <section className={"section1"}>
+                <section className={"reptile-details-section1"}>
                     <ReptileInformation
-                        reptile={reptiles[index]} deleteReptile = {deleteReptile} editReptile={editReptile} breeders = {breeders}
+                        reptile={reptiles[index]} deleteReptile={removeReptile} editReptile={editReptile}
+                        breeders={breeders}
                     />
                 </section>
-
-
-                <section className="section2">
+                <section className="reptile-details-section2">
                     <TabContext value={value}>
-                        <TabList variant={"fullWidth"} onChange={handleChange} aria-label="lab API tabs example">
+                        <TabList variant={"fullWidth"} onChange={handleTabChange} aria-label="lab API tabs example">
                             <Tab className={"tab"}
                                  label={<span style={{color: 'white'}}>Fütterungen</span>}
                                  value="1"/>
@@ -64,19 +67,21 @@ const ReptileDetails = ({reptiles, setReptiles, editReptile, breeders}: any) => 
                                  value="3"/>
                         </TabList>
                         <TabPanel value="1">
-                            <FeedTable reptiles={reptiles} setReptiles = {setReptiles} index={index} startDate = {startDate} setStartDate={setStartDate}/>
+                            <FeedTable reptiles={reptiles}  saveFeeding={saveFeeding} deleteFeeding={deleteFeeding}
+                                       index={index} startDate={startDate} setStartDate={setStartDate}/>
                         </TabPanel>
                         <TabPanel value="2">
-                            <NotesTable reptiles={reptiles} setReptiles = {setReptiles} index={index} startDate = {startDate} setStartDate={setStartDate}/>
+                            <NotesTable reptiles={reptiles} saveNote={saveNote} index={index} deleteNote={deleteNote}
+                                        startDate={startDate} setStartDate={setStartDate}/>
                         </TabPanel>
                         <TabPanel value="3">
-                            <WeightsTable reptiles={reptiles} setReptiles = {setReptiles} index={index} startDate = {startDate} setStartDate={setStartDate}/>
+                            <WeightsTable reptiles={reptiles}  saveWeight={saveWeight} deleteWeight={deleteWeight}
+                                          index={index} startDate={startDate} setStartDate={setStartDate}/>
                         </TabPanel>
                     </TabContext>
                 </section>
             </div>
         </>
-
     )
 }
 

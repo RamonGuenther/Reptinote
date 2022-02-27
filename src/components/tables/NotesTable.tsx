@@ -16,7 +16,7 @@ import {notifyFailure, notifySuccess} from "../../helper/Toasts";
 import AddNoteModal from "../modals/reptile/AddNoteModal";
 import {MdDelete} from "react-icons/md";
 
-const NotesTable = ({reptiles, setReptiles, index, startDate, setStartDate}: any) => {
+const NotesTable = ({reptiles, saveNote, deleteNote, index, startDate, setStartDate}: any) => {
 
     const [tableData, setTableData] = useState<Note[]>(()=>{
        return [...reptiles[index].notes].reverse();
@@ -31,31 +31,28 @@ const NotesTable = ({reptiles, setReptiles, index, startDate, setStartDate}: any
             notifyFailure("Bitte alle Felder ausfüllen."); //TODO eigenes
             return;
         }
-        const newReptiles = [...reptiles];
         let newNote = new Note();
         newNote.setNote(inputNote, startDate.toLocaleDateString());
-        newReptiles[index].notes.push(newNote);
-        setReptiles(newReptiles);
+
+        saveNote(newNote, index);
         setInputNote("");
         setStartDate(new Date());
 
-        handleDataChange(newReptiles[index].notes)
+        handleDataChange([...reptiles[index].notes])
 
         notifySuccess("Die Notiz wurde gespeichert.");
         toggleAddNoteModal();
     }
 
-    function deleteNote(id: string) {
-        const newReptile = [...reptiles];
+    function removeNote(id: string) {
         let indexNote: number = 0;
-        for (let i = 0; i < newReptile[index].notes.length; i++) {
-            if (id === newReptile[index].notes[i].id) {
+        for (let i = 0; i < reptiles[index].notes.length; i++) {
+            if (id === reptiles[index].notes[i].id) {
                 indexNote = i;
             }
         }
-        newReptile[index].notes.splice(indexNote, 1);
-        setReptiles(newReptile);
-        handleDataChange(newReptile[index].notes);
+        deleteNote(index, indexNote);
+        handleDataChange([...reptiles[index].notes]);
     }
 
     function handleDataChange(newTableData: Note[]) {
@@ -73,9 +70,9 @@ const NotesTable = ({reptiles, setReptiles, index, startDate, setStartDate}: any
     }
 
 
-    /**
-     * TODO: TABELLENSHIT
-     */
+    /*---------------------------------------------------------------------------------------------------
+                                          Alles für die Tabelle an sich
+     -----------------------------------------------------------------------------------------------------*/
 
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
@@ -85,7 +82,8 @@ const NotesTable = ({reptiles, setReptiles, index, startDate, setStartDate}: any
     };
 
     const [page, setPage] = React.useState(0);
-    // Avoid a layout jump when reaching the last page with empty rows.
+
+    //Um einen Layout-Sprung zu vermeiden beim Wechseln auf eine Seite die nicht voll gefüllt ist
     const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - tableData.length) : 0;
 
     const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number,) => {
@@ -127,7 +125,7 @@ const NotesTable = ({reptiles, setReptiles, index, startDate, setStartDate}: any
                                 <TableCell component="th">{item.date}</TableCell>
                                 <TableCell component="th">{item.note}</TableCell>
                                 <TableCell component="th"><Button onClick={() => {
-                                    deleteNote(item.id)
+                                    removeNote(item.id)
                                 }}><MdDelete size={"25px"} style={{color: "#c54a4a"}}/></Button></TableCell>
                             </TableRow>
                         ))}

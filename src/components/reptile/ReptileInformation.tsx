@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {Button, Card, CardActions, CardContent, CardMedia} from "@mui/material";
 import {MdDelete} from "react-icons/md";
-import "./reptileInformation.css"
+import "../../style/reptileInformation.css"
 import DeleteDialog from "../modals/DeleteDialog";
 import EditReptileModal from "../modals/reptile/EditReptileModal";
 import {initialValuesReptile} from "../../helper/Constants";
@@ -12,6 +12,10 @@ import {Breeder} from "../../data/Breeder";
 
 const ReptileInformation = ({reptile, deleteReptile, editReptile, breeders}: any) => {
 
+    /*---------------------------------------------------------------------------------------------------
+                                                  States
+    -----------------------------------------------------------------------------------------------------*/
+
     const [showDeleteDialog, setShowDeleteDialog] = React.useState(false);
     const [showEditReptileModal, setShowEditReptileModal] = useState(false);
     const [reptileValues, setReptileValues] = useState(initialValuesReptile);
@@ -20,6 +24,57 @@ const ReptileInformation = ({reptile, deleteReptile, editReptile, breeders}: any
     const [selectedSpeciesOption, setSelectedSpeciesOption] = useState("");
     const [selectedBreederOption, setSelectedBreederOption] = useState("");
 
+    /*---------------------------------------------------------------------------------------------------
+                                              Submit-Funktionen
+     -----------------------------------------------------------------------------------------------------*/
+
+
+    function updateReptile(): void {
+        if (reptileValues.name === "" || reptileValues.birthday === "" || reptileValues.type === "" || selectedGenderOption === null || selectedSpeciesOption === null) {
+            notifyFailure("Bitte alle Pflichtfelder ausfüllen!");
+            return;
+        }
+        let newReptile = reptile;
+
+        newReptile.setReptile(
+            reptileValues.name,
+            reptileValues.birthday,
+            reptileValues.type,
+            reptileValues.morph,
+            selectedGenderOption,
+            selectedSpeciesOption,
+            reptileValues.image
+        );
+
+        if (selectedBreederOption !== "") {
+            for (let i = 0; i < breeders.length; i++) {
+                if (breeders[i].lastName === selectedBreederOption) {
+                    let breeder: Breeder = breeders[i];
+                    newReptile.setBreeder(breeder);
+                    break;
+                }
+            }
+        }
+        editReptile(newReptile)
+        setReptileValues(initialValuesReptile);
+        notifySuccess("Das Reptil " + reptileValues.name + " wurde bearbeitet.");
+        toggleEditReptileModal();
+    }
+
+
+    /*---------------------------------------------------------------------------------------------------
+                                            Input Change Handler
+    -----------------------------------------------------------------------------------------------------*/
+
+
+    function handleInputChangeReptile(e: any): void {
+        const {name, value} = e.target;
+
+        setReptileValues({
+            ...reptileValues,
+            [name]: value,
+        });
+    }
 
     function handleSpeciesSelect(event: any) {
         setSelectedSpeciesOption(event.target.value)
@@ -33,14 +88,10 @@ const ReptileInformation = ({reptile, deleteReptile, editReptile, breeders}: any
         setSelectedBreederOption(event.target.value);
     }
 
-    function handleInputChangeReptile(e: any): void {
-        const {name, value} = e.target;
 
-        setReptileValues({
-            ...reptileValues,
-            [name]: value,
-        });
-    }
+    /*---------------------------------------------------------------------------------------------------
+                                           Toggle Modal Funktionen
+    -----------------------------------------------------------------------------------------------------*/
 
     const toggleDeleteDialog = () => {
         setShowDeleteDialog(!showDeleteDialog);
@@ -50,37 +101,10 @@ const ReptileInformation = ({reptile, deleteReptile, editReptile, breeders}: any
         setShowEditReptileModal(!showEditReptileModal);
     }
 
-    function addReptile(): void {
-        if (reptileValues.name === "" || reptileValues.birthday === "" || reptileValues.type === "" || selectedGenderOption === null || selectedSpeciesOption === null) {
-            notifyFailure("Bitte alle Pflichtfelder ausfüllen!");
-            return;
-        }
 
-
-        let newReptile = reptile;
-
-        newReptile.setReptile(reptileValues.name, reptileValues.birthday, reptileValues.type, reptileValues.morph, selectedGenderOption, selectedSpeciesOption, reptileValues.image);
-
-        if (selectedBreederOption !== "") {
-            for (let i = 0; i < breeders.length; i++) {
-                if (breeders[i].lastName === selectedBreederOption) {
-                    let breeder: Breeder = breeders[i];
-                    newReptile.setBreeder(breeder);
-                    break;
-                }
-            }
-        }
-
-        editReptile(newReptile)
-        setReptileValues(initialValuesReptile); //reset
-        notifySuccess("Das Reptil " + reptileValues.name + " wurde bearbeitet.");
-        toggleEditReptileModal();
-    }
-
-
-    const feedings = reptile.feedings;
-    const notes = reptile.notes;
-    const weights = reptile.weights;
+    /*---------------------------------------------------------------------------------------------------
+                                                 Sonstiges
+    -----------------------------------------------------------------------------------------------------*/
 
     function initializeEdit() {
         let name = reptile.name;
@@ -103,13 +127,12 @@ const ReptileInformation = ({reptile, deleteReptile, editReptile, breeders}: any
 
     return (
         <>
-
             <EditReptileModal
                 toggleShow={toggleEditReptileModal}
                 basicModal={showEditReptileModal}
                 handleInputChange={handleInputChangeReptile}
                 values={reptileValues}
-                submit={addReptile}
+                submit={updateReptile}
                 selectedGenderOption={selectedGenderOption}
                 handleGenderSelect={handleGenderSelect}
                 selectedSpeciesOption={selectedSpeciesOption}
@@ -147,35 +170,34 @@ const ReptileInformation = ({reptile, deleteReptile, editReptile, breeders}: any
                                 className={"reptile-information-span"}>Morph: </span>{reptile.morph}</h2>
                         </div>
                         <div>
-                            {weights[weights.length - 1] !== undefined &&
+                            {reptile.weights[reptile.weights.length - 1] !== undefined &&
                             <h2 className={"reptile-information-h2"}><span className={"reptile-information-span"}>
-                                Gewicht:</span> {weights[weights.length - 1].weight}g</h2>}
+                                Gewicht:</span> {reptile.weights[reptile.weights.length - 1].weight}g</h2>}
 
-                            {feedings[feedings.length - 1] !== undefined &&
+                            {reptile.feedings[reptile.feedings.length - 1] !== undefined &&
                             <h2 className={"reptile-information-h2"}><span className={"reptile-information-span"}>
-                                Letzte Fütterung:</span> {feedings[feedings.length - 1].date}</h2>}
+                                Letzte Fütterung:</span> {reptile.feedings[reptile.feedings.length - 1].date}</h2>}
 
                             <h2 className={"reptile-information-h2"}><span className={"reptile-information-span"}>
                                 Züchter:  </span>{reptile.breeder.firstName + " " + reptile.breeder.lastName}</h2>
                         </div>
                     </div>
-                    {notes[notes.length - 1] !== undefined &&
+                    {reptile.notes[reptile.notes.length - 1] !== undefined &&
                     <h2 className={"reptile-information-h2"}><span className={"reptile-information-span"}>
-                                Aktuellste Notiz:  </span>{notes[notes.length - 1].note}...</h2>}
+                                Aktuellste Notiz:  </span>{reptile.notes[reptile.notes.length - 1].note}...</h2>}
                 </CardContent>
                 <CardActions className={"reptileInfoActions"}>
-                        <Button variant="contained" className={"reptile-information-buttons bg-primary"} onClick={() => {
-                            toggleEditReptileModal();
-                        }}> <FiEdit size={"25px"}/>
-                        </Button>
-                        <Button variant="contained" className={"reptile-information-buttons bg-danger"} onClick={() => {
-                            toggleDeleteDialog()
-                        }}> <MdDelete size={"25px"}/>
-                        </Button>
+                    <Button variant="contained" className={"reptile-information-buttons bg-primary"} onClick={() => {
+                        toggleEditReptileModal();
+                    }}> <FiEdit size={"25px"}/>
+                    </Button>
+                    <Button variant="contained" className={"reptile-information-buttons bg-danger"} onClick={() => {
+                        toggleDeleteDialog()
+                    }}> <MdDelete size={"25px"}/>
+                    </Button>
                 </CardActions>
             </Card>
         </>
-
     )
 }
 

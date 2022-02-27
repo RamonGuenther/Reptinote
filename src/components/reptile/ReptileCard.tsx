@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import "./reptileCard.css"
+import "../../style/reptileCard.css"
 import {MdDelete, MdSearch} from "react-icons/md";
 import {IoFastFoodOutline, IoRestaurantOutline} from "react-icons/io5";
 import {FiEdit} from "react-icons/fi";
@@ -100,20 +100,20 @@ const ReptileCard = ({
                         </Link>
 
                         <Button variant="contained" className={"reptile-card-buttons bg-success"} onClick={() => {
+                            setReptileId(reptile.id);
                             toggleWeightModal();
-                            setReptileId(reptile.id)
                         }}> <GiWeight size={"25px"}/>
                         </Button>
 
                         <Button variant="contained" className={"reptile-card-buttons bg-success"} onClick={() => {
+                            setReptileId(reptile.id);
                             toggleNoteModal();
-                            setReptileId(reptile.id)
                         }}> <FaStickyNote size={"25px"}/>
                         </Button>
 
                         <Button variant="contained" className={"reptile-card-buttons bg-success"} onClick={() => {
+                            setReptileId(reptile.id);
                             toggleFeedingModal();
-                            setReptileId(reptile.id)
                         }}> <IoRestaurantOutline size={"25px"}/>
                         </Button>
 
