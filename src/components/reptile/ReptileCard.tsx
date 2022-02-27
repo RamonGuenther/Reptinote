@@ -126,7 +126,8 @@ const ReptileCard = ({
 
                         </Button>
                         <Button variant="contained" className={"reptile-card-buttons bg-danger"} onClick={() => {
-                            toggleDeleteDialog()
+                            setReptileId(reptile.id);
+                            toggleDeleteDialog();
                         }}> <MdDelete size={"25px"}/>
                         </Button>
 

@@ -243,11 +243,11 @@ function App() {
 
 
     useEffect(() => {
-            localStorage.setItem("reptiles", JSON.stringify(reptiles))
+        localStorage.setItem("reptiles", JSON.stringify(reptiles))
     }, [reptiles]);
 
     useEffect(() => {
-            localStorage.setItem("breeders", JSON.stringify(breeders))
+        localStorage.setItem("breeders", JSON.stringify(breeders))
     }, [breeders]);
 
     return (
