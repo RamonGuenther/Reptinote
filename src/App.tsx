@@ -90,7 +90,7 @@ function App() {
                 return reptileList;
             } catch (e) {
                 console.log(e)
-                return []
+                return [];
             }
         } else {
             return createExampleReptile();
@@ -243,19 +243,11 @@ function App() {
 
 
     useEffect(() => {
-        if (reptiles.length !== 0) {
             localStorage.setItem("reptiles", JSON.stringify(reptiles))
-        } else {
-            localStorage.removeItem("reptiles")
-        }
     }, [reptiles]);
 
     useEffect(() => {
-        if (breeders.length > 1) {
             localStorage.setItem("breeders", JSON.stringify(breeders))
-        } else {
-            localStorage.removeItem("breeders")
-        }
     }, [breeders]);
 
     return (
