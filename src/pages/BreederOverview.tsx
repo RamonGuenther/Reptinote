@@ -5,7 +5,7 @@ import {Button, TextField} from "@mui/material";
 import {initialValuesBreeder} from "../helper/Constants";
 import AddBreederModal from "../components/modals/breeder/AddBreederModal";
 import EditBreederModal from "../components/modals/breeder/EditBreederModal";
-import DeleteDialog from "../components/modals/reptile/DeleteDialog";
+import DeleteDialog from "../components/modals/DeleteDialog";
 import "./breederOverview.css"
 import {useStyles} from "../helper/Functions";
 import {notifyFailure, notifySuccess} from "../helper/Toasts";
@@ -140,6 +140,7 @@ const BreederOverview = ({breeders, setBreeders}: any) => {
 
     useEffect(() => {
             initializeEdit();
+            // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [showEditBreederModal])
 
 
@@ -207,21 +208,9 @@ const BreederOverview = ({breeders, setBreeders}: any) => {
                 return (
                     <BreederCard
                         key={index}
-                        id={item.id}
-                        companyName={item.companyName}
-                        firstName={item.firstName}
-                        lastName={item.lastName}
-                        street={item.street}
-                        postal={item.postal}
-                        place={item.place}
-                        country={item.country}
-                        mail={item.mail}
-                        phone={item.phone}
-                        index={index}
-                        deleteBreeder={deleteBreeder}
+                        breeder={item}
                         toggleEditBreederModal={toggleEditBreederModal}
                         toggleDeleteDialog={toggleDeleteDialog}
-                        showDeleteDialog={showDeleteDialog}
                         setBreederId={setBreederId}
                     />
                 )

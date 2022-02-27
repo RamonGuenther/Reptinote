@@ -25,7 +25,7 @@ const EditReptileModal = ({
                               handleSpeciesSelect,
                               selectedBreederOption,
                               handleBreederSelect,
-                              breeders
+                              breeders,
                           }: any) => {
     return (
         <>
@@ -43,7 +43,7 @@ const EditReptileModal = ({
                                 className={"mt-3"}
                                 value={values.name}
                                 onChange={handleInputChange}
-                                name="name" //TODO: ohne name Attribut funktioniert es nicht
+                                name="name"
                                 type="text"
                                 label={"Name"}
                                 placeholder="Name des Reptils..."

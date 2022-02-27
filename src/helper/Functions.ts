@@ -54,7 +54,7 @@ export function createExampleReptile(): Reptile[] {
 }
 
 export function createExampleBreeders() : Breeder[]{
-    let breederList: Breeder[] = []; //TODO Breeder wie oben auslagern
+    let breederList: Breeder[] = [];
 
     for (let i = 0; i < breedersExample.length; i++) {
         let newBreeder = new Breeder();

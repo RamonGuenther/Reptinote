@@ -2,11 +2,10 @@ import React, {useEffect, useState} from "react";
 import {Button, Card, CardActions, CardContent, CardMedia} from "@mui/material";
 import {MdDelete} from "react-icons/md";
 import "./reptileInformation.css"
-import DeleteDialog from "../modals/reptile/DeleteDialog";
+import DeleteDialog from "../modals/DeleteDialog";
 import EditReptileModal from "../modals/reptile/EditReptileModal";
 import {initialValuesReptile} from "../../helper/Constants";
 import {notifyFailure, notifySuccess} from "../../helper/Toasts";
-import {Reptile} from "../../data/Reptile";
 import {FiEdit} from "react-icons/fi";
 import {Breeder} from "../../data/Breeder";
 
@@ -72,7 +71,7 @@ const ReptileInformation = ({reptile, deleteReptile, editReptile, breeders}: any
             }
         }
 
-        editReptile(newReptile, reptile.id)
+        editReptile(newReptile)
         setReptileValues(initialValuesReptile); //reset
         notifySuccess("Das Reptil " + reptileValues.name + " wurde bearbeitet.");
         toggleEditReptileModal();
@@ -98,6 +97,7 @@ const ReptileInformation = ({reptile, deleteReptile, editReptile, breeders}: any
 
     useEffect(() => {
         initializeEdit();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [showEditReptileModal])
 
 

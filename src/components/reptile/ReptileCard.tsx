@@ -17,27 +17,16 @@ import {
     CardMedia,
     Chip,
 } from "@mui/material";
-import DeleteDialog from "../modals/reptile/DeleteDialog";
+import DeleteDialog from "../modals/DeleteDialog";
 
 const ReptileCard = ({
-                         id,
-                         name,
-                         birthday,
-                         type,
-                         morph,
-                         gender,
-                         species,
-                         feedings,
-                         weights,
-                         notes,
-                         index,
 
+                         reptile,
                          onDeleteReptile,
                          toggleWeightModal,
                          toggleNoteModal,
                          toggleFeedingModal,
                          setReptileId,
-                         image,
                          toggleReptileEditModal
                      }: any) => {
 
@@ -50,18 +39,18 @@ const ReptileCard = ({
 
     return (
         <div>
-            <DeleteDialog open={showDeleteDialog} toggleDeleteDialog={toggleDeleteDialog} name={name}
+            <DeleteDialog open={showDeleteDialog} toggleDeleteDialog={toggleDeleteDialog} name={reptile.name}
                           action={onDeleteReptile}/>
             <Card id={"reptile-card"}>
                 <CardHeader
-                    avatar={<Link to={`/reptileDetails/${id}`}> <Chip onClick={() => {
-                    }} id={"reptile-card-name_badge"} variant="filled" label={name}/> </Link>}
+                    avatar={<Link to={`/reptileDetails/${reptile.id}`}> <Chip onClick={() => {
+                    }} id={"reptile-card-name_badge"} variant="filled" label={reptile.name}/> </Link>}
                 />
                 <CardContent id={"reptile-card-body"}>
-                    {image !== "" ? <CardMedia
+                    {reptile.image !== "" ? <CardMedia
                         id={"reptile-card-image"}
                         component={"img"}
-                        image={image}
+                        image={reptile.image}
 
                     /> : <CardMedia
                         id={"reptile-card-image"}
@@ -70,28 +59,28 @@ const ReptileCard = ({
                     />}
 
                     <div className={"reptile-card-text"}>
-                        <h2 className={"reptile-card-h2"}><span className={"reptile-card-span"}>Name:</span> {name}</h2>
+                        <h2 className={"reptile-card-h2"}><span className={"reptile-card-span"}>Name:</span> {reptile.name}</h2>
                         <h2 className={"reptile-card-h2"}><span
-                            className={"reptile-card-span"}>Geburtstag:</span> {birthday}</h2>
+                            className={"reptile-card-span"}>Geburtstag:</span> {reptile.birthday}</h2>
                         <h2 className={"reptile-card-h2"}><span
-                            className={"reptile-card-span"}>Geschlecht:</span> {gender}</h2>
+                            className={"reptile-card-span"}>Geschlecht:</span> {reptile.gender}</h2>
                         <h2 className={"reptile-card-h2"}><span
-                            className={"reptile-card-span"}>Spezies: </span> {species}</h2>
-                        <h2 className={"reptile-card-h2"}><span className={"reptile-card-span"}>Typ: </span> {type}</h2>
-                        <h2 className={"reptile-card-h2"}><span className={"reptile-card-span"}>Morph: </span>{morph}
+                            className={"reptile-card-span"}>Spezies: </span> {reptile.species}</h2>
+                        <h2 className={"reptile-card-h2"}><span className={"reptile-card-span"}>Typ: </span> {reptile.type}</h2>
+                        <h2 className={"reptile-card-h2"}><span className={"reptile-card-span"}>Morph: </span>{reptile.morph}
                         </h2>
                         <div className={"reptile-card-badge_layout"}>
-                            {weights[weights.length - 1] !== undefined &&
+                            {reptile.weights[reptile.weights.length - 1] !== undefined &&
                             <h3><Badge className="reptile-card-last_badge"> <GiWeight size={"25px"}/>
-                                {weights[weights.length - 1]._weight}g</Badge></h3>}
+                                {reptile.weights[reptile.weights.length - 1]._weight}g</Badge></h3>}
 
-                            {feedings[feedings.length - 1] !== undefined &&
+                            {reptile.feedings[reptile.feedings.length - 1] !== undefined &&
                             <h3><Badge className="reptile-card-last_badge"> <IoFastFoodOutline size={"25px"}/>
-                                {feedings[feedings.length - 1]._date}</Badge></h3>}
+                                {reptile.feedings[reptile.feedings.length - 1]._date}</Badge></h3>}
 
-                            {notes[notes.length - 1] !== undefined &&
+                            {reptile.notes[reptile.notes.length - 1] !== undefined &&
                             <h3><Badge className="reptile-card-last_badge"> <FaStickyNote size={"25px"}/>
-                                {notes[notes.length - 1]._note.substring(0, 30)}...</Badge></h3>}
+                                {reptile.notes[reptile.notes.length - 1]._note.substring(0, 30)}...</Badge></h3>}
 
                         </div>
                     </div>
@@ -101,7 +90,7 @@ const ReptileCard = ({
 
                     <div className={"reptile-card-buttons_Layout"}>
 
-                        <Link to={`/reptileDetails/${id}`}>
+                        <Link to={`/reptileDetails/${reptile.id}`}>
                             <Button variant="contained" className={"reptile-card-buttons bg-info"}
                                     onClick={() => {
                                     }}> <MdSearch size={"25px"}/>
@@ -111,27 +100,27 @@ const ReptileCard = ({
 
                         <Button variant="contained" className={"reptile-card-buttons bg-success"} onClick={() => {
                             toggleWeightModal();
-                            setReptileId(id)
+                            setReptileId(reptile.id)
                         }}> <GiWeight size={"25px"}/>
                         </Button>
 
 
                         <Button variant="contained" className={"reptile-card-buttons bg-success"} onClick={() => {
                             toggleNoteModal();
-                            setReptileId(id)
+                            setReptileId(reptile.id)
                         }}> <FaStickyNote size={"25px"}/>
                         </Button>
 
                         <Button variant="contained" className={"reptile-card-buttons bg-success"} onClick={() => {
                             toggleFeedingModal();
-                            setReptileId(id)
+                            setReptileId(reptile.id)
                         }}> <IoRestaurantOutline size={"25px"}/>
                         </Button>
 
                         <div id="verticalLine"/>
 
                         <Button variant="contained" className={"reptile-card-buttons"} onClick={() => {
-                            setReptileId(id);
+                            setReptileId(reptile.id);
                             toggleReptileEditModal();
                         }}> <FiEdit size={"25px"}/>
 

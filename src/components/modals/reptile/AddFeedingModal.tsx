@@ -35,7 +35,6 @@ const AddFeedingModal = ({
             <DialogContent>
                     <form>
                         <FormControl fullWidth>
-
                             <TextField
                                 className={"mt-2"}
                                 value={values.type}

@@ -1,14 +1,9 @@
-import React, {useEffect} from "react";
+import React from "react";
 import {
-    Avatar,
     Button,
     Card,
     CardActions,
     CardContent,
-    CardHeader,
-    Divider,
-    IconButton,
-    Typography
 } from "@mui/material";
 import "./breedercard.css"
 import {FiEdit} from "react-icons/fi";
@@ -16,22 +11,11 @@ import {MdDelete} from "react-icons/md";
 
 
 const BreederCard = ({
-                         id,
-                         companyName,
-                         firstName,
-                         lastName,
-                         street,
-                         postal,
-                         place,
-                         country,
-                         mail,
-                         phone,
+                         breeder,
                          toggleEditBreederModal,
                          setBreederId,
                          toggleDeleteDialog,
-
                      }: any) => {
-
 
     return (
         <div className="breeder-card-layout">
@@ -41,41 +25,41 @@ const BreederCard = ({
 
 
                     <h2 className={"breeder-card-h2"}>
-                        <span className={"breeder-card-span"}>Name:</span> {lastName + ", " + firstName}
+                        <span className={"breeder-card-span"}>Name:</span> {breeder.lastName + ", " + breeder.firstName}
                     </h2>
 
                     <h2 className={"breeder-card-h2"}>
-                        <span className={"breeder-card-span"}>Firma:</span> {companyName}
+                        <span className={"breeder-card-span"}>Firma:</span> {breeder.companyName}
                     </h2>
 
                     <h2 className={"breeder-card-h2"}>
-                        <span className={"breeder-card-span"}>Adresse:</span> {street}
+                        <span className={"breeder-card-span"}>Adresse:</span> {breeder.street}
                     </h2>
 
                     <h2 className={"breeder-card-h2"}>
-                        <span className={"breeder-card-span"}>Ort: </span> {postal + " " + place}
+                        <span className={"breeder-card-span"}>Ort: </span> {breeder.postal + " " + breeder.place}
                     </h2>
 
                     <h2 className={"breeder-card-h2"}>
-                        <span className={"breeder-card-span"}>Land: </span> {country}
+                        <span className={"breeder-card-span"}>Land: </span> {breeder.country}
                     </h2>
 
                     <h2 className={"breeder-card-h2"}>
-                        <span className={"breeder-card-span"}>Email: </span>{mail}
+                        <span className={"breeder-card-span"}>Email: </span>{breeder.mail}
                     </h2>
 
                     <h2 className={"breeder-card-h2"}>
-                        <span className={"breeder-card-span"}>Tel.-Nr.: </span>{phone}
+                        <span className={"breeder-card-span"}>Tel.-Nr.: </span>{breeder.phone}
                     </h2>
                 </CardContent>
                 <CardActions id={"breeder-card-actions"}>
                     <div className={"breeder-card-button_layout"}>
                         <Button size="small" className={"breeder-card-edit_button"} onClick={() => {
-                            setBreederId(id);
+                            setBreederId(breeder.id);
                             toggleEditBreederModal()
                         }}><FiEdit size={"25px"}/></Button>
                         <Button size="small" className={"breeder-card-delete_button"} onClick={function () {
-                            setBreederId(id);
+                            setBreederId(breeder.id);
                             toggleDeleteDialog()
                         }}><MdDelete size={"25px"}/></Button>
 

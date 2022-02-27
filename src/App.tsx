@@ -100,9 +100,9 @@ function App() {
         setReptiles(newReptiles);
     }
 
-    function editReptile(newReptile: Reptile, id: string): void {
+    function editReptile(newReptile: Reptile): void {
         const newReptiles = [...reptiles];
-        newReptiles[findBreederId(id)] = newReptile;
+        newReptiles[findReptileIndex(newReptile.id)] = newReptile;
         setReptiles(newReptiles);
     }
 
@@ -113,10 +113,10 @@ function App() {
     }
 
 
-    function findBreederId(id: String): number {
+    function findReptileIndex(id: String): number {
         let index = 0;
-        for (let i = 0; i < breeders.length; i++) {
-            if (id === breeders[i].id) {
+        for (let i = 0; i < reptiles.length; i++) {
+            if (id === reptiles[i].id) {
                 index = i;
             }
         }

@@ -88,7 +88,7 @@ const FeedTable = ({reptiles, setReptiles, index, startDate, setStartDate}: any)
         setPage(0);
     };
 
-    const [rowsPerPage, setRowsPerPage] = React.useState(5);
+    const [rowsPerPage, setRowsPerPage] = useState(5);
 
     const [page, setPage] = useState(0);
 
@@ -111,11 +111,8 @@ const FeedTable = ({reptiles, setReptiles, index, startDate, setStartDate}: any)
                 startDate={startDate}
                 setStartDate={setStartDate}
             />
-            {/*<Fab className={"tableAddButton"}  size={"small"} onClick={toggleAddFeedingModal}><FiPlus size={"25px"}/></Fab>*/}
-
             <Button className={"tableAddButton"} variant={"contained"} onClick={toggleAddFeedingModal}>Fütterung hinzufügen</Button>
             <TableContainer component={Paper}>
-                {/*<Button variant={"contained"}>Hinzufügen</Button>*/}
                 <Table size="medium">
                     <TableHead style={{background:"grey"}}>
                         <TableRow>
