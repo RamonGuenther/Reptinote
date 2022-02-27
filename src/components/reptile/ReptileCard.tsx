@@ -22,19 +22,19 @@ import DeleteDialog from "../modals/DeleteDialog";
 const ReptileCard = ({
 
                          reptile,
+                         setReptileId,
                          onDeleteReptile,
                          toggleWeightModal,
                          toggleNoteModal,
                          toggleFeedingModal,
-                         setReptileId,
                          toggleReptileEditModal
                      }: any) => {
 
     const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
-    const toggleDeleteDialog = () => {
+    function toggleDeleteDialog(): void {
         setShowDeleteDialog(!showDeleteDialog);
-    };
+    }
 
 
     return (
@@ -58,17 +58,19 @@ const ReptileCard = ({
                         image={"https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/No_image" +
                         "_available_600_x_450.svg/600px-No_image_available_600_x_450.svg.png?20150903195108"}
                     />}
-
                     <div className={"reptile-card-text"}>
-                        <h2 className={"reptile-card-h2"}><span className={"reptile-card-span"}>Name:</span> {reptile.name}</h2>
+                        <h2 className={"reptile-card-h2"}><span
+                            className={"reptile-card-span"}>Name:</span> {reptile.name}</h2>
                         <h2 className={"reptile-card-h2"}><span
                             className={"reptile-card-span"}>Geburtstag:</span> {reptile.birthday}</h2>
                         <h2 className={"reptile-card-h2"}><span
                             className={"reptile-card-span"}>Geschlecht:</span> {reptile.gender}</h2>
                         <h2 className={"reptile-card-h2"}><span
                             className={"reptile-card-span"}>Spezies: </span> {reptile.species}</h2>
-                        <h2 className={"reptile-card-h2"}><span className={"reptile-card-span"}>Typ: </span> {reptile.type}</h2>
-                        <h2 className={"reptile-card-h2"}><span className={"reptile-card-span"}>Morph: </span>{reptile.morph}
+                        <h2 className={"reptile-card-h2"}><span
+                            className={"reptile-card-span"}>Typ: </span> {reptile.type}</h2>
+                        <h2 className={"reptile-card-h2"}><span
+                            className={"reptile-card-span"}>Morph: </span>{reptile.morph}
                         </h2>
                         <div className={"reptile-card-badge_layout"}>
                             {reptile.weights[reptile.weights.length - 1] !== undefined &&
@@ -86,7 +88,6 @@ const ReptileCard = ({
                         </div>
                     </div>
                 </CardContent>
-
                 <CardActions id={"reptile-card-actions"}>
 
                     <div className={"reptile-card-buttons_Layout"}>
@@ -96,7 +97,6 @@ const ReptileCard = ({
                                     onClick={() => {
                                     }}> <MdSearch size={"25px"}/>
                             </Button>
-
                         </Link>
 
                         <Button variant="contained" className={"reptile-card-buttons bg-success"} onClick={() => {
@@ -129,6 +129,7 @@ const ReptileCard = ({
                             toggleDeleteDialog()
                         }}> <MdDelete size={"25px"}/>
                         </Button>
+
                     </div>
                 </CardActions>
             </Card>

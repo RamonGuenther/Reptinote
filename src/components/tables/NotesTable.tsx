@@ -18,8 +18,8 @@ import {MdDelete} from "react-icons/md";
 
 const NotesTable = ({reptiles, saveNote, deleteNote, index, startDate, setStartDate}: any) => {
 
-    const [tableData, setTableData] = useState<Note[]>(()=>{
-       return [...reptiles[index].notes].reverse();
+    const [tableData, setTableData] = useState<Note[]>(() => {
+        return [...reptiles[index].notes].reverse(); //Damit der aktuellste Wert auch als erstes angezeigt wird
     });
 
     const [showAddNoteModal, setShowAddNoteModal] = useState(false);
@@ -27,8 +27,8 @@ const NotesTable = ({reptiles, saveNote, deleteNote, index, startDate, setStartD
 
 
     function addNote() {
-        if (inputNote === "") { //TODO: wie validieren
-            notifyFailure("Bitte alle Felder ausfüllen."); //TODO eigenes
+        if (inputNote === "") {
+            notifyFailure("Bitte alle Felder ausfüllen.");
             return;
         }
         let newNote = new Note();
@@ -56,7 +56,7 @@ const NotesTable = ({reptiles, saveNote, deleteNote, index, startDate, setStartD
     }
 
     function handleDataChange(newTableData: Note[]) {
-        const newReptiles = [...newTableData].reverse();
+        const newReptiles = [...newTableData].reverse(); //Damit der aktuellste Wert auch als erstes angezeigt wird
         setTableData(newReptiles);
     }
 
@@ -71,24 +71,24 @@ const NotesTable = ({reptiles, saveNote, deleteNote, index, startDate, setStartD
 
 
     /*---------------------------------------------------------------------------------------------------
-                                          Alles für die Tabelle an sich
-     -----------------------------------------------------------------------------------------------------*/
+                            Alle benötigten Dinge für die Funktionen der Tabelle
+    -----------------------------------------------------------------------------------------------------*/
 
-    const [rowsPerPage, setRowsPerPage] = React.useState(5);
+    const [rowsPerPage, setRowsPerPage] = useState(5);
+    const [page, setPage] = useState(0);
 
-    const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    function handleChangeRowsPerPage(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void {
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
-    };
+    }
 
-    const [page, setPage] = React.useState(0);
+    function handleChangePage(event: React.MouseEvent<HTMLButtonElement> | null, newPage: number): void {
+        setPage(newPage);
+    }
 
     //Um einen Layout-Sprung zu vermeiden beim Wechseln auf eine Seite die nicht voll gefüllt ist
     const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - tableData.length) : 0;
 
-    const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number,) => {
-        setPage(newPage);
-    };
 
     return (
         <div>
@@ -103,18 +103,19 @@ const NotesTable = ({reptiles, saveNote, deleteNote, index, startDate, setStartD
                 submit={addNote}
             />
 
-            <Button className={"tableAddButton"} variant={"contained"} onClick={toggleAddNoteModal}>Notiz hinzufügen</Button>
+            <Button className={"tableAddButton"} variant={"contained"} onClick={toggleAddNoteModal}>Notiz
+                hinzufügen</Button>
 
             <TableContainer component={Paper}>
                 <Table size="medium">
-                    <TableHead style={{background:"grey"}}>
+                    <TableHead style={{background: "grey"}}>
                         <TableRow>
                             <TableCell>Datum</TableCell>
                             <TableCell>Notiz</TableCell>
                             <TableCell>Entfernen</TableCell>
                         </TableRow>
                     </TableHead>
-                    <TableBody style={{background:"#a6a1a1"}}>
+                    <TableBody style={{background: "#a6a1a1"}}>
                         {(rowsPerPage > 0
                                 ? tableData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                 : tableData
@@ -135,10 +136,10 @@ const NotesTable = ({reptiles, saveNote, deleteNote, index, startDate, setStartD
                             </TableRow>
                         )}
                     </TableBody>
-                    <TableFooter style={{background:"#a6a1a1"}}>
+                    <TableFooter style={{background: "#a6a1a1"}}>
                         <TableRow>
                             <TablePagination
-                                rowsPerPageOptions={[5, 10 ]}
+                                rowsPerPageOptions={[5, 10]}
                                 count={tableData.length}
                                 rowsPerPage={rowsPerPage}
                                 page={page}

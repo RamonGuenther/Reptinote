@@ -85,6 +85,7 @@ const AddReptileModal = ({
                                 placeholder="Image Url eingeben"
                             />
                         </FormControl>
+
                         <FormControl className={"mt-3"} fullWidth>
                             <InputLabel required>Geschlecht</InputLabel>
                             <MuiSelect
@@ -111,8 +112,9 @@ const AddReptileModal = ({
                                 })}
                             </MuiSelect>
                         </FormControl>
+
                         <FormControl className={"mt-3"} fullWidth>
-                            <InputLabel required>Spezies</InputLabel>
+                            <InputLabel required>Züchter</InputLabel>
                             <MuiSelect
                                 value={selectedBreederOption ? selectedBreederOption : ""}
                                 label="Spezies"
@@ -125,6 +127,7 @@ const AddReptileModal = ({
                                 })}
                             </MuiSelect>
                         </FormControl>
+                        
                     </form>
                 </DialogContent>
                 <Divider/>

@@ -8,32 +8,34 @@ import {makeStyles} from "@material-ui/styles";
 
 
 export function createExampleReptile(): Reptile[] {
+    let reptileList: Reptile[] = [];
     let feedings: Feeding[] = [];
     let weights: Weight[] = [];
     let notes: Note[] = [];
 
-    for (let j = 0; j < feedingExample.length; j++) {
-        let newFeeding = new Feeding();
-        newFeeding.setFeeding(feedingExample[j].weight, feedingExample[j].food, feedingExample[j].date)
-        feedings.push(newFeeding);
-    }
-
-    for (let k = 0; k < weightExample.length; k++) {
-        let newWeight = new Weight();
-        newWeight.setWeight(weightExample[k].weight, weightExample[k].date)
-        weights.push(newWeight);
-    }
-
-    for (let l = 0; l < noteExample.length; l++) {
-        let newNote = new Note();
-        newNote.setNote(noteExample[l].note, noteExample[l].date)
-        notes.push(newNote);
-    }
-
-    let reptileList: Reptile[] = [];
-
     for (let i = 0; i < reptilesExample.length; i++) {
         let newReptile = new Reptile();
+        feedings = [];
+        weights = [];
+        notes = [];
+
+        for (let j = 0; j < feedingExample.length; j++) {
+            let newFeeding = new Feeding();
+            newFeeding.setFeeding(feedingExample[j].weight, feedingExample[j].food, feedingExample[j].date)
+            feedings.push(newFeeding);
+        }
+
+        for (let k = 0; k < weightExample.length; k++) {
+            let newWeight = new Weight();
+            newWeight.setWeight(weightExample[k].weight, weightExample[k].date)
+            weights.push(newWeight);
+        }
+
+        for (let l = 0; l < noteExample.length; l++) {
+            let newNote = new Note();
+            newNote.setNote(noteExample[l].note, noteExample[l].date)
+            notes.push(newNote);
+        }
 
         newReptile.loadReptile(
             reptilesExample[i].name,
@@ -50,6 +52,7 @@ export function createExampleReptile(): Reptile[] {
 
         reptileList.push(newReptile);
     }
+
     return reptileList;
 }
 

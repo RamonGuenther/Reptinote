@@ -19,7 +19,16 @@ import {useStyles} from "../helper/Functions";
 import {Reptile} from "../data/Reptile";
 
 
-function ReptileOverview({reptiles, saveReptile, deleteReptile, saveFeeding, saveWeight, saveNote, editReptile, breeders}: any) {
+function ReptileOverview({
+                             reptiles,
+                             saveReptile,
+                             deleteReptile,
+                             saveFeeding,
+                             saveWeight,
+                             saveNote,
+                             editReptile,
+                             breeders
+                         }: any) {
 
     /*---------------------------------------------------------------------------------------------------
                                              States
@@ -51,11 +60,8 @@ function ReptileOverview({reptiles, saveReptile, deleteReptile, saveFeeding, sav
 
 
     function addReptile(): void {
-        if (reptileValues.name === "" ||
-            reptileValues.birthday === "" ||
-            reptileValues.type === "" ||
-            selectedGenderOption === null ||
-            selectedSpeciesOption === null) {
+        if (reptileValues.name === "" || reptileValues.birthday === "" || reptileValues.type === "" ||
+            selectedGenderOption === null || selectedSpeciesOption === null) {
             notifyFailure("Bitte alle Pflichtfelder ausfüllen!");
             return;
         }
@@ -69,11 +75,8 @@ function ReptileOverview({reptiles, saveReptile, deleteReptile, saveFeeding, sav
     }
 
     function updateReptile(): void {
-        if (reptileValues.name === "" ||
-            reptileValues.birthday === "" ||
-            reptileValues.type === "" ||
-            selectedGenderOption === null ||
-            selectedSpeciesOption === null) {
+        if (reptileValues.name === "" || reptileValues.birthday === "" || reptileValues.type === "" ||
+            selectedGenderOption === null || selectedSpeciesOption === null) {
             notifyFailure("Bitte alle Pflichtfelder ausfüllen!");
             return;
         }
@@ -81,7 +84,7 @@ function ReptileOverview({reptiles, saveReptile, deleteReptile, saveFeeding, sav
         setReptile(newReptile);
         editReptile(newReptile);
         setReptileValues(initialValuesReptile);
-        setSearchValue(reptileValues.name); //TODO
+        setSearchValue(reptileValues.name);
         notifySuccess("Die Änderungen des Reptils " + reptileValues.name + " wurden gespeichert.");
         toggleEditReptileModal();
 
@@ -89,6 +92,7 @@ function ReptileOverview({reptiles, saveReptile, deleteReptile, saveFeeding, sav
 
 
     function removeReptile(): void {
+        setSearchValue("");
         deleteReptile(findReptileId());
     }
 
@@ -107,21 +111,21 @@ function ReptileOverview({reptiles, saveReptile, deleteReptile, saveFeeding, sav
         toggleAddFeedingModal();
     }
 
-    function addNote() {
+    function addNote(): void {
         if (inputNote === "") {
             notifyFailure("Bitte alle Felder ausfüllen.");
             return;
         }
         let note = new Note();
         note.setNote(inputNote, startDate.toLocaleDateString());
-        saveNote(note,findReptileId())
+        saveNote(note, findReptileId())
         setInputNote("");
         setStartDate(new Date());
         notifySuccess("Die Notiz wurde gespeichert.");
         toggleAddNoteModal();
     }
 
-    function addWeight() {
+    function addWeight(): void {
         if (isNaN(parseInt(inputWeight))) {
             notifyFailure("Bitte alle Felder und im richtigen Format ausfüllen!")
             return;
@@ -181,7 +185,6 @@ function ReptileOverview({reptiles, saveReptile, deleteReptile, saveFeeding, sav
         });
     }
 
-
     function handleInputChangeFeeding(e: any): void {
         const {name, value} = e.target;
         setFeedingValues({
@@ -217,6 +220,9 @@ function ReptileOverview({reptiles, saveReptile, deleteReptile, saveFeeding, sav
 
 
     function toggleAddReptileModal(): void {
+        setSelectedGenderOption("");
+        setSelectedSpeciesOption("");
+        setSelectedBreederOption("");
         setReptileValues(initialValuesReptile);
         setShowAddReptileModal(!showAddReptileModal);
     }
@@ -233,7 +239,7 @@ function ReptileOverview({reptiles, saveReptile, deleteReptile, saveFeeding, sav
         setShowAddNoteModal(!showAddNoteModal);
     }
 
-    function toggleEditReptileModal() {
+    function toggleEditReptileModal(): void {
         setShowEditReptileModal(!showEditReptileModal);
     }
 
@@ -243,7 +249,7 @@ function ReptileOverview({reptiles, saveReptile, deleteReptile, saveFeeding, sav
     -----------------------------------------------------------------------------------------------------*/
 
 
-    function initializeEdit() {
+    function initializeEdit(): void {
         if (reptiles.length === 0 || !showEditReptileModal) {
             return;
         }
@@ -367,7 +373,6 @@ function ReptileOverview({reptiles, saveReptile, deleteReptile, saveFeeding, sav
                         key={index}
                         reptile={item}
                         onDeleteReptile={removeReptile}
-                        addFeeding={addFeeding}
                         toggleFeedingModal={toggleAddFeedingModal}
                         toggleWeightModal={toggleAddWeightModal}
                         toggleNoteModal={toggleAddNoteModal}

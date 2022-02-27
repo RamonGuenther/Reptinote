@@ -17,18 +17,18 @@ import AddFeedingModal from "../modals/reptile/AddFeedingModal";
 import {notifyFailure, notifySuccess} from "../../helper/Toasts";
 import "../../style/reptileInformation.css"
 import {MdDelete} from "react-icons/md";
+
 const FeedTable = ({reptiles, saveFeeding, deleteFeeding, index, startDate, setStartDate}: any) => {
 
-    const [tableData, setTableData] = useState<Feeding[]>(()=>{
-        return [...reptiles[index].feedings].reverse();
+    const [tableData, setTableData] = useState<Feeding[]>(() => {
+        return [...reptiles[index].feedings].reverse(); //Damit der aktuellste Wert auch als erstes angezeigt wird
     });
-
 
     const [feedingValues, setFeedingValues] = useState(initialValuesFeeding);
     const [showAddFeedingModal, setShowAddFeedingModal] = useState(false);
 
-    function addFeeding(){
-        if (feedingValues.type === "" || isNaN(parseInt(feedingValues.weight))){ //TODO: wie validieren
+    function addFeeding() {
+        if (feedingValues.type === "" || isNaN(parseInt(feedingValues.weight))) { //TODO: wie validieren
             notifyFailure("Bitte alle Felder und im richtigen Format ausfüllen!")
             return;
         }
@@ -49,14 +49,13 @@ const FeedTable = ({reptiles, saveFeeding, deleteFeeding, index, startDate, setS
                 indexFood = i;
             }
         }
-        deleteFeeding(index,indexFood);
+        deleteFeeding(index, indexFood);
         handleDataChange([...reptiles[index].feedings]);
     }
 
 
-
     function handleDataChange(newTableData: Feeding[]) {
-        const newReptiles = [...newTableData].reverse();
+        const newReptiles = [...newTableData].reverse(); //Damit der aktuellste Wert auch als erstes angezeigt wird
         setTableData(newReptiles);
     }
 
@@ -74,24 +73,23 @@ const FeedTable = ({reptiles, saveFeeding, deleteFeeding, index, startDate, setS
 
 
     /*---------------------------------------------------------------------------------------------------
-                                         Alles für die Tabelle an sich
+                            Alle benötigten Dinge für die Funktionen der Tabelle
     -----------------------------------------------------------------------------------------------------*/
 
-    const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const [rowsPerPage, setRowsPerPage] = useState(5);
+    const [page, setPage] = useState(0);
+
+    function handleChangeRowsPerPage(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void {
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
-    };
+    }
 
-    const [rowsPerPage, setRowsPerPage] = useState(5);
-
-    const [page, setPage] = useState(0);
+    function handleChangePage(event: React.MouseEvent<HTMLButtonElement> | null, newPage: number): void {
+        setPage(newPage);
+    }
 
     //Um einen Layout-Sprung zu vermeiden beim Wechseln auf eine Seite die nicht voll gefüllt ist
     const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - tableData.length) : 0;
-
-    const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number,) => {
-        setPage(newPage);
-    };
 
 
     return (
@@ -105,10 +103,11 @@ const FeedTable = ({reptiles, saveFeeding, deleteFeeding, index, startDate, setS
                 startDate={startDate}
                 setStartDate={setStartDate}
             />
-            <Button className={"tableAddButton"} variant={"contained"} onClick={toggleAddFeedingModal}>Fütterung hinzufügen</Button>
+            <Button className={"tableAddButton"} variant={"contained"} onClick={toggleAddFeedingModal}>Fütterung
+                hinzufügen</Button>
             <TableContainer component={Paper}>
                 <Table size="medium">
-                    <TableHead style={{background:"grey"}}>
+                    <TableHead style={{background: "grey"}}>
                         <TableRow>
                             <TableCell> Datum </TableCell>
                             <TableCell>Futter</TableCell>
@@ -117,7 +116,7 @@ const FeedTable = ({reptiles, saveFeeding, deleteFeeding, index, startDate, setS
 
                         </TableRow>
                     </TableHead>
-                    <TableBody style={{background:"#a6a1a1"}}>
+                    <TableBody style={{background: "#a6a1a1"}}>
                         {(rowsPerPage > 0
                                 ? tableData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                 : tableData
@@ -139,7 +138,7 @@ const FeedTable = ({reptiles, saveFeeding, deleteFeeding, index, startDate, setS
                             </TableRow>
                         )}
                     </TableBody>
-                    <TableFooter style={{background:"#a6a1a1"}}>
+                    <TableFooter style={{background: "#a6a1a1"}}>
                         <TableRow>
                             <TablePagination
                                 rowsPerPageOptions={[5, 10]}

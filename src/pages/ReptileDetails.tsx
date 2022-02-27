@@ -3,7 +3,7 @@ import {useNavigate, useParams} from "react-router-dom";
 import {Tab} from "@mui/material";
 import FeedTable from "../components/tables/FeedTable";
 import ReptileInformation from "../components/reptile/ReptileInformation";
-import "./reptileDetails.css"
+import "../style/reptileDetails.css"
 import {TabContext, TabList, TabPanel} from "@mui/lab";
 import NotesTable from "../components/tables/NotesTable";
 import WeightsTable from "../components/tables/WeightsTable";
@@ -42,9 +42,9 @@ const ReptileDetails = ({
         history("/reptilienUebersicht");
     }
 
-    const handleTabChange = (event: React.SyntheticEvent, newValue: string) => {
+    function handleTabChange(event: React.SyntheticEvent, newValue: string): void {
         setValue(newValue);
-    };
+    }
 
     return (
         <>
@@ -67,7 +67,7 @@ const ReptileDetails = ({
                                  value="3"/>
                         </TabList>
                         <TabPanel value="1">
-                            <FeedTable reptiles={reptiles}  saveFeeding={saveFeeding} deleteFeeding={deleteFeeding}
+                            <FeedTable reptiles={reptiles} saveFeeding={saveFeeding} deleteFeeding={deleteFeeding}
                                        index={index} startDate={startDate} setStartDate={setStartDate}/>
                         </TabPanel>
                         <TabPanel value="2">
@@ -75,7 +75,7 @@ const ReptileDetails = ({
                                         startDate={startDate} setStartDate={setStartDate}/>
                         </TabPanel>
                         <TabPanel value="3">
-                            <WeightsTable reptiles={reptiles}  saveWeight={saveWeight} deleteWeight={deleteWeight}
+                            <WeightsTable reptiles={reptiles} saveWeight={saveWeight} deleteWeight={deleteWeight}
                                           index={index} startDate={startDate} setStartDate={setStartDate}/>
                         </TabPanel>
                     </TabContext>

@@ -1,14 +1,13 @@
 import {v4 as uuid} from "uuid";
 
 export default class Note {
-    private _id : string;
-    private _date : string = "";
+    private _id: string;
+    private _date: string = "";
     private _note: string = "";
 
     constructor() {
         this._id = uuid();
     }
-
 
     get id(): string {
         return this._id;
@@ -34,7 +33,7 @@ export default class Note {
         this._note = value;
     }
 
-    public setNote(note: string, date : string){
+    public setNote(note: string, date: string): void {
         this._note = note;
         this._date = date;
     }

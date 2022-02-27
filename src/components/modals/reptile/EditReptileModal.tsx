@@ -1,5 +1,4 @@
 import React from "react";
-
 import {
     Button,
     Dialog, DialogActions,
@@ -37,7 +36,6 @@ const EditReptileModal = ({
                 <DialogContent className={"modal-content"} style={{width: "500px"}}>
                     <form>
                         <FormControl fullWidth>
-
                             <TextField
                                 className={"mt-3"}
                                 value={values.name}
@@ -74,7 +72,6 @@ const EditReptileModal = ({
                                 type="text"
                                 placeholder="Morph des Reptils..."
                             />
-
                             <TextField
                                 className={"mt-3"}
                                 value={values.image}
@@ -84,8 +81,8 @@ const EditReptileModal = ({
                                 type="text"
                                 placeholder="Image Url eingeben"
                             />
-
                         </FormControl>
+
                         <FormControl className={"mt-3"} fullWidth>
                             <InputLabel required>Geschlecht</InputLabel>
                             <MuiSelect
@@ -111,8 +108,9 @@ const EditReptileModal = ({
                                 })}
                             </MuiSelect>
                         </FormControl>
+
                         <FormControl className={"mt-3"} fullWidth>
-                            <InputLabel required>Spezies</InputLabel>
+                            <InputLabel required>Züchter</InputLabel>
                             <MuiSelect
                                 value={selectedBreederOption ? selectedBreederOption : ""}
                                 label="Spezies"
@@ -125,6 +123,7 @@ const EditReptileModal = ({
                                 })}
                             </MuiSelect>
                         </FormControl>
+
                     </form>
                 </DialogContent>
                 <Divider/>
@@ -135,7 +134,6 @@ const EditReptileModal = ({
                     <Button onClick={submit}>Reptil Speichern</Button>
                 </DialogActions>
             </Dialog>
-
         </>
     )
 }

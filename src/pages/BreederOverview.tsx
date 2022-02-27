@@ -16,7 +16,7 @@ const BreederOverview = ({breeders, saveBreeder, editBreeder, deleteBreeder}: an
     -----------------------------------------------------------------------------------------------------*/
 
     const [copyBreeder, setCopyBreeder] = useState<Breeder[]>(() => {
-        return [...breeders].slice(1); //Um den unbekannten Breeder im ersten Feld nicht anzuzeigen
+        return [...breeders].slice(1); //Um den Unbekannten Breeder im ersten Feld nicht anzuzeigen
     });
 
     const [breederId, setBreederId] = useState("");
@@ -46,7 +46,7 @@ const BreederOverview = ({breeders, saveBreeder, editBreeder, deleteBreeder}: an
         toggleAddBreederModal();
     }
 
-    function updateBreeder() {
+    function updateBreeder(): void {
         if (breederValues.firstName === "" || breederValues.lastName === "") {
             notifyFailure("Bitte alle Pflichtfelder ausfüllen!");
             return;
@@ -55,12 +55,14 @@ const BreederOverview = ({breeders, saveBreeder, editBreeder, deleteBreeder}: an
         setBreeder(newBreeder);
         editBreeder(newBreeder);
         notifySuccess("Die Änderungen des Züchters " + breederValues.firstName + " " + breederValues.lastName + " wurden gespeichert.");
+        setSearchValue(breederValues.lastName);
         toggleEditBreederModal();
         setBreederValues(initialValuesBreeder);
     }
 
 
-    function removeBreeder() {
+    function removeBreeder(): void {
+        setSearchValue("");
         deleteBreeder(findBreederIndex());
     }
 
@@ -107,9 +109,9 @@ const BreederOverview = ({breeders, saveBreeder, editBreeder, deleteBreeder}: an
                                          Toggle Modal Funktionen
     -----------------------------------------------------------------------------------------------------*/
 
-    const toggleDeleteDialog = () => {
+    function toggleDeleteDialog(): void {
         setShowDeleteDialog(!showDeleteDialog);
-    };
+    }
 
     function toggleAddBreederModal(): void {
         setBreederValues(initialValuesBreeder)
@@ -126,7 +128,7 @@ const BreederOverview = ({breeders, saveBreeder, editBreeder, deleteBreeder}: an
     -----------------------------------------------------------------------------------------------------*/
 
 
-    function initializeEdit() {
+    function initializeEdit(): void {
         if (breeders.length === 0) {
             return;
         }
@@ -163,7 +165,7 @@ const BreederOverview = ({breeders, saveBreeder, editBreeder, deleteBreeder}: an
 
 
     useEffect(() => {
-        setCopyBreeder([...breeders].slice(1))  //Um den unbekannten Breeder im ersten Feld nicht anzuzeigen
+        setCopyBreeder([...breeders].slice(1))  //Um den Unbekannten Breeder im ersten Feld nicht anzuzeigen
     }, [breeders])
 
 

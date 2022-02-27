@@ -1,14 +1,13 @@
 import {v4 as uuid} from "uuid";
 
 export default class Weight {
-    private _id : string;
-    private _date : string = "";
-    private _weight : string ="";
+    private _id: string;
+    private _date: string = "";
+    private _weight: string = "";
 
     constructor() {
         this._id = uuid();
     }
-
 
     get id(): string {
         return this._id;
@@ -22,7 +21,6 @@ export default class Weight {
         return this._weight;
     }
 
-
     set id(value: string) {
         this._id = value;
     }
@@ -35,7 +33,7 @@ export default class Weight {
         this._weight = value;
     }
 
-    public setWeight(weight: string, date : string){
+    public setWeight(weight: string, date: string): void {
         this._weight = weight;
         this._date = date;
     }

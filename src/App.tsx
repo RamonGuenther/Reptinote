@@ -26,7 +26,6 @@ function App() {
             let parsed = JSON.parse(items);
             try {
                 let reptileList: Reptile[] = [];
-
                 let feedings: Feeding[] = [];
                 let weights: Weight[] = [];
                 let notes: Note[] = [];

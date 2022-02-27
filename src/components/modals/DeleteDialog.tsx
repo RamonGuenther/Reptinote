@@ -10,10 +10,7 @@ export default function DeleteDialog({open, toggleDeleteDialog, action, name}: a
 
     return (
         <div>
-            <Dialog
-                open={open}
-                onClose={toggleDeleteDialog}
-            >
+            <Dialog open={open} onClose={toggleDeleteDialog}>
                 <DialogTitle className={"delete-dialog"}>
                     {name + " wirklich löschen?"}
                 </DialogTitle>

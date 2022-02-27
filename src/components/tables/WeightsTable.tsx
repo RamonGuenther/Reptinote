@@ -19,12 +19,11 @@ import {MdDelete} from "react-icons/md";
 const WeightsTable = ({reptiles, saveWeight, deleteWeight, index, startDate, setStartDate}: any) => {
 
     const [tableData, setTableData] = useState<Weight[]>(() => {
-        return [...reptiles[index].weights].reverse();
+        return [...reptiles[index].weights].reverse(); //Damit der aktuellste Wert auch als erstes angezeigt wird
     });
 
     const [showAddWeightModal, setShowAddWeightModal] = useState(false);
     const [inputWeight, setInputWeight] = useState("");
-
 
 
     function addWeight(): void {
@@ -56,7 +55,7 @@ const WeightsTable = ({reptiles, saveWeight, deleteWeight, index, startDate, set
 
     function handleDataChange(newTableData: Weight[]): void {
         const newReptiles = [...newTableData].reverse();
-        setTableData(newReptiles);
+        setTableData(newReptiles); //Damit der aktuellste Wert auch als erstes angezeigt wird
     }
 
     function handleInputChangeWeight(event: any): void {
@@ -70,23 +69,24 @@ const WeightsTable = ({reptiles, saveWeight, deleteWeight, index, startDate, set
 
 
     /*---------------------------------------------------------------------------------------------------
-                                         Alles für die Tabelle an sich
+                            Alle benötigten Dinge für die Funktionen der Tabelle
     -----------------------------------------------------------------------------------------------------*/
 
-    const [rowsPerPage, setRowsPerPage] = React.useState(5);
+    const [rowsPerPage, setRowsPerPage] = useState(5);
+    const [page, setPage] = useState(0);
 
-    const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    function handleChangeRowsPerPage(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void {
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
-    };
+    }
 
-    const [page, setPage] = React.useState(0);
+    function handleChangePage(event: React.MouseEvent<HTMLButtonElement> | null, newPage: number): void {
+        setPage(newPage);
+    }
+
     //Um einen Layout-Sprung zu vermeiden beim Wechseln auf eine Seite die nicht voll gefüllt ist
     const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - tableData.length) : 0;
 
-    const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number,) => {
-        setPage(newPage);
-    };
 
     return (
         <div>

@@ -30,7 +30,8 @@ const ReptileInformation = ({reptile, deleteReptile, editReptile, breeders}: any
 
 
     function updateReptile(): void {
-        if (reptileValues.name === "" || reptileValues.birthday === "" || reptileValues.type === "" || selectedGenderOption === null || selectedSpeciesOption === null) {
+        if (reptileValues.name === "" || reptileValues.birthday === "" || reptileValues.type === "" ||
+            selectedGenderOption === null || selectedSpeciesOption === null) {
             notifyFailure("Bitte alle Pflichtfelder ausfüllen!");
             return;
         }
@@ -149,6 +150,7 @@ const ReptileInformation = ({reptile, deleteReptile, editReptile, breeders}: any
                 <h2 id={"reptile-information-name"}>{reptile.name}</h2>
                 <h2 id={"reptile-information-species_type"}>{reptile.species} | {reptile.type}</h2>
                 <CardContent className={"reptileInfoContent"}>
+
                     {reptile.image !== "" ? <CardMedia
                         className={"reptile-information-image"}
                         component={"img"}
@@ -160,6 +162,7 @@ const ReptileInformation = ({reptile, deleteReptile, editReptile, breeders}: any
                         image={"https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/" +
                         "No_image_available_600_x_450.svg/600px-No_image_available_600_x_450.svg.png?20150903195108"}
                     />}
+
                     <div className={"reptile-information-card-text"}>
                         <div>
                             <h2 className={"reptile-information-h2"}><span
@@ -182,9 +185,11 @@ const ReptileInformation = ({reptile, deleteReptile, editReptile, breeders}: any
                                 Züchter:  </span>{reptile.breeder.firstName + " " + reptile.breeder.lastName}</h2>
                         </div>
                     </div>
+
                     {reptile.notes[reptile.notes.length - 1] !== undefined &&
                     <h2 className={"reptile-information-h2"}><span className={"reptile-information-span"}>
                                 Aktuellste Notiz:  </span>{reptile.notes[reptile.notes.length - 1].note}...</h2>}
+
                 </CardContent>
                 <CardActions className={"reptileInfoActions"}>
                     <Button variant="contained" className={"reptile-information-buttons bg-primary"} onClick={() => {

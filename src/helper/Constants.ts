@@ -42,7 +42,6 @@ export const initialValuesBreeder = {
 
 export const reptilesExample = [
     {
-        id: 1,
         name: 'Hubert',
         geburtsdatum: 'NZ20',
         geschlecht: optionsGender[1],
@@ -53,7 +52,6 @@ export const reptilesExample = [
         feedings: []
     },
     {
-        id: 2,
         name: 'Tifa',
         geburtsdatum: 'NZ21',
         geschlecht: optionsGender[0],
@@ -64,7 +62,6 @@ export const reptilesExample = [
         feedings: []
     },
     {
-        id: 3,
         name: 'Hektor',
         geburtsdatum: 'NZ21',
         geschlecht: optionsGender[1],
@@ -162,7 +159,6 @@ export const noteExample = [
 
     },
 ]
-
 
 
 export const breedersExample = [

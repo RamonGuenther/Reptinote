@@ -1,5 +1,4 @@
 import React from "react";
-
 import {
     Button,
     Dialog,
@@ -70,7 +69,6 @@ const AddWeightModal = ({
                     <Button onClick={submit}> Fütterung hinzufügen</Button>
                 </DialogActions>
             </Dialog>
-
         </>
     )
 }
