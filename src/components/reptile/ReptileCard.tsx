@@ -55,7 +55,8 @@ const ReptileCard = ({
                     /> : <CardMedia
                         id={"reptile-card-image"}
                         component={"img"}
-                        image={"https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/No_image_available_600_x_450.svg/600px-No_image_available_600_x_450.svg.png?20150903195108"}
+                        image={"https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/No_image" +
+                        "_available_600_x_450.svg/600px-No_image_available_600_x_450.svg.png?20150903195108"}
                     />}
 
                     <div className={"reptile-card-text"}>
@@ -104,7 +105,6 @@ const ReptileCard = ({
                         }}> <GiWeight size={"25px"}/>
                         </Button>
 
-
                         <Button variant="contained" className={"reptile-card-buttons bg-success"} onClick={() => {
                             toggleNoteModal();
                             setReptileId(reptile.id)
@@ -117,7 +117,7 @@ const ReptileCard = ({
                         }}> <IoRestaurantOutline size={"25px"}/>
                         </Button>
 
-                        <div id="verticalLine"/>
+                        <div id="reptile-card-vertical_line"/>
 
                         <Button variant="contained" className={"reptile-card-buttons"} onClick={() => {
                             setReptileId(reptile.id);

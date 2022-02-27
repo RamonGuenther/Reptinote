@@ -30,16 +30,13 @@ const AddNoteModal = ({
     return (
         <>
             <Dialog open={showAddNoteModal} onClose={toggleAddNoteModal}>
-                <DialogTitle>
+                <DialogTitle className={"modal-title"}>
                     Notiz hinzufügen
                 </DialogTitle>
                 <Divider/>
-
-                <DialogContent>
+                <DialogContent className={"modal-content"} style={{width: "400px"}}>
                     <form>
-
                         <FormControl fullWidth>
-
                         <TextField
                             className={"mt-2 mb-4"}
                             value={inputNote}
@@ -65,7 +62,7 @@ const AddNoteModal = ({
                 </DialogContent>
                 <Divider/>
 
-                <DialogActions>
+                <DialogActions className={"modal-actions"}>
                     <Button color='secondary' onClick={toggleAddNoteModal}>
                         Abbrechen
                     </Button>

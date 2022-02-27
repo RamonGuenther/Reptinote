@@ -31,28 +31,25 @@ const AddWeightModal = ({
     return (
         <>
             <Dialog open={showAddWeightModal} onClose={toggleAddWeightModal}>
-                <DialogTitle>
+                <DialogTitle className={"modal-title"}>
                     Gewicht hinzufügen
                 </DialogTitle>
                 <Divider/>
-
-                <DialogContent>
+                <DialogContent className={"modal-content"} style={{width: "400px"}}>
                     <form>
                         <FormControl fullWidth>
-
-                        <TextField
-                            className={"mt-2 mb-4"}
-                            value={inputWeight}
-                            onChange={changeWeight}
-                            type="text"
-                            label={"Gewicht"}
-                            helperText={"Numerische Werte"}
-                            placeholder="Aktuelles Gewicht des Reptils..."
-                            InputProps={
-                                {endAdornment : <InputAdornment position="end">g</InputAdornment>,}
-                            }
-                        />
-
+                            <TextField
+                                className={"mt-2 mb-4"}
+                                value={inputWeight}
+                                onChange={changeWeight}
+                                type="text"
+                                label={"Gewicht"}
+                                helperText={"Numerische Werte"}
+                                placeholder="Aktuelles Gewicht des Reptils..."
+                                InputProps={
+                                    {endAdornment: <InputAdornment position="end">g</InputAdornment>,}
+                                }
+                            />
                             <LocalizationProvider dateAdapter={AdapterDateFns}>
                                 <DesktopDatePicker
                                     label="Datum der Messung"
@@ -61,20 +58,16 @@ const AddWeightModal = ({
                                     onChange={setStartDate}
                                     renderInput={(params) => <TextField {...params} required/>}
                                 />
-
                             </LocalizationProvider>
                         </FormControl>
                     </form>
                 </DialogContent>
                 <Divider/>
-
-                <DialogActions>
+                <DialogActions className={"modal-actions"}>
                     <Button color='secondary' onClick={toggleAddWeightModal}>
                         Abbrechen
                     </Button>
                     <Button onClick={submit}> Fütterung hinzufügen</Button>
-
-
                 </DialogActions>
             </Dialog>
 

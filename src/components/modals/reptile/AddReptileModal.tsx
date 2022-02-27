@@ -1,6 +1,5 @@
 import React from "react";
 import {
-    Autocomplete,
     Button,
     Dialog, DialogActions,
     DialogContent,
@@ -30,11 +29,11 @@ const AddReptileModal = ({
     return (
         <>
             <Dialog open={showAddReptileModal} onClose={toggleAddReptileModal}>
-                <DialogTitle>
+                <DialogTitle className={"modal-title"}>
                     Reptil hinzufügen
                 </DialogTitle>
                 <Divider/>
-                <DialogContent style={{width: "500px"}}>
+                <DialogContent className={"modal-content"} style={{width: "500px"}}>
                     <form>
                         <FormControl fullWidth>
                             <TextField
@@ -94,8 +93,8 @@ const AddReptileModal = ({
                                 onChange={handleGenderSelect}
 
                             >
-                                {optionsGender.map((item:string, index: number) =>{
-                                    return <MenuItem key={index} value = {item} > {item} </MenuItem>
+                                {optionsGender.map((item: string, index: number) => {
+                                    return <MenuItem key={index} value={item}> {item} </MenuItem>
                                 })}
                             </MuiSelect>
                         </FormControl>
@@ -107,13 +106,11 @@ const AddReptileModal = ({
                                 label="Spezies"
                                 onChange={handleSpeciesSelect}
                             >
-                                {optionsSpecies.map((item: string, index : number) => {
-                                    return <MenuItem key ={index} value={item}>{item}</MenuItem>
+                                {optionsSpecies.map((item: string, index: number) => {
+                                    return <MenuItem key={index} value={item}>{item}</MenuItem>
                                 })}
                             </MuiSelect>
                         </FormControl>
-
-
                         <FormControl className={"mt-3"} fullWidth>
                             <InputLabel required>Spezies</InputLabel>
                             <MuiSelect
@@ -131,7 +128,7 @@ const AddReptileModal = ({
                     </form>
                 </DialogContent>
                 <Divider/>
-                <DialogActions>
+                <DialogActions className={"modal-actions"}>
                     <Button color='secondary' onClick={toggleAddReptileModal}>
                         Abbrechen
                     </Button>

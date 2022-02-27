@@ -1,5 +1,5 @@
 import React from "react";
-import "./addEditBreederModal.css"
+import "../modal.css"
 import {
     Button,
     Dialog, DialogActions,
@@ -19,11 +19,11 @@ const EditBreederModal = ({
     return (
         <>
             <Dialog open={showEditBreederModal} onClose={toggleEditBreederModal}>
-                <DialogTitle className={"add-breeder-modal-title"}>
+                <DialogTitle className={"modal-title"}>
                     Züchter bearbeiten
                 </DialogTitle>
                 <Divider/>
-                <DialogContent className={"add-breeder-modal-content"}>
+                <DialogContent className={"modal-content"} style={{width: "500px"}}>
                     <form>
                         <FormControl fullWidth>
                             <TextField
@@ -73,7 +73,6 @@ const EditBreederModal = ({
                                 type="text"
                                 placeholder="Postleitzahl..."
                             />
-
                             <TextField
                                 className={"mt-3"}
                                 value={values.place}
@@ -114,7 +113,7 @@ const EditBreederModal = ({
                     </form>
                 </DialogContent>
                 <Divider/>
-                <DialogActions className={"add-breeder-modal-actions"}>
+                <DialogActions className={"modal-actions"}>
                     <Button color='secondary' onClick={toggleEditBreederModal}>
                         Abbrechen
                     </Button>

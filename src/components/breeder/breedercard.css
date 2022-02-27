@@ -1,10 +1,10 @@
 
-.breeder-card-layout{
+.breeder-card-layout {
     margin-top: 50px;
     display: inline-flex;
 }
 
-#breeder-card{
+#breeder-card {
     width: 400px;
     margin-left: 20px;
     background-color: #5d4444;
@@ -12,36 +12,36 @@
     border-radius: 10px;
 }
 
-.breeder-card-h2{
+.breeder-card-h2 {
     font-size: large;
     margin-top: 10px;
 }
 
-.breeder-card-span{
+.breeder-card-span {
     font-size: large;
     font-weight: bold;
 }
 
-.breeder-card-content{
+.breeder-card-content {
     text-align: left;
     color: white;
 }
 
-#breeder-card-actions{
+#breeder-card-actions {
     background-color: #515254;
 }
 
-.breeder-card-button_layout{
+.breeder-card-button_layout {
     margin: auto;
 }
 
-.breeder-card-edit_button{
+.breeder-card-edit_button {
     background-color: #2378b9 !important;
     color: white !important;
     margin-right: 10px !important;
 }
 
-.breeder-card-delete_button{
+.breeder-card-delete_button {
     background-color: #7e3d3d !important;
     color: white !important;
 }

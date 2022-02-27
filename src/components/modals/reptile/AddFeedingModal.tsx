@@ -28,11 +28,11 @@ const AddFeedingModal = ({
     return (
         <>
             <Dialog open={showAddFeedingModal} onClose={toggleAddFeedingModal}>
-                <DialogTitle>
+                <DialogTitle className={"modal-title"}>
                     Fütterung hinzufügen
                 </DialogTitle>
-             <Divider/>
-            <DialogContent>
+                <Divider/>
+                <DialogContent className={"modal-content"} style={{width: "400px"}}>
                     <form>
                         <FormControl fullWidth>
                             <TextField
@@ -55,11 +55,10 @@ const AddFeedingModal = ({
                                 placeholder="Gewicht des Futters..."
                                 helperText={"Numerische Werte"}
                                 InputProps={{
-                                    endAdornment : <InputAdornment position="end">g</InputAdornment>
+                                    endAdornment: <InputAdornment position="end">g</InputAdornment>
                                 }}
                                 required
                             />
-
                             <LocalizationProvider dateAdapter={AdapterDateFns}>
                                 <DesktopDatePicker
                                     label="Fütterungsdatum"
@@ -73,8 +72,7 @@ const AddFeedingModal = ({
                     </form>
                 </DialogContent>
                 <Divider/>
-
-                <DialogActions>
+                <DialogActions className={"modal-actions"}>
                     <Button color='secondary' onClick={toggleAddFeedingModal}>
                         Abbrechen
                     </Button>

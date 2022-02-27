@@ -122,11 +122,9 @@ const ReptileInformation = ({reptile, deleteReptile, editReptile, breeders}: any
 
             <DeleteDialog open={showDeleteDialog} toggleDeleteDialog={toggleDeleteDialog} action={deleteReptile}
                           name={reptile.name}/>
-
             <Card id={"reptile-information-card"}>
                 <h2 id={"reptile-information-name"}>{reptile.name}</h2>
                 <h2 id={"reptile-information-species_type"}>{reptile.species} | {reptile.type}</h2>
-
                 <CardContent className={"reptileInfoContent"}>
                     {reptile.image !== "" ? <CardMedia
                         className={"reptile-information-image"}
@@ -136,7 +134,8 @@ const ReptileInformation = ({reptile, deleteReptile, editReptile, breeders}: any
                     /> : <CardMedia
                         className={"reptile-information-image"}
                         component={"img"}
-                        image={"https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/No_image_available_600_x_450.svg/600px-No_image_available_600_x_450.svg.png?20150903195108"}
+                        image={"https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/" +
+                        "No_image_available_600_x_450.svg/600px-No_image_available_600_x_450.svg.png?20150903195108"}
                     />}
                     <div className={"reptile-information-card-text"}>
                         <div>
@@ -147,7 +146,6 @@ const ReptileInformation = ({reptile, deleteReptile, editReptile, breeders}: any
                             <h2 className={"reptile-information-h2"}><span
                                 className={"reptile-information-span"}>Morph: </span>{reptile.morph}</h2>
                         </div>
-
                         <div>
                             {weights[weights.length - 1] !== undefined &&
                             <h2 className={"reptile-information-h2"}><span className={"reptile-information-span"}>
@@ -159,31 +157,21 @@ const ReptileInformation = ({reptile, deleteReptile, editReptile, breeders}: any
 
                             <h2 className={"reptile-information-h2"}><span className={"reptile-information-span"}>
                                 Züchter:  </span>{reptile.breeder.firstName + " " + reptile.breeder.lastName}</h2>
-
                         </div>
-
                     </div>
                     {notes[notes.length - 1] !== undefined &&
                     <h2 className={"reptile-information-h2"}><span className={"reptile-information-span"}>
                                 Aktuellste Notiz:  </span>{notes[notes.length - 1].note}...</h2>}
                 </CardContent>
-
                 <CardActions className={"reptileInfoActions"}>
-
-                    <div className={"reptile-information-button_layout"}>
-
                         <Button variant="contained" className={"reptile-information-buttons bg-primary"} onClick={() => {
                             toggleEditReptileModal();
                         }}> <FiEdit size={"25px"}/>
                         </Button>
-
                         <Button variant="contained" className={"reptile-information-buttons bg-danger"} onClick={() => {
                             toggleDeleteDialog()
                         }}> <MdDelete size={"25px"}/>
                         </Button>
-
-
-                    </div>
                 </CardActions>
             </Card>
         </>

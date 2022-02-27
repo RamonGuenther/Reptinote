@@ -8,7 +8,6 @@ import "./deleteDialog.css";
 
 export default function DeleteDialog({open, toggleDeleteDialog, action, name}: any) {
 
-
     return (
         <div>
             <Dialog
@@ -22,8 +21,8 @@ export default function DeleteDialog({open, toggleDeleteDialog, action, name}: a
                     <h4 className={"delete-dialog"}>Die Daten können danach nicht mehr wiederhergestellt werden!</h4>
                 </DialogContent>
                 <DialogActions className={"delete-dialog"}>
-                    <Button className="delete-dialog-buttons" onClick={toggleDeleteDialog}>Abbrechen</Button>
-                    <Button className="delete-dialog-buttons" onClick={() => {
+                    <Button onClick={toggleDeleteDialog}>Abbrechen</Button>
+                    <Button onClick={() => {
                         action();
                         toggleDeleteDialog()
                     }} autoFocus>

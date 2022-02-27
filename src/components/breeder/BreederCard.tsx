@@ -23,7 +23,6 @@ const BreederCard = ({
 
                 <CardContent className={"breeder-card-content"}>
 
-
                     <h2 className={"breeder-card-h2"}>
                         <span className={"breeder-card-span"}>Name:</span> {breeder.lastName + ", " + breeder.firstName}
                     </h2>

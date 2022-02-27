@@ -20,6 +20,9 @@ import {useStyles} from "../helper/Functions";
 
 function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editReptile, breeders}: any) {
 
+  /*---------------------------------------------------------------------------------------------------
+                                           States
+  -----------------------------------------------------------------------------------------------------*/
     const [reptileId, setReptileId] = useState("");
 
     const [feedingValues, setFeedingValues] = useState(initialValuesFeeding);
@@ -42,6 +45,9 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
     const [inputWeight, setInputWeight] = useState("");
     const [inputNote, setInputNote] = useState("");
 
+    /*---------------------------------------------------------------------------------------------------
+                                             Submit-Funktionen
+    -----------------------------------------------------------------------------------------------------*/
 
 
     function updateReptiles(): void {
@@ -97,7 +103,6 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
 
 
 
-
     function addFeeding(): void {
         if (feedingValues.type === "" || isNaN(parseInt(feedingValues.weight))) {
             notifyFailure("Bitte alle Felder und im richtigen Format ausfüllen!")
@@ -144,8 +149,6 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
         toggleAddWeightModal();
     }
 
-
-
     function findReptileId(): number {
         let index = 0;
         for (let i = 0; i < reptiles.length; i++) {
@@ -155,6 +158,11 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
         }
         return index;
     }
+
+    /*---------------------------------------------------------------------------------------------------
+                                            Input Handler
+    -----------------------------------------------------------------------------------------------------*/
+
 
     function handleInputChangeReptile(e: any): void {
         const {name, value} = e.target;
@@ -182,6 +190,23 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
     }
 
 
+    function handleSpeciesSelect(event: any) {
+        setSelectedSpeciesOption(event.target.value)
+    }
+
+    function handleGenderSelect(event: any) {
+        setSelectedGenderOption(event.target.value)
+    }
+
+    function handleBreederSelect(event: any) {
+        setSelectedBreederOption(event.target.value);
+    }
+
+    /*---------------------------------------------------------------------------------------------------
+                                       Toggle Modal Funktionen
+    -----------------------------------------------------------------------------------------------------*/
+
+
     function toggleAddReptileModal(): void {
         setReptileValues(initialValuesReptile);
         setShowAddReptileModal(!showAddReptileModal);
@@ -204,17 +229,9 @@ function ReptileOverview({reptiles, setReptiles, saveReptile, saveFeeding, editR
     }
 
 
-    function handleSpeciesSelect(event: any) {
-        setSelectedSpeciesOption(event.target.value)
-    }
-
-    function handleGenderSelect(event: any) {
-        setSelectedGenderOption(event.target.value)
-    }
-
-    function handleBreederSelect(event: any) {
-        setSelectedBreederOption(event.target.value);
-    }
+    /*---------------------------------------------------------------------------------------------------
+                                           Sonstiges
+    -----------------------------------------------------------------------------------------------------*/
 
 
     function initializeEdit() {

@@ -21,6 +21,8 @@ const WeightsTable = ({reptiles, setReptiles, index, startDate, setStartDate}: a
     const [tableData, setTableData] = useState<Weight[]>(()=>{
         return [...reptiles[index].weights].reverse();
     });
+
+
     const [showAddWeightModal, setShowAddWeightModal] = useState(false);
     const [inputWeight, setInputWeight] = useState("");
 

@@ -30,12 +30,11 @@ const EditReptileModal = ({
     return (
         <>
             <Dialog open={basicModal} onClose={toggleShow}>
-                <DialogTitle>
+                <DialogTitle className={"modal-title"}>
                     Reptil Bearbeiten
                 </DialogTitle>
                 <Divider/>
-
-                <DialogContent style={{width: "500px"}}>
+                <DialogContent className={"modal-content"} style={{width: "500px"}}>
                     <form>
                         <FormControl fullWidth>
 
@@ -94,8 +93,8 @@ const EditReptileModal = ({
                                 label="Geschlecht"
                                 onChange={handleGenderSelect}
                             >
-                                {optionsGender.map((item:string, index: number) =>{
-                                    return <MenuItem key={index} value = {item} > {item} </MenuItem>
+                                {optionsGender.map((item: string, index: number) => {
+                                    return <MenuItem key={index} value={item}> {item} </MenuItem>
                                 })}
                             </MuiSelect>
                         </FormControl>
@@ -129,8 +128,7 @@ const EditReptileModal = ({
                     </form>
                 </DialogContent>
                 <Divider/>
-
-                <DialogActions>
+                <DialogActions className={"modal-actions"}>
                     <Button color='secondary' onClick={toggleShow}>
                         Abbrechen
                     </Button>
